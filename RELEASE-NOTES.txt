@@ -1,0 +1,30 @@
+---------------------------------------------------------------------
+TAG Entrega 1.0
+---------------------------------------------------------------------
+NEW FEATURES (lo que están entregando y está funcionando):
+* xxx
+* xxx
+
+NOTES (ej: funcionalidad que falta, alguna consideración especial):
+* xxx
+* xxx
+
+KNOWN ISSUES (ej: funcionalidad que saben que están funcionando diferente, algún error conocido en la funcionalidad terminada, etc) :
+* xxx
+* xxx
+
+
+que es lo que hay hacer
+<<<Core>>>
+Creación de repositorios GitHub
+Configuración en Travis
+Build corriendo y SUCCESS
+Configurar el proyecto en https://www.codacy.com
+Pantalla prototipo del uso de la API de gmaps (mostrar puntos en un mapa, distancia y tiempo entre 2 puntos))
+Deploy automático utlizando HEROKU o cualquiera similar
+TAG en GitHub y Confeccionar Release Notes de entrega 1 (https://drive.google.com/file/d/0BxyNm_rQ4Q8vZU52eF9QeXR4X3M/view)
+Clean Code según la materia (todo en Ingles)
+Cobertura > 90% (https://www.adictosaltrabajo.com/tutoriales/integracion-de-un-proyecto-de-github-con-travis-y-codacy/)
+<<<Modelo>>>
+Implementar modelo completo
+Testing automático unitario según las pautas de la materia

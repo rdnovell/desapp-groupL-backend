@@ -10,21 +10,19 @@ public class Validator {
 		validateUserNombre(user);
 		validateUserApellido(user);
 		validateUserEmail(user);
-		valideUserPasword(user);
+		validateUserPasword(user);
 	}
 
-	private static void valideUserPasword(User user) throws InvalidParameterException {
+	private static void validateUserPasword(User user) throws InvalidParameterException {
 		final String PASSWORD_PATTERN ="((?=.*\\d)(?=.*[a-zA-Z]).{4,10})";
 		
-		if (user.getPassword().length() <= 0 ) throw new InvalidParameterException("Usuario con password invalido");
+		if (user.getPassword().length() < 4 ) throw new InvalidParameterException("Usuario con password invalido");
 		if (user.getPassword().length() > 10 ) throw new InvalidParameterException("Usuario con password invalido");
 		if (!Pattern.compile(PASSWORD_PATTERN).matcher(user.getPassword()).matches()) throw new InvalidParameterException("Usuario con password con formato invalido");
 	}
 
 	private static void validateUserEmail(User user) throws InvalidParameterException {
-		final String EMAIL_PATTERN = 
-				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		
 		if (user.getEmail().length() <= 0 ) throw new InvalidParameterException("Usuario con mail invalido");
 		if (!Pattern.compile(EMAIL_PATTERN).matcher(user.getEmail()).matches()) throw new InvalidParameterException("Usuario con mail con formato invalido");

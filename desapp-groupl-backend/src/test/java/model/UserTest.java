@@ -29,7 +29,6 @@ public class UserTest {
 
 	}
 	
-	
 	// Validaciones
 	// Nombre: Texto - Max 30 - Requerido.
 	@Test(expected = InvalidParameterException.class)
@@ -96,11 +95,16 @@ public class UserTest {
 		this.userHandler.createUser(this.testUser);
 	}
 	@Test
-	public void testUsuarioConPasswordValido() {
+	public void testUsuarioConPasswordValido() throws InvalidParameterException {
 		this.testUser.setPassword("alco12ne");
 		assertTrue(Pattern.compile(PASSWORD_PATTERN).matcher(this.testUser.getPassword()).matches());
+		this.userHandler.createUser(this.testUser);
 	}
 	//Fecha de Nacimiento : DD/MM/AAAA - Requerido
 	
-	
+	@Test
+	public void testUsuarioConFechaDeNacimientoValida() {
+		this.testUser.setPassword("alco12ne");
+		assertEquals(this.testUser.getFechaNacimiento(), "01/01/1985");
+	}
 }

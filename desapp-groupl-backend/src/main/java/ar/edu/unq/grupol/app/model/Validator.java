@@ -10,6 +10,15 @@ public class Validator {
 		validateUserNombre(user);
 		validateUserApellido(user);
 		validateUserEmail(user);
+		valideUserPasword(user);
+	}
+
+	private static void valideUserPasword(User user) throws InvalidParameterException {
+		final String PASSWORD_PATTERN ="((?=.*\\d)(?=.*[a-zA-Z]).{4,10})";
+		
+		if (user.getPassword().length() <= 0 ) throw new InvalidParameterException("Usuario con password invalido");
+		if (user.getPassword().length() > 10 ) throw new InvalidParameterException("Usuario con password invalido");
+		if (!Pattern.compile(PASSWORD_PATTERN).matcher(user.getPassword()).matches()) throw new InvalidParameterException("Usuario con password con formato invalido");
 	}
 
 	private static void validateUserEmail(User user) throws InvalidParameterException {

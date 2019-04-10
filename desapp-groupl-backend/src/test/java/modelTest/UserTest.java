@@ -20,6 +20,8 @@ public class UserTest {
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	
+	private static final String PASSWORD_PATTERN ="((?=.*\\d)(?=.*[a-zA-Z]).{4,10})";
+	 
 	@Before
 	public void before() {
 		this.userHandler = new UserHandler();
@@ -78,6 +80,26 @@ public class UserTest {
 	}
 	
 	// Contraseña: Min 4 - Max 10 - Alfanumérico - Requerido.
+	@Test(expected = InvalidParameterException.class)
+	public void testUsuarioConPasswordMenorA4() throws InvalidParameterException {
+		this.testUser.setPassword("a12");
+		this.userHandler.createUser(this.testUser);
+	}
+	@Test(expected = InvalidParameterException.class)
+	public void testUsuarioConPasswordMayorA10() throws InvalidParameterException {
+		this.testUser.setPassword("alcome12rh345");
+		this.userHandler.createUser(this.testUser);
+	}
+	@Test(expected = InvalidParameterException.class)
+	public void testUsuarioConPasswordNoAlpha() throws InvalidParameterException {
+		this.testUser.setPassword("alcone");
+		this.userHandler.createUser(this.testUser);
+	}
+	@Test
+	public void testUsuarioConPasswordValido() {
+		this.testUser.setPassword("alco12ne");
+		assertTrue(Pattern.compile(PASSWORD_PATTERN).matcher(this.testUser.getPassword()).matches());
+	}
 	//Fecha de Nacimiento : DD/MM/AAAA - Requerido
 	
 	

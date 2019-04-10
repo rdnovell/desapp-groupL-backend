@@ -16,6 +16,7 @@ public class User {
 	private String nombre;
 	private String apellido;
 	private String email;
+	private String password;
 	private LocalDate fechaNacimiento;
 	
 	public User(String nombre, String apellido, String email, LocalDate fechaNacimiento) throws InvalidParameterException {
@@ -23,6 +24,7 @@ public class User {
 		this.apellido = apellido;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
+		this.password = "";
 
 	}
 	

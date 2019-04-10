@@ -1,4 +1,4 @@
-package modelTest;
+package model;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -15,7 +15,7 @@ public class TestBuilder {
 			testUser.setNombre("Pedro");
 			testUser.setApellido("Esposito");
 	     	testUser.setEmail("pedro.esposito@gmail.com");
-	     	testUser.setFechaNacimiento(LocalDate.of(1985, Month.JANUARY, 1));;
+	     	testUser.setFechaNacimiento(LocalDate.of(1985, Month.JANUARY, 1));
 			return this;
 		}
 		

@@ -2,15 +2,17 @@ package model;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 
-import ar.edu.unq.grupol.app.model.User;
+import ar.edu.unq.grupol.app.model.*;
 
 public class TestBuilder {
 
+	// Herramientas para testear users
 	public static class UserBuilder {
 		private User testUser = new User();		
-		
-			
+
 		public UserBuilder validUser(){
 			testUser.setNombre("Pedro");
 			testUser.setApellido("Esposito");
@@ -27,5 +29,33 @@ public class TestBuilder {
 	public static UserBuilder testUser() {
 		return new UserBuilder();
 	}
-	
+
+	// Herramientas para testear eventos
+
+	public static class FiestaBuilder {
+
+		private Fiesta testFiesta = new Fiesta();
+
+		public FiestaBuilder validFiesta(){
+			testFiesta.setTitulo("Asado con amigos");
+
+			List<Item> items = new ArrayList<Item>();
+			items.add(new Item("Asado",100));
+			testFiesta.setItems(items);
+
+            List<User> invitados = new ArrayList<User>();
+            invitados.add(testUser().validUser().build());
+            testFiesta.setInvitados(invitados);
+
+            return this;
+		}
+
+		public Fiesta build() {
+			return testFiesta;
+		}
+    }
+
+	public static FiestaBuilder testEvento() {
+		return new FiestaBuilder();
+	}
 }

@@ -21,7 +21,7 @@ public class User {
 	
 	public String getFechaNacimiento() {
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		return this.fechaNacimiento.format(formatter);
+		return fechaNacimiento.format(formatter);
 		
 	}
 	

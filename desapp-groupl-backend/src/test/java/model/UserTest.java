@@ -24,8 +24,8 @@ public class UserTest {
 	 
 	@Before
 	public void before() {
-		this.userHandler = new UserHandler();
-		this.testUser = TestBuilder.testUser().validUser().build();
+		userHandler = new UserHandler();
+		testUser = TestBuilder.testUser().validUser().build();
 
 	}
 	
@@ -33,78 +33,78 @@ public class UserTest {
 	// Nombre: Texto - Max 30 - Requerido.
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioSinNombre() throws InvalidParameterException {
-		this.testUser.setNombre("");
-		this.userHandler.createUser(this.testUser);
+		testUser.setNombre("");
+		userHandler.createUser(testUser);
 	}
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConNombreMayorA30() throws InvalidParameterException {
-		this.testUser.setNombre("Juan carlos la mona gimenez de cordoba capital");
-		this.userHandler.createUser(this.testUser);
+		testUser.setNombre("Juan carlos la mona gimenez de cordoba capital");
+		userHandler.createUser(testUser);
 	}
 	@Test
 	public void testUsuarioConNombreValido() {
-		assertTrue(this.testUser.getNombre().length() > 0 && this.testUser.getNombre().length() < 30);
+		assertTrue(testUser.getNombre().length() > 0 && testUser.getNombre().length() < 30);
 	}
 
 	// Apellido: Texto - Max 30 - Requerido.
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioSinApellido() throws InvalidParameterException {
-		this.testUser.setApellido("");
-		this.userHandler.createUser(this.testUser);
+		testUser.setApellido("");
+		userHandler.createUser(testUser);
 	}
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConApellidoMayorA30() throws InvalidParameterException {
-		this.testUser.setApellido("Juan carlos la mona gimenez de cordoba capital");
-		this.userHandler.createUser(this.testUser);
+		testUser.setApellido("Juan carlos la mona gimenez de cordoba capital");
+		userHandler.createUser(testUser);
 	}
 	@Test
 	public void testUsuarioConApellidoValido() {
-		assertTrue(this.testUser.getApellido().length() > 0 && this.testUser.getApellido().length() < 30);
+		assertTrue(testUser.getApellido().length() > 0 && testUser.getApellido().length() < 30);
 	}
 	
 	// Email: Formato_email - Requerido
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioSinEmail() throws InvalidParameterException {
-		this.testUser.setEmail("");
-		this.userHandler.createUser(this.testUser);
+		testUser.setEmail("");
+		userHandler.createUser(testUser);
 	}
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConEmailInvalido() throws InvalidParameterException {
-		this.testUser.setEmail("alfa.com");
-		this.userHandler.createUser(this.testUser);
+		testUser.setEmail("alfa.com");
+		userHandler.createUser(testUser);
 	}
 	@Test
 	public void testUsuarioConEmailValido() {
-		assertTrue(Pattern.compile(EMAIL_PATTERN).matcher(this.testUser.getEmail()).matches());
+		assertTrue(Pattern.compile(EMAIL_PATTERN).matcher(testUser.getEmail()).matches());
 	}
 	
 	// Contraseña: Min 4 - Max 10 - Alfanumérico - Requerido.
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConPasswordMenorA4() throws InvalidParameterException {
-		this.testUser.setPassword("a12");
-		this.userHandler.createUser(this.testUser);
+		testUser.setPassword("a12");
+		userHandler.createUser(testUser);
 	}
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConPasswordMayorA10() throws InvalidParameterException {
-		this.testUser.setPassword("alcome12rh345");
-		this.userHandler.createUser(this.testUser);
+		testUser.setPassword("alcome12rh345");
+		userHandler.createUser(testUser);
 	}
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConPasswordNoAlpha() throws InvalidParameterException {
-		this.testUser.setPassword("alcone");
-		this.userHandler.createUser(this.testUser);
+		testUser.setPassword("alcone");
+		userHandler.createUser(testUser);
 	}
 	@Test
 	public void testUsuarioConPasswordValido() throws InvalidParameterException {
-		this.testUser.setPassword("alco12ne");
-		assertTrue(Pattern.compile(PASSWORD_PATTERN).matcher(this.testUser.getPassword()).matches());
-		this.userHandler.createUser(this.testUser);
+		testUser.setPassword("alco12ne");
+		assertTrue(Pattern.compile(PASSWORD_PATTERN).matcher(testUser.getPassword()).matches());
+		userHandler.createUser(testUser);
 	}
 	//Fecha de Nacimiento : DD/MM/AAAA - Requerido
 	
 	@Test
 	public void testUsuarioConFechaDeNacimientoValida() {
-		this.testUser.setPassword("alco12ne");
-		assertEquals(this.testUser.getFechaNacimiento(), "01/01/1985");
+		testUser.setPassword("alco12ne");
+		assertEquals(testUser.getFechaNacimiento(), "01/01/1985");
 	}
 }

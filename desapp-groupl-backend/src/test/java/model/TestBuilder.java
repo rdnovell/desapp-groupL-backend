@@ -36,9 +36,11 @@ public class TestBuilder {
 	public static class FiestaBuilder {
 
 		private Fiesta testFiesta = new Fiesta();
+		private User organizador = TestBuilder.testUser().validUser().build();
 
 		public FiestaBuilder validFiesta(){
 			testFiesta.setTitulo("Asado con amigos");
+			testFiesta.setOrganizador(organizador);
 
 			List<Item> items = new ArrayList<Item>();
 			items.add(new Item("Asado",100));

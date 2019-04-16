@@ -16,10 +16,15 @@ public class FiestaTest {
     }
 
     @Test
+    public void testObtenerOrganizdor() {
+        assertEquals(testFiesta.getOrganizador().getNombre(), "Pedro");
+    }
+
+    @Test
     public void testObtenerTitulo() {
         assertEquals(testFiesta.getTitulo(), "Asado con amigos");
     }
-
+    
     @Test
     public void testCantidadDeInvitados() {
         assertEquals(testFiesta.getInvitados().size(), 1);

@@ -7,17 +7,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.Email;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class User {
 
-	private String nombre;
-	private String apellido;
-	private String email;
-	private String password;
-	private LocalDate fechaNacimiento;
-	
+    @NotNull(message = "Name must be defined")
+    @Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters")
+    private String nombre;
+
+    @NotNull(message = "Lastname must be defined")
+    @Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters")
+    private String apellido;
+
+    @NotNull(message = "Email must be defined")
+    private String email;
+
+    @NotNull(message = "Pasword must be defined")
+    private String password;
+
+    @NotNull(message = "Birthdate must be defined")
+    private LocalDate fechaNacimiento;
+
 	public String getFechaNacimiento() {
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		return fechaNacimiento.format(formatter);

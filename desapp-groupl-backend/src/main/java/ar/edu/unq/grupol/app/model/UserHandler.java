@@ -6,7 +6,7 @@ public class UserHandler {
 
 	public User createUser(User user) throws InvalidParameterException {
         Validator.validateUser(user);
-		return user;
+        return user;
 	}
 
 }

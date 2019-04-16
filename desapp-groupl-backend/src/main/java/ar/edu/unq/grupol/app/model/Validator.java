@@ -1,18 +1,31 @@
 package ar.edu.unq.grupol.app.model;
 
+import java.util.Set;
 import java.util.regex.Pattern;
+
 import ar.edu.unq.grupol.app.exceptions.InvalidParameterException;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
 
 public class Validator {
 
 	public static void validateUser(User user) throws InvalidParameterException {
-		validateUserNombreOApellido(user.getNombre(), "nombre");
-		validateUserNombreOApellido(user.getApellido(), "apellido");
+
+		validateConstraints(user);
 		validateUserEmail(user);
 		validateUserPasword(user);
 	}
 
-	private static void validateUserPasword(User user) throws InvalidParameterException {
+    private static <T> void validateConstraints(T object) throws InvalidParameterException {
+        Set<ConstraintViolation<T>> violations = Validation.buildDefaultValidatorFactory().getValidator().validate(object);
+        if(!violations.isEmpty()) {
+            throw new InvalidParameterException(violations.stream().findFirst().get().getMessage());
+        }
+
+    }
+
+    private static void validateUserPasword(User user) throws InvalidParameterException {
 		final String PASSWORD_PATTERN ="((?=.*\\d)(?=.*[a-zA-Z]).{4,10})";
 		
 		if (!Pattern.compile(PASSWORD_PATTERN).matcher(user.getPassword()).matches())
@@ -24,10 +37,5 @@ public class Validator {
 		
 		if (!Pattern.compile(EMAIL_PATTERN).matcher(user.getEmail()).matches())
 			throw new InvalidParameterException("Usuario con mail con formato invalido");
-	}
-
-	private static void validateUserNombreOApellido(String valor, String campo) throws InvalidParameterException {
-		if (valor.length() <= 0 || valor.length() > 30)
-			throw new InvalidParameterException("Usuario con " + campo + " invalido");
 	}
 }

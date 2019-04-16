@@ -17,6 +17,7 @@ public class TestBuilder {
 			testUser.setNombre("Pedro");
 			testUser.setApellido("Esposito");
 	     	testUser.setEmail("pedro.esposito@gmail.com");
+	     	testUser.setPassword("alpa1234");
 	     	testUser.setFechaNacimiento(LocalDate.of(1985, Month.JANUARY, 1));
 			return this;
 		}

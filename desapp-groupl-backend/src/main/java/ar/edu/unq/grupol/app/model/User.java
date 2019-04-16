@@ -3,7 +3,6 @@ package ar.edu.unq.grupol.app.model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import ar.edu.unq.grupol.app.exceptions.InvalidParameterException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

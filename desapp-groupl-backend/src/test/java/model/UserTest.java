@@ -13,7 +13,7 @@ import ar.edu.unq.grupol.app.model.UserService;
 
 public class UserTest {
 
-	public User testUser; 
+	private User testUser; 
 	private UserService userHandler;
 	
 	private static final String EMAIL_PATTERN = 

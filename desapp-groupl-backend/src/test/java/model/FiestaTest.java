@@ -3,16 +3,32 @@ package model;
 import static org.junit.Assert.*;
 
 import ar.edu.unq.grupol.app.model.Party;
+import ar.edu.unq.grupol.app.model.EmailSender;
+import ar.edu.unq.grupol.app.model.Event;
+import ar.edu.unq.grupol.app.model.EventService;
+
 import org.junit.Before;
 import org.junit.Test;
+import static org.mockito.Mockito.*;
+
 
 public class FiestaTest {
 
-    public Party testFiesta;
-
+	private Party testFiesta;
+    private EventService eventHandler;
+    
     @Before
     public void before() {
-        testFiesta = TestBuilder.testEvento().validFiesta().build();
+        testFiesta = TestBuilder.testParty().validFiesta().build();
+        eventHandler = new EventService();
+    }
+    
+    @Test
+    public void testEnvioDeNotificacion() {
+    	Event eventMock = mock(Event.class);
+    	eventHandler.createEvent(eventMock);
+    	//Esto envia un mail de verdad testFiesta.sendInvitations();
+    	verify(eventMock, times(1)).sendInvitations();
     }
 
     @Test

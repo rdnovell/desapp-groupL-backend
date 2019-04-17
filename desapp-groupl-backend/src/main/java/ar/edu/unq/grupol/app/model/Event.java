@@ -21,7 +21,7 @@ public abstract class Event {
 		confirmedGuests.add(user);
 	}
 
-    public void enviarInvitaciones(){
-    	guests.stream().forEach(guest -> EmailSender.send(title,guest.getEmail()));
+    public void sendInvitations(){
+    	guests.stream().forEach(guest -> EmailSender.getInstance().send(title,guest.getEmail()));
     }
 }

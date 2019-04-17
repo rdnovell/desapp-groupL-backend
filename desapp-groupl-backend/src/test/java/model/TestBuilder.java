@@ -16,7 +16,7 @@ public class TestBuilder {
 		public UserBuilder validUser(){
 			testUser.setName("Pedro");
 			testUser.setLastName("Esposito");
-	     	testUser.setEmail("pedro.esposito@gmail.com");
+	     	testUser.setEmail("rubendario.novelli@gmail.com");
 	     	testUser.setPassword("alpa1234");
 	     	testUser.setBirthDate(LocalDate.of(1985, Month.JANUARY, 1));
 			return this;
@@ -58,7 +58,7 @@ public class TestBuilder {
 		}
     }
 
-	public static FiestaBuilder testEvento() {
+	public static FiestaBuilder testParty() {
 		return new FiestaBuilder();
 	}
 }

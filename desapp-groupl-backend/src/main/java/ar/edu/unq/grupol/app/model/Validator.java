@@ -11,7 +11,6 @@ import javax.validation.Validation;
 public class Validator {
 
 	public static void validateUser(User user) throws InvalidParameterException {
-
 		validateConstraints(user);
 		validateUserEmail(user);
 		validateUserPasword(user);

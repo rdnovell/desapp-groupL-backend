@@ -18,11 +18,11 @@ public class User {
 
     @NotNull(message = "Name must be defined")
     @Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters")
-    private String nombre;
+    private String name;
 
     @NotNull(message = "Lastname must be defined")
     @Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters")
-    private String apellido;
+    private String lastName;
 
     @NotNull(message = "Email must be defined")
     private String email;
@@ -31,11 +31,11 @@ public class User {
     private String password;
 
     @NotNull(message = "Birthdate must be defined")
-    private LocalDate fechaNacimiento;
+    private LocalDate birthDate;
 
-	public String getFechaNacimiento() {
+	public String getBirthDate() {
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		return fechaNacimiento.format(formatter);
+		return birthDate.format(formatter);
 		
 	}
 	

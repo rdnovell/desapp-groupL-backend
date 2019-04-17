@@ -9,12 +9,12 @@ import org.junit.Test;
 
 import ar.edu.unq.grupol.app.exceptions.InvalidParameterException;
 import ar.edu.unq.grupol.app.model.User;
-import ar.edu.unq.grupol.app.model.UserHandler;
+import ar.edu.unq.grupol.app.model.UserService;
 
 public class UserTest {
 
 	public User testUser; 
-	private UserHandler userHandler;
+	private UserService userHandler;
 	
 	private static final String EMAIL_PATTERN = 
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -24,7 +24,7 @@ public class UserTest {
 	 
 	@Before
 	public void before() {
-		userHandler = new UserHandler();
+		userHandler = new UserService();
 		testUser = TestBuilder.testUser().validUser().build();
 
 	}
@@ -33,33 +33,33 @@ public class UserTest {
 	// Nombre: Texto - Max 30 - Requerido.
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioSinNombre() throws InvalidParameterException {
-		testUser.setNombre("");
+		testUser.setName("");
 		userHandler.createUser(testUser);
 	}
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConNombreMayorA30() throws InvalidParameterException {
-		testUser.setNombre("Juan carlos la mona gimenez de cordoba capital");
+		testUser.setName("Juan carlos la mona gimenez de cordoba capital");
 		userHandler.createUser(testUser);
 	}
 	@Test
 	public void testUsuarioConNombreValido() {
-		assertTrue(testUser.getNombre().length() > 0 && testUser.getNombre().length() < 30);
+		assertTrue(testUser.getName().length() > 0 && testUser.getName().length() < 30);
 	}
 
 	// Apellido: Texto - Max 30 - Requerido.
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioSinApellido() throws InvalidParameterException {
-		testUser.setApellido("");
+		testUser.setLastName("");
 		userHandler.createUser(testUser);
 	}
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConApellidoMayorA30() throws InvalidParameterException {
-		testUser.setApellido("Juan carlos la mona gimenez de cordoba capital");
+		testUser.setLastName("Juan carlos la mona gimenez de cordoba capital");
 		userHandler.createUser(testUser);
 	}
 	@Test
 	public void testUsuarioConApellidoValido() {
-		assertTrue(testUser.getApellido().length() > 0 && testUser.getApellido().length() < 30);
+		assertTrue(testUser.getLastName().length() > 0 && testUser.getLastName().length() < 30);
 	}
 	
 	// Email: Formato_email - Requerido
@@ -105,6 +105,6 @@ public class UserTest {
 	@Test
 	public void testUsuarioConFechaDeNacimientoValida() {
 		testUser.setPassword("alco12ne");
-		assertEquals(testUser.getFechaNacimiento(), "01/01/1985");
+		assertEquals(testUser.getBirthDate(), "01/01/1985");
 	}
 }

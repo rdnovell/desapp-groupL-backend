@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class Item {
-	private String titulo;
-	private int costo;
+	private String title;
+	private int value;
 }

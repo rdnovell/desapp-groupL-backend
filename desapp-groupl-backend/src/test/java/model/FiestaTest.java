@@ -2,13 +2,13 @@ package model;
 
 import static org.junit.Assert.*;
 
-import ar.edu.unq.grupol.app.model.Fiesta;
+import ar.edu.unq.grupol.app.model.Party;
 import org.junit.Before;
 import org.junit.Test;
 
 public class FiestaTest {
 
-    public Fiesta testFiesta;
+    public Party testFiesta;
 
     @Before
     public void before() {
@@ -17,32 +17,32 @@ public class FiestaTest {
 
     @Test
     public void testObtenerOrganizdor() {
-        assertEquals(testFiesta.getOrganizador().getNombre(), "Pedro");
+        assertEquals(testFiesta.getOwner().getName(), "Pedro");
     }
 
     @Test
     public void testObtenerTitulo() {
-        assertEquals(testFiesta.getTitulo(), "Asado con amigos");
+        assertEquals(testFiesta.getTitle(), "Asado con amigos");
     }
     
     @Test
     public void testCantidadDeInvitados() {
-        assertEquals(testFiesta.getInvitados().size(), 1);
+        assertEquals(testFiesta.getGuests().size(), 1);
     }
 
     @Test
     public void testCantidadDeInvitadosConfirmados() {
-        assertEquals(testFiesta.getInvitadosConfirmados().size(), 0);
+        assertEquals(testFiesta.getConfirmedGuests().size(), 0);
     }
 
     @Test
     public void testObtenerCostoTotal() {
-        assertEquals(testFiesta.getCosto(),0);
+        assertEquals(testFiesta.getPartyCost(), 0);
     }
 
     @Test
     public void testAlAgregarUnInvitadoSeModificaElCostoTotal() {
-        testFiesta.agregarInvitadoConfirmado(TestBuilder.testUser().validUser().build());
-        assertEquals(testFiesta.getCosto(),100);
+        testFiesta.addConfirmedGuests(TestBuilder.testUser().validUser().build());
+        assertEquals(testFiesta.getPartyCost(), 100);
     }
 }

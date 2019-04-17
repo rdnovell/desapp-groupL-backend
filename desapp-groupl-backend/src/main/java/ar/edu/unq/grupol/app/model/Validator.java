@@ -28,13 +28,13 @@ public class Validator {
 		final String PASSWORD_PATTERN ="((?=.*\\d)(?=.*[a-zA-Z]).{4,10})";
 		
 		if (!Pattern.compile(PASSWORD_PATTERN).matcher(user.getPassword()).matches())
-			throw new InvalidParameterException("Usuario con password con formato invalido");
+			throw new InvalidParameterException("User with invalid password");
 	}
 
 	private static void validateUserEmail(User user) throws InvalidParameterException {
 		final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{0,})$";
 		
 		if (!Pattern.compile(EMAIL_PATTERN).matcher(user.getEmail()).matches())
-			throw new InvalidParameterException("Usuario con mail con formato invalido");
+			throw new InvalidParameterException("User with invalid email");
 	}
 }

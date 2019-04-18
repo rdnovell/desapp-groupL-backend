@@ -6,6 +6,7 @@ import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
+import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -29,7 +30,7 @@ public class EmailSender {
 		return instance;
 	}
 
-	public void send(String titulo, String email) {
+	public void send(String titulo, String email) throws SendFailedException {
 		try {
 			MimeMessage message = new MimeMessage(createSession());
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
@@ -37,7 +38,8 @@ public class EmailSender {
 			message.setText("Invitation");
 			Transport.send(message);
 		} catch (MessagingException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw new SendFailedException("Invalid send address", e);
 		}
 	}
 

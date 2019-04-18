@@ -15,6 +15,10 @@ public class Validator {
 		validateUserEmail(user);
 		validateUserPasword(user);
 	}
+	
+	public static void validateParty(Party party) throws InvalidParameterException {
+		validateConstraints(party);
+	}
 
     private static <T> void validateConstraints(T object) throws InvalidParameterException {
         Set<ConstraintViolation<T>> violations = Validation.buildDefaultValidatorFactory().getValidator().validate(object);

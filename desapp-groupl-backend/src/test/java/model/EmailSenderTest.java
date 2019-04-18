@@ -8,7 +8,7 @@ import javax.mail.SendFailedException;
 
 import org.junit.Test;
 
-import ar.edu.unq.grupol.app.model.EmailSender;
+import ar.edu.unq.grupol.app.service.EmailSender;
 
 public class EmailSenderTest {
 

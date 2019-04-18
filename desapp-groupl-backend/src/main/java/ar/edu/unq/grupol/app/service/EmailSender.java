@@ -1,4 +1,4 @@
-package ar.edu.unq.grupol.app.model;
+package ar.edu.unq.grupol.app.service;
 
 import java.util.Properties;
 

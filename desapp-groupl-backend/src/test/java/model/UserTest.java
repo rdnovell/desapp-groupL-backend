@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import ar.edu.unq.grupol.app.exceptions.InvalidParameterException;
 import ar.edu.unq.grupol.app.model.User;
-import ar.edu.unq.grupol.app.model.UserService;
+import ar.edu.unq.grupol.app.service.UserService;
 
 public class UserTest {
 

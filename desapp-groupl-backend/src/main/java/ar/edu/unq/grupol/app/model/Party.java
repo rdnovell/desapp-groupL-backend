@@ -1,11 +1,32 @@
 package ar.edu.unq.grupol.app.model;
 
+import java.time.LocalDate;
+
+import javax.validation.constraints.NotNull;
+
+import ar.edu.unq.grupol.app.model.exception.EventException;
+import ar.edu.unq.grupol.app.model.exception.InvitationExpiredException;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 public class Party extends Event {
+	
+	@NotNull(message = "Expiration date must be defined.")
+	@Setter
+	private LocalDate expirationDate;
+	
+	@Override
+	public void addConfirmedGuests(User user) throws EventException {
+		if (LocalDate.now().isBefore(expirationDate)) {
+			super.addConfirmedGuests(user);
+		} else {
+			throw new InvitationExpiredException("The invitation has expired.");
+		}
+	}
 
     public int getPartyCost() {
-        return getItems().stream().mapToInt(item -> item.getValue()).sum() * getConfirmedGuests().size();
+        return getTotalCost() * getConfirmedGuests().size();
     }
+    
 }

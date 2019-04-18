@@ -3,8 +3,9 @@ package model;
 import static org.junit.Assert.*;
 
 import ar.edu.unq.grupol.app.model.Party;
+import ar.edu.unq.grupol.app.model.exception.EventException;
+import ar.edu.unq.grupol.app.service.EventService;
 import ar.edu.unq.grupol.app.model.Event;
-import ar.edu.unq.grupol.app.model.EventService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -56,7 +57,7 @@ public class FiestaTest {
     }
 
     @Test
-    public void testAlAgregarUnInvitadoSeModificaElCostoTotal() {
+    public void testAlAgregarUnInvitadoSeModificaElCostoTotal() throws EventException {
         testFiesta.addConfirmedGuests(TestBuilder.testUser().validUser().build());
         assertEquals(testFiesta.getPartyCost(), 100);
     }

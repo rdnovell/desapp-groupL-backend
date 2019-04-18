@@ -1,13 +1,17 @@
 package ar.edu.unq.grupol.app.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.AccessLevel;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.SendFailedException;
+
+import ar.edu.unq.grupol.app.model.exception.EventException;
+import ar.edu.unq.grupol.app.model.exception.GuestNotFoundException;
+import ar.edu.unq.grupol.app.service.EmailSender;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -18,9 +22,23 @@ public abstract class Event {
 	@Setter(AccessLevel.NONE)
 	private List<User> confirmedGuests = new ArrayList<User>();
 	private List<Item> items;
+	private LocalDate date;
+	
+	private boolean checkGuest(List<User> users, User user) {
+		return users.stream().anyMatch(guest -> guest.getId() == user.getId());
+	}
+	
+	protected boolean userIsConfimated(User user) {
+		return checkGuest(confirmedGuests, user);
+	}
 
-	public void addConfirmedGuests(User user){
-		confirmedGuests.add(user);
+	public void addConfirmedGuests(User user) throws EventException {
+		if (checkGuest(guests, user)) {
+			confirmedGuests.add(user);
+			user.addEventAssist(this);
+		} else {
+			throw new GuestNotFoundException("User must be invited to the event.");
+		}
 	}
 
     public void sendInvitations(){
@@ -28,9 +46,20 @@ public abstract class Event {
 			try {
 				EmailSender.getInstance().send(title,guest.getEmail());
 			} catch (SendFailedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		});
     }
+    
+    public void addItems(List<Item> items) {
+    	this.items.addAll(items);
+    }
+    
+    public Integer getTotalCost() {
+    	return items.stream().mapToInt(item -> item.getValue()).sum();
+    }
+    
+    public void withTemplate(Template template) {
+    	addItems(template.getItems());
+    }
+    
 }

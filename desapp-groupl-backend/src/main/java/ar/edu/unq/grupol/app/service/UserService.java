@@ -1,6 +1,8 @@
-package ar.edu.unq.grupol.app.model;
+package ar.edu.unq.grupol.app.service;
 
 import ar.edu.unq.grupol.app.exceptions.InvalidParameterException;
+import ar.edu.unq.grupol.app.model.User;
+import ar.edu.unq.grupol.app.model.Validator;
 
 public class UserService {
 

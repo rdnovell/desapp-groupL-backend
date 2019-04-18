@@ -1,30 +1,30 @@
 ---------------------------------------------------------------------
 TAG Entrega 1.0
 ---------------------------------------------------------------------
-NEW FEATURES (lo que est·n entregando y est· funcionando):
+NEW FEATURES (lo que est√°n entregando y est√° funcionando):
+* Creaci√≥n de repositorios en Github.
+* Configuraci√≥n en Travis.
+
+NOTES (ej: funcionalidad que falta, alguna consideraci√≥n especial):
 * xxx
 * xxx
 
-NOTES (ej: funcionalidad que falta, alguna consideraciÛn especial):
-* xxx
-* xxx
-
-KNOWN ISSUES (ej: funcionalidad que saben que est·n funcionando diferente, alg˙n error conocido en la funcionalidad terminada, etc) :
+KNOWN ISSUES (ej: funcionalidad que saben que est√°n funcionando diferente, alg√∫n error conocido en la funcionalidad terminada, etc) :
 * xxx
 * xxx
 
 
 que es lo que hay hacer
 <<<Core>>>
-CreaciÛn de repositorios GitHub
-ConfiguraciÛn en Travis
+Creaci√≥n de repositorios GitHub
+Configuraci√≥n en Travis
 Build corriendo y SUCCESS
 Configurar el proyecto en https://www.codacy.com
 Pantalla prototipo del uso de la API de gmaps (mostrar puntos en un mapa, distancia y tiempo entre 2 puntos))
-Deploy autom·tico utlizando HEROKU o cualquiera similar
+Deploy autom√°tico utlizando HEROKU o cualquiera similar
 TAG en GitHub y Confeccionar Release Notes de entrega 1 (https://drive.google.com/file/d/0BxyNm_rQ4Q8vZU52eF9QeXR4X3M/view)
-Clean Code seg˙n la materia (todo en Ingles)
+Clean Code seg√∫n la materia (todo en Ingles)
 Cobertura > 90% (https://www.adictosaltrabajo.com/tutoriales/integracion-de-un-proyecto-de-github-con-travis-y-codacy/)
 <<<Modelo>>>
 Implementar modelo completo
-Testing autom·tico unitario seg˙n las pautas de la materia
+Testing autom√°tico unitario seg√∫n las pautas de la materia

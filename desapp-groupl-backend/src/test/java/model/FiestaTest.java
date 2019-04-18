@@ -3,7 +3,6 @@ package model;
 import static org.junit.Assert.*;
 
 import ar.edu.unq.grupol.app.model.Party;
-import ar.edu.unq.grupol.app.model.EmailSender;
 import ar.edu.unq.grupol.app.model.Event;
 import ar.edu.unq.grupol.app.model.EventService;
 

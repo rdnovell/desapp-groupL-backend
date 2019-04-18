@@ -5,6 +5,5 @@ public class EventService {
 	public Event createEvent(Event event) {
 		event.sendInvitations();
 		return event;
-		
 	}
 }

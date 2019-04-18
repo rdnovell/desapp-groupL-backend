@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.SendFailedException;
+
 @Getter
 @Setter
 public abstract class Event {
@@ -22,6 +24,13 @@ public abstract class Event {
 	}
 
     public void sendInvitations(){
-    	guests.stream().forEach(guest -> EmailSender.getInstance().send(title,guest.getEmail()));
+    	guests.stream().forEach(guest -> {
+			try {
+				EmailSender.getInstance().send(title,guest.getEmail());
+			} catch (SendFailedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
     }
 }

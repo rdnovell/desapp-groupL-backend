@@ -35,8 +35,11 @@ public class User {
     
     private List<Event> eventsAssisted;
     
+    private Account account; 
+    
     public User() {
     	eventsAssisted = new ArrayList<Event>();
+    	account = new Account();
     }
 
 	public String getBirthDate() {

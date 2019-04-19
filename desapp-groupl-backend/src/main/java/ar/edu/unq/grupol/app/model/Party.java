@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import ar.edu.unq.grupol.app.model.exception.EventException;
 import ar.edu.unq.grupol.app.model.exception.InvitationExpiredException;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ public class Party extends Event {
 	
 	@NotNull(message = "Expiration date must be defined.")
 	@Setter
+	@Getter
 	private LocalDate expirationDate;
 	
 	@Override

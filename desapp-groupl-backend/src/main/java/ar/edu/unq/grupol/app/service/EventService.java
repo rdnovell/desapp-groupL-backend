@@ -5,7 +5,9 @@ import ar.edu.unq.grupol.app.model.Account;
 import ar.edu.unq.grupol.app.model.CrowdFundingCommonAccount;
 import ar.edu.unq.grupol.app.model.Event;
 import ar.edu.unq.grupol.app.model.Party;
+import ar.edu.unq.grupol.app.model.User;
 import ar.edu.unq.grupol.app.model.Validator;
+import ar.edu.unq.grupol.app.model.exception.InvalidAmount;
 
 public class EventService {
 	
@@ -21,13 +23,9 @@ public class EventService {
 		return crowdFundingCommonAccount;
 	}
 	
-	public void addFunds(CrowdFundingCommonAccount crowdFundingCommonAccount, Integer amount) {
+	public void addFunds(CrowdFundingCommonAccount crowdFundingCommonAccount, User user, Integer amount) throws InvalidAmount {
+		user.getAccount().getMoney(amount);
 		crowdFundingCommonAccount.addFunds(amount);
 	}
 
-	public Event createEvent(Event event) {
-		event.sendInvitations();
-		return event;
-	}
-	
 }

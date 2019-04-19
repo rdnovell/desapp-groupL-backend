@@ -1,6 +1,7 @@
 package ar.edu.unq.grupol.app.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.unq.grupol.app.model.exception.InvalidAmount;
@@ -9,8 +10,8 @@ import lombok.Getter;
 @Getter
 public class Account {
 
-	Integer balance;
-	List<Transaction> transactions;
+	private Integer balance = 0;
+	private List<Transaction> transactions = new ArrayList<Transaction>();
 	
 	public void addMoney(Integer amount) {
 		balance += amount;

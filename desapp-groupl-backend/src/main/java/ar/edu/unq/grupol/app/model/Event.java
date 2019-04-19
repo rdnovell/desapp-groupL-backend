@@ -28,7 +28,7 @@ public abstract class Event {
 		return users.stream().anyMatch(guest -> guest.getId() == user.getId());
 	}
 	
-	protected boolean userIsConfimated(User user) {
+	public boolean userIsConfimated(User user) {
 		return checkGuest(confirmedGuests, user);
 	}
 

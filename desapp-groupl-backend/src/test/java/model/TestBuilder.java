@@ -45,7 +45,9 @@ public class TestBuilder {
 			List<Item> items = new ArrayList<Item>();
 			items.add(new Item(1, "Asado",100));
 			testFiesta.setItems(items);
+			
 			testFiesta.setExpirationDate(LocalDate.now().plusDays(10));
+			
             List<User> invitados = new ArrayList<User>();
             invitados.add(testUser().validUser().build());
             testFiesta.setGuests(invitados);

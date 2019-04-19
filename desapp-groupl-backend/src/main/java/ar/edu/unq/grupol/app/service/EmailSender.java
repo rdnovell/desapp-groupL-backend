@@ -50,7 +50,7 @@ public class EmailSender {
 		prop.put("mail.smtp.host", "smtp.gmail.com");
 		prop.put("mail.smtp.port", "587");
 
-		Authenticator authentication = new javax.mail.Authenticator() {
+		Authenticator authentication = new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
             }};

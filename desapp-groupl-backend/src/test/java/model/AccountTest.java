@@ -3,7 +3,6 @@ package model;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;

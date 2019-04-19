@@ -7,8 +7,8 @@ import lombok.Getter;
 @Getter
 public class Purchase {
 
-	User user;
-	Integer amount;
+	private User user;
+	private Integer amount;
 	
 	public void addAmount(Integer amount) {
 		this.amount += amount;

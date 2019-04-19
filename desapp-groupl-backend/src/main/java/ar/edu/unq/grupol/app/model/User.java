@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 public class User {
 	
-	Integer id;
+	private Integer id;
 
     @NotNull(message = "Name must be defined")
     @Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters")

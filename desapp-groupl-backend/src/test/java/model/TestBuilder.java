@@ -25,6 +25,10 @@ public class TestBuilder {
 		return new CrowdFundingCommonAccountBuilder();
 	}
 
+	public static CrowdFundingBuilder testCrowdFunding() {
+		return new CrowdFundingBuilder();
+	}
+	
 	public static class UserBuilder {
 		private User testUser = new User();
 
@@ -58,7 +62,7 @@ public class TestBuilder {
 			testFiesta.setExpirationDate(LocalDate.now().plusDays(10));
 
 			List<User> invitados = new ArrayList<User>();
-			invitados.add(testUser().validUser().build());
+			invitados.add(TestBuilder.testUser().validUser().build());
 			testFiesta.setGuests(invitados);
 
 			return this;
@@ -100,6 +104,35 @@ public class TestBuilder {
 
 		public CrowdFundingCommonAccount build() {
 			return testCrowdFundingCommonAccount;
+		}
+	}
+
+	public static class CrowdFundingBuilder {
+
+		private CrowdFunding testCrowdFunding = new CrowdFunding();
+		private User organizador = TestBuilder.testUser().validUser().build();
+		private User user2 = TestBuilder.testUser().validUser().build();
+		
+		public CrowdFundingBuilder validCrowdFunding() {
+			testCrowdFunding.setTitle("Asado con amigos");
+			testCrowdFunding.setOwner(organizador);
+
+			List<Item> items = new ArrayList<Item>();
+			items.add(new Item(1, "Asado", 100));
+			testCrowdFunding.setItems(items);
+			
+			List<User> invitados = new ArrayList<User>();
+			invitados.add(testCrowdFunding.getOwner());
+			user2.setId(2);
+			user2.setName("Juan");
+			invitados.add(user2);
+			testCrowdFunding.setGuests(invitados);
+			
+			return this;
+		}
+
+		public CrowdFunding build() {
+			return testCrowdFunding;
 		}
 	}
 }

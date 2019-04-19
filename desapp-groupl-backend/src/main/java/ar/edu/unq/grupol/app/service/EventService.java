@@ -3,6 +3,7 @@ package ar.edu.unq.grupol.app.service;
 import ar.edu.unq.grupol.app.exceptions.InvalidParameterException;
 import ar.edu.unq.grupol.app.model.Account;
 import ar.edu.unq.grupol.app.model.Basket;
+import ar.edu.unq.grupol.app.model.CrowdFunding;
 import ar.edu.unq.grupol.app.model.CrowdFundingCommonAccount;
 import ar.edu.unq.grupol.app.model.Event;
 import ar.edu.unq.grupol.app.model.Party;
@@ -24,6 +25,11 @@ public class EventService {
 		return crowdFundingCommonAccount;
 	}
 
+	public CrowdFunding createCrowdFunding(CrowdFunding crowdFunding) {
+		crowdFunding.sendInvitations();
+		return crowdFunding;
+	}
+	
 	public void addFunds(CrowdFundingCommonAccount crowdFundingCommonAccount, User user, Integer amount) throws InvalidAmount {
 		user.getAccount().getMoney(amount);
 		crowdFundingCommonAccount.addFunds(amount);

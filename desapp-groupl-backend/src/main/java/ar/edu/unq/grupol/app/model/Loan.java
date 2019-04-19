@@ -1,5 +1,8 @@
 package ar.edu.unq.grupol.app.model;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class Loan {
 
 	private User user;

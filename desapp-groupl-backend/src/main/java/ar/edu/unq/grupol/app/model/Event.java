@@ -21,7 +21,7 @@ public abstract class Event {
 	private List<User> guests;
 	@Setter(AccessLevel.NONE)
 	private List<User> confirmedGuests = new ArrayList<User>();
-	private List<Item> items;
+	private List<Item> items = new ArrayList<Item>();
 	private LocalDate date;
 	
 	private boolean checkGuest(List<User> users, User user) {

@@ -16,7 +16,7 @@ import ar.edu.unq.grupol.app.model.exception.InvalidParameterException;
 @Component
 public class EventService {
 	
-	@Autowired EmailSender emailSender;
+	@Autowired private EmailSender emailSender;
 	
 	private <T> T createEvent(Event event) throws InvalidParameterException {
 		Validator.validateEvent(event);
@@ -32,14 +32,10 @@ public class EventService {
 	public CrowdFundingCommonAccount createCrowdFundingCommonAccount(CrowdFundingCommonAccount crowdFundingCommonAccount) throws InvalidParameterException {
 		crowdFundingCommonAccount.setCommonAccount(new Account());
 		return createEvent(crowdFundingCommonAccount);
-//		crowdFundingCommonAccount.sendInvitations();
-//		return crowdFundingCommonAccount;
 	}
 
 	public CrowdFunding createCrowdFunding(CrowdFunding crowdFunding) throws InvalidParameterException {
 		return createEvent(crowdFunding);
-//		crowdFunding.sendInvitations();
-//		return crowdFunding;
 	}
 	
 	public void addFunds(CrowdFundingCommonAccount crowdFundingCommonAccount, User user, Integer amount) throws InvalidAmount {
@@ -49,8 +45,6 @@ public class EventService {
 
 	public Basket createBasket(Basket basket) throws InvalidParameterException {
 		return createEvent(basket);
-//		basket.sendInvitations();
-//		return basket;
 	}
 
 }

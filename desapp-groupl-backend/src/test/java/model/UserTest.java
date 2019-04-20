@@ -1,14 +1,10 @@
 package model;
 
 import static org.junit.Assert.*;
-
-import java.time.LocalDate;
 import java.util.regex.Pattern;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-
 import ar.edu.unq.grupol.app.model.User;
 import ar.edu.unq.grupol.app.model.exception.InvalidParameterException;
 import ar.edu.unq.grupol.app.persistence.UserRepository;
@@ -40,11 +36,13 @@ public class UserTest {
 		testUser.setName("");
 		userHandler.createUser(testUser);
 	}
+	
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConNombreMayorA30() throws InvalidParameterException {
 		testUser.setName("Juan carlos la mona gimenez de cordoba capital");
 		userHandler.createUser(testUser);
 	}
+	
 	@Test
 	public void testUsuarioConNombreValido() {
 		assertTrue(testUser.getName().length() > 0 && testUser.getName().length() < 30);
@@ -56,11 +54,13 @@ public class UserTest {
 		testUser.setLastName("");
 		userHandler.createUser(testUser);
 	}
+	
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConApellidoMayorA30() throws InvalidParameterException {
 		testUser.setLastName("Juan carlos la mona gimenez de cordoba capital");
 		userHandler.createUser(testUser);
 	}
+	
 	@Test
 	public void testUsuarioConApellidoValido() {
 		assertTrue(testUser.getLastName().length() > 0 && testUser.getLastName().length() < 30);
@@ -72,11 +72,13 @@ public class UserTest {
 		testUser.setEmail("");
 		userHandler.createUser(testUser);
 	}
+	
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConEmailInvalido() throws InvalidParameterException {
 		testUser.setEmail("alfa.com");
 		userHandler.createUser(testUser);
 	}
+	
 	@Test
 	public void testUsuarioConEmailValido() {
 		assertTrue(Pattern.compile(EMAIL_PATTERN).matcher(testUser.getEmail()).matches());
@@ -88,11 +90,13 @@ public class UserTest {
 		testUser.setPassword("a12");
 		userHandler.createUser(testUser);
 	}
+	
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConPasswordMayorA10() throws InvalidParameterException {
 		testUser.setPassword("alcome12rh345");
 		userHandler.createUser(testUser);
 	}
+	
 	@Test(expected = InvalidParameterException.class)
 	public void testUsuarioConPasswordNoAlpha() throws InvalidParameterException {
 		testUser.setPassword("alcone");
@@ -111,4 +115,5 @@ public class UserTest {
 		testUser.setPassword("alco12ne");
 		assertEquals(testUser.getBirthDate(), "01/01/1985");
 	}
+	
 }

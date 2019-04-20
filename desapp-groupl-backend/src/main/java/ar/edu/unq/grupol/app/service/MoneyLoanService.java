@@ -37,10 +37,6 @@ public class MoneyLoanService implements Observer {
 	public void payLoans() {
 		loans.forEach(loan -> payLoan(loan));
 	}
-	//
-	// public void payLoansRisks() {
-	// loans.stream().filter(Loan::isRisk).forEach(loan -> payLoan(loan));
-	// }
 
 	public void payLoan(Loan loan) {
 		Account account = loan.getUser().getAccount();

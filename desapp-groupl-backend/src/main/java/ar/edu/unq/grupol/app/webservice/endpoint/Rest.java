@@ -9,7 +9,7 @@ import ar.edu.unq.grupol.app.webservice.util.RestUtils;
 
 public class Rest {
 
-	Logger logger = LoggerFactory.getLogger(this.getClass());
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	protected Response ok() {
 		return RestUtils.ok();

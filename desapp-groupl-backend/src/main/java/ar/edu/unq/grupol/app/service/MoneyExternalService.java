@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.stream.Collectors;
-
 import ar.edu.unq.grupol.app.model.Transaction;
 import ar.edu.unq.grupol.app.model.TransactionType;
 import ar.edu.unq.grupol.app.model.User;

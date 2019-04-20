@@ -8,10 +8,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.edu.unq.grupol.app.exceptions.InvalidParameterException;
 import ar.edu.unq.grupol.app.model.Item;
 import ar.edu.unq.grupol.app.model.Party;
 import ar.edu.unq.grupol.app.model.Template;
+import ar.edu.unq.grupol.app.model.exception.InvalidParameterException;
 
 public class TemplateTest {
 	private Party testFiesta;

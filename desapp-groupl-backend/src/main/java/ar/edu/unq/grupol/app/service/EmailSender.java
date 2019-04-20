@@ -1,59 +1,55 @@
 package ar.edu.unq.grupol.app.service;
 
-import java.util.Properties;
+import java.util.List;
+import java.util.concurrent.Executors;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.stereotype.Component;
+import com.mailjet.client.ClientOptions;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.resource.Emailv31;
+import ar.edu.unq.grupol.app.model.MailJetUser;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.SendFailedException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
+@Component
 public class EmailSender {
 
-    final String username = "ciu.dominos.pizza@gmail.com";
-    final String password = "interfaces2017";
+	private String apiKey;
+	private String apiSecret;
+	private JSONObject mailFrom;
 
-	public static EmailSender instance = new EmailSender();
-
-	public EmailSender() {
-
+	public EmailSender() throws JSONException {
+		apiKey = "16a6b8c2894541dacd5d82bee3a35f46";
+		apiSecret = "ebbe9b9a09a9076144a8802abdd16019";
+		mailFrom = createMail(new MailJetUser("Eventeando", "marinoalanunq@gmail.com"));
 	}
 
-	public static EmailSender getInstance() {
-		if (instance == null) {
-			instance = new EmailSender();
-		}
-		return instance;
+	public void send(List<MailJetUser> toUsers) {
+		MailjetClient client = new MailjetClient(apiKey, apiSecret, new ClientOptions("v3.1"));
+		MailjetRequest request = new MailjetRequest(Emailv31.resource).property(Emailv31.MESSAGES, createMail(toUsers));
+		Executors.newSingleThreadExecutor().submit(() -> client.post(request));
+	}
+	
+	private JSONArray createMail(List<MailJetUser> toUsers) {
+		JSONArray jsonArray = new JSONArray();
+		toUsers.forEach(user -> {
+			try {
+				jsonArray.put(
+						new JSONObject().put(Emailv31.Message.FROM, mailFrom)
+						.put(Emailv31.Message.TO, new JSONArray().put(createMail(user)))
+						.put(Emailv31.Message.SUBJECT, "Eventeando: Invitación")
+						.put(Emailv31.Message.TEXTPART, "Estimado " + user.getName() + " has sido invitado al evento." )
+						);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		});
+		return jsonArray;
+	}
+	
+	private JSONObject createMail(MailJetUser user) throws JSONException {
+		return new JSONObject().put("Email", user.getMailAddress()).put("Name", user.getName());
 	}
 
-	public void send(String titulo, String email) throws SendFailedException {
-		try {
-			MimeMessage message = new MimeMessage(createSession());
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-			message.setSubject(titulo);
-			message.setText("Invitation");
-			Transport.send(message);
-		} catch (MessagingException e) {
-			//e.printStackTrace();
-			throw new SendFailedException("Invalid send address", e);
-		}
-	}
-
-	private Session createSession() {
-		Properties prop = new Properties();
-		prop.put("mail.smtp.auth", "true");
-		prop.put("mail.smtp.starttls.enable", "true");
-		prop.put("mail.smtp.host", "smtp.gmail.com");
-		prop.put("mail.smtp.port", "587");
-
-		Authenticator authentication = new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }};
-		return Session.getInstance(prop, authentication);
-	}
 }

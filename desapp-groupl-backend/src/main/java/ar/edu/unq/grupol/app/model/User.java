@@ -4,16 +4,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import com.google.common.collect.EvictingQueue;
-
 import ar.edu.unq.grupol.app.service.MoneyLoanService;
 import lombok.Getter;
 import lombok.Setter;

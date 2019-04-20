@@ -1,15 +1,9 @@
 package model;
 
 import static org.junit.Assert.*;
-
-import java.time.LocalDate;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import ar.edu.unq.grupol.app.model.Account;
-import ar.edu.unq.grupol.app.model.Transaction;
-import ar.edu.unq.grupol.app.model.TransactionType;
 import ar.edu.unq.grupol.app.model.exception.InvalidAmount;
 
 public class AccountTest {

@@ -1,9 +1,5 @@
 package ar.edu.unq.grupol.app.model;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import ar.edu.unq.grupol.app.model.exception.InvalidAmount;
 import lombok.Getter;
 
@@ -11,17 +7,14 @@ import lombok.Getter;
 public class Account {
 
 	private Integer balance = 0;
-//	private List<Transaction> transactions = new ArrayList<Transaction>();
 	
 	public void addMoney(Integer amount) {
 		balance += amount;
-//		transactions.add(new Transaction(TransactionType.ADDFUND, LocalDateTime.now(), amount));
 	}
 	
 	public void getMoney(Integer amount) throws InvalidAmount {
 		if (balance >= amount) {
 			balance -= amount;
-//			transactions.add(new Transaction(TransactionType.GETFUND, LocalDateTime.now(), amount));
 		} else {
 			throw new InvalidAmount("Transaction cannot be done, insufficient balance.");
 		}

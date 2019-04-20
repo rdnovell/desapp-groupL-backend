@@ -2,13 +2,9 @@ package service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 import java.time.LocalDate;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import ar.edu.unq.grupol.app.model.Account;
 import ar.edu.unq.grupol.app.model.Transaction;
 import ar.edu.unq.grupol.app.model.TransactionType;
 import ar.edu.unq.grupol.app.model.User;

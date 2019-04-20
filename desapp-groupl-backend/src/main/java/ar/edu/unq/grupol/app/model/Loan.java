@@ -27,11 +27,11 @@ public class Loan {
 	}
 	
 	public boolean isFinished() {
-		return loanTerm == loanTermsPayed;
+		return loanTerm.equals(loanTermsPayed);
 	}
 	
 	public boolean isRisk() {
-		return creditSituation == CreditSituationType.RISK;
+		return creditSituation.equals(CreditSituationType.RISK);
 	}
 	
 }

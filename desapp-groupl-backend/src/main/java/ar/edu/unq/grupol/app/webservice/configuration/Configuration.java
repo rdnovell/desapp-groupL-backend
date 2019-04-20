@@ -7,6 +7,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Component;
 import ar.edu.unq.grupol.app.webservice.exceptionhandler.BadRequestExceptionHandler;
+import ar.edu.unq.grupol.app.webservice.exceptionhandler.InvalidParameterExceptionHandler;
 import ar.edu.unq.grupol.app.webservice.exceptionhandler.NotFoundExceptionHandler;
 import ar.edu.unq.grupol.app.webservice.exceptionhandler.ServerExceptionHandler;
 
@@ -28,6 +29,7 @@ public class Configuration extends ResourceConfig {
 		register(BadRequestExceptionHandler.class);
 		register(ServerExceptionHandler.class);
 		register(NotFoundExceptionHandler.class);
+		register(InvalidParameterExceptionHandler.class);
 	}
 
 }

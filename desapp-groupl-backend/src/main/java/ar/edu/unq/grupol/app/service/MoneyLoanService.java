@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Optional;
+
+import org.springframework.stereotype.Component;
 
 import ar.edu.unq.grupol.app.model.Account;
 import ar.edu.unq.grupol.app.model.CreditSituationType;
@@ -13,6 +14,7 @@ import ar.edu.unq.grupol.app.model.User;
 import ar.edu.unq.grupol.app.model.exception.InvalidAmount;
 import lombok.Getter;
 
+@Component
 @Getter
 public class MoneyLoanService implements Observer {
 

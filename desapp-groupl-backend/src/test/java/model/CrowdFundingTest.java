@@ -11,6 +11,7 @@ import org.junit.Test;
 import ar.edu.unq.grupol.app.model.CrowdFunding;
 import ar.edu.unq.grupol.app.model.User;
 import ar.edu.unq.grupol.app.model.exception.EventException;
+import ar.edu.unq.grupol.app.model.exception.InvalidParameterException;
 import ar.edu.unq.grupol.app.service.EventService;
 
 public class CrowdFundingTest {
@@ -31,7 +32,7 @@ public class CrowdFundingTest {
 	}
 
 	@Test
-	public void testEnvioDeNotificacion() {
+	public void testEnvioDeNotificacion() throws InvalidParameterException {
 		CrowdFunding crowdFundingMock = mock(CrowdFunding.class);
 		eventHandler.createCrowdFunding(crowdFundingMock);
 		// Esto envia un mail de verdad testFiesta.sendInvitations();

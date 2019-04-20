@@ -4,14 +4,12 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import ar.edu.unq.grupol.app.model.Account;
-import ar.edu.unq.grupol.app.model.Basket;
 import ar.edu.unq.grupol.app.model.CrowdFundingCommonAccount;
 import ar.edu.unq.grupol.app.model.exception.InvalidAmount;
+import ar.edu.unq.grupol.app.model.exception.InvalidParameterException;
 import ar.edu.unq.grupol.app.service.EventService;
 
 public class CrowdFundingCommonAccountTest {
@@ -26,7 +24,7 @@ public class CrowdFundingCommonAccountTest {
 	}
 
 	@Test
-	public void testEnvioDeNotificacion() {
+	public void testEnvioDeNotificacion() throws InvalidParameterException {
 		CrowdFundingCommonAccount crowdFundingCommonAccountMock = mock(CrowdFundingCommonAccount.class);
 		eventHandler.createCrowdFundingCommonAccount(crowdFundingCommonAccountMock);
 		// Esto envia un mail de verdad testFiesta.sendInvitations();

@@ -1,4 +1,4 @@
-package ar.edu.unq.grupol.app.exceptions;
+package ar.edu.unq.grupol.app.model.exception;
 
 public class InvalidParameterException extends Exception {
 

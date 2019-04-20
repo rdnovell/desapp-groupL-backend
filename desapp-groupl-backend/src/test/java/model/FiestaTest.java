@@ -6,8 +6,8 @@ import ar.edu.unq.grupol.app.model.Party;
 import ar.edu.unq.grupol.app.model.User;
 import ar.edu.unq.grupol.app.model.exception.EventException;
 import ar.edu.unq.grupol.app.model.exception.GuestNotFoundException;
+import ar.edu.unq.grupol.app.model.exception.InvalidParameterException;
 import ar.edu.unq.grupol.app.service.EventService;
-import ar.edu.unq.grupol.app.exceptions.InvalidParameterException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,9 +30,8 @@ public class FiestaTest {
 	@Test
 	public void testEnvioDeNotificacion() throws InvalidParameterException {
 		Party partyMock = mock(Party.class);
-		 ReflectionTestUtils.setField(partyMock, "expirationDate", LocalDate.now());
+		ReflectionTestUtils.setField(partyMock, "expirationDate", LocalDate.now());
 		eventHandler.createParty(partyMock);
-		// Esto envia un mail de verdad testFiesta.sendInvitations();
 		verify(partyMock, times(1)).sendInvitations();
 	}
 

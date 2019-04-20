@@ -3,10 +3,10 @@ package ar.edu.unq.grupol.app.model;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import ar.edu.unq.grupol.app.exceptions.InvalidParameterException;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
+
+import ar.edu.unq.grupol.app.model.exception.InvalidParameterException;
 
 public class Validator {
 
@@ -16,8 +16,8 @@ public class Validator {
 		validateUserPasword(user);
 	}
 	
-	public static void validateParty(Party party) throws InvalidParameterException {
-		validateConstraints(party);
+	public static void validateEvent(Event event) throws InvalidParameterException {
+		validateConstraints(event);
 	}
 
     private static <T> void validateConstraints(T object) throws InvalidParameterException {

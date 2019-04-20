@@ -15,6 +15,7 @@ import ar.edu.unq.grupol.app.model.Basket;
 import ar.edu.unq.grupol.app.model.Item;
 import ar.edu.unq.grupol.app.model.ItemAssigned;
 import ar.edu.unq.grupol.app.model.User;
+import ar.edu.unq.grupol.app.model.exception.InvalidParameterException;
 import ar.edu.unq.grupol.app.service.EventService;
 
 public class BasketTest {
@@ -36,7 +37,7 @@ public class BasketTest {
 	}
 
 	@Test
-	public void testEnvioDeNotificacion() {
+	public void testEnvioDeNotificacion() throws InvalidParameterException {
 		Basket basketMock = mock(Basket.class);
 		eventHandler.createBasket(basketMock);
 		// Esto envia un mail de verdad testFiesta.sendInvitations();

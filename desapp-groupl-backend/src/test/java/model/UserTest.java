@@ -2,13 +2,16 @@ package model;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
-import ar.edu.unq.grupol.app.exceptions.InvalidParameterException;
 import ar.edu.unq.grupol.app.model.User;
+import ar.edu.unq.grupol.app.model.exception.InvalidParameterException;
+import ar.edu.unq.grupol.app.persistence.UserRepository;
 import ar.edu.unq.grupol.app.service.UserService;
 
 public class UserTest {
@@ -25,6 +28,7 @@ public class UserTest {
 	@Before
 	public void before() {
 		userHandler = new UserService();
+		ReflectionTestUtils.setField(userHandler, "userRepository", new UserRepository());
 		testUser = TestBuilder.testUser().validUser().build();
 
 	}

@@ -3,9 +3,7 @@ package ar.edu.unq.grupol.app.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.mail.SendFailedException;
-
+import java.util.stream.Collectors;
 import ar.edu.unq.grupol.app.model.exception.EventException;
 import ar.edu.unq.grupol.app.model.exception.GuestNotFoundException;
 import ar.edu.unq.grupol.app.service.EmailSender;
@@ -16,6 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class Event {
+	private EmailSender emailSender;
 	private String title;
 	private User owner;
 	private List<User> guests;
@@ -41,13 +40,11 @@ public abstract class Event {
 		}
 	}
 
-    public void sendInvitations(){
-    	guests.stream().forEach(guest -> {
-			try {
-				EmailSender.getInstance().send(title,guest.getEmail());
-			} catch (SendFailedException e) {
-			}
-		});
+    public void sendInvitations() {
+    	if (!guests.isEmpty()) {
+        	List<MailJetUser> mailJetUsers = guests.stream().map(guest -> new MailJetUser(guest.getName() + " " + guest.getLastName(), guest.getEmail())).collect(Collectors.toList());
+        	emailSender.send(mailJetUsers);
+    	}
     }
     
     public void addItems(List<Item> items) {

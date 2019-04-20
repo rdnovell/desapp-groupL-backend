@@ -58,5 +58,9 @@ public class BasketTest {
 		assertEquals(itemAssigned.getUser().getId(), user.getId());
 	}
 	
-
+	@Test
+	public void testUnUsuarioNoCumpleDejaDeSerDutiful() {
+		testBasket.setNotDutiful(user);
+		assertFalse(user.isDutiful());
+	}
 }

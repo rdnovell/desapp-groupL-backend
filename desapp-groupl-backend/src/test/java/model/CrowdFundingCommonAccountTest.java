@@ -35,6 +35,13 @@ public class CrowdFundingCommonAccountTest {
 	public void testGetBalance() {
 		assertTrue(testCrowdFundingCommonAccount.getBalance() == 0);
 	}
+	
+	@Test
+	public void testGetFunds() throws InvalidAmount {
+		testCrowdFundingCommonAccount.addFunds(200);
+		testCrowdFundingCommonAccount.getFunds(100);
+		assertTrue(testCrowdFundingCommonAccount.getBalance() == 100);
+	}
 
 	@Test
 	public void testAddFundsBalance() {

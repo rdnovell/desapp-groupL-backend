@@ -34,7 +34,7 @@ public class TestBuilder {
 		private User testUser = new User();
 
 		public UserBuilder validUser() {
-			testUser.setId(1);
+			testUser.setId(0);
 			testUser.setMoneyLoanService(new MoneyLoanService());
 			testUser.setName("Pedro");
 			testUser.setLastName("Esposito");
@@ -63,6 +63,7 @@ public class TestBuilder {
 			testFiesta.setItems(items);
 
 			testFiesta.setExpirationDate(LocalDate.now().plusDays(10));
+			testFiesta.setDate(LocalDate.now().plusDays(12));
 
 			List<User> invitados = new ArrayList<User>();
 			invitados.add(TestBuilder.testUser().validUser().build());

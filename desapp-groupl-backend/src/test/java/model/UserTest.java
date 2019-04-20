@@ -1,10 +1,17 @@
 package model;
 
 import static org.junit.Assert.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import ar.edu.unq.grupol.app.model.Event;
+import ar.edu.unq.grupol.app.model.Party;
 import ar.edu.unq.grupol.app.model.User;
 import ar.edu.unq.grupol.app.model.exception.InvalidParameterException;
 import ar.edu.unq.grupol.app.persistence.UserRepository;
@@ -116,4 +123,32 @@ public class UserTest {
 		assertEquals(testUser.getBirthDate(), "01/01/1985");
 	}
 	
+	@Test
+	public void testUsuarioDutiful() {
+		assertTrue(testUser.isDutiful());
+	}
+	
+	@Test
+	public void testUsuarioNotDutiful() {
+		testUser.getDutifulList().add(false);
+		assertFalse(testUser.isDutiful());
+	}
+	
+	@Test
+	public void testEventsFilter() {
+		Party event1 = TestBuilder.testParty().validFiesta().build();
+		Party event2 = TestBuilder.testParty().validFiesta().build();
+		
+		List<Event> eventsAssisted = new ArrayList<Event>();
+		eventsAssisted.add(event1);
+		eventsAssisted.add(event2);
+		testUser.setEventsAssisted(eventsAssisted);
+		
+		assertTrue(testUser.getEventsInCourse().size() == 2);
+		assertTrue(testUser.getEventsCoursed().size() == 0);
+		
+		event1.setDate(LocalDate.now().minusDays(12));
+		assertTrue(testUser.getEventsInCourse().size() == 1);
+		assertTrue(testUser.getEventsCoursed().size() == 1);
+	}
 }

@@ -1,7 +1,6 @@
 package service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import java.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +32,7 @@ public class MoneyExternalServiceTest {
 		Transaction transaction = testMoneyExternalService.getTransactions().get(0);
 		assertTrue(transaction.getAmount() == 100);
 		assertEquals(transaction.getType(), TransactionType.ADDFUND);
+		assertEquals(transaction.getUser(), testUser);
 		assertEquals(transaction.getDate().getDayOfMonth(), LocalDate.now().getDayOfMonth());
 		assertEquals(testMoneyExternalService.getTransactions().size(), 1);
 	}

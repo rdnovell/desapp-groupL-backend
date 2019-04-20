@@ -39,6 +39,8 @@ public class MoneyLoanServiceTest {
 		testMoneyLoanService.createLoan(testUser);
 		Loan loan = testMoneyLoanService.getLoan(testUser);
 		assertEquals(loan.getUser().getId(), testUser.getId());
+		assertTrue(loan.getLoanAmount() == 1000);
+		assertTrue(loan.getLoanTerm() == 6);
 	}
 	
 	@Test
@@ -59,6 +61,7 @@ public class MoneyLoanServiceTest {
 		testUser.getAccount().addMoney(300);
 		testMoneyLoanService.payLoan(loan);
 		assertTrue(testUser.getAccount().getBalance() == 100);
+		assertTrue(loan.getLoanTermsPayed() == 1);
 	}
 	
 	@Test
@@ -79,6 +82,15 @@ public class MoneyLoanServiceTest {
 		testUser.getAccount().addMoney(100);
 		testMoneyLoanService.payLoan(loan);
 		assertEquals(loan.getCreditSituation(), CreditSituationType.RISK);
+	}
+	
+	@Test
+	public void testPayLoanIsRisk() {
+		testMoneyLoanService.createLoan(testUser);
+		Loan loan = testMoneyLoanService.getLoan(testUser);
+		testUser.getAccount().addMoney(100);
+		testMoneyLoanService.payLoan(loan);
+		assertTrue(loan.isRisk());
 	}
 	
 	@Test

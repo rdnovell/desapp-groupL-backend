@@ -5,11 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-
 import ar.edu.unq.grupol.app.model.CreditSituationType;
 import ar.edu.unq.grupol.app.model.Loan;
 import ar.edu.unq.grupol.app.model.User;
-import ar.edu.unq.grupol.app.persistence.UserRepository;
 import ar.edu.unq.grupol.app.service.MoneyLoanService;
 import model.TestBuilder;
 

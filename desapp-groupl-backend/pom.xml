@@ -119,6 +119,7 @@
 				<configuration>
 					<excludes>
 						<exclude>**/ar/edu/unq/grupol/app/webservice/**</exclude>
+						<exclude>**/ar/edu/unq/grupol/app/persistence/**</exclude>
 						<exclude>**/ar/edu/unq/grupol/app/A*</exclude>
 					</excludes>
 				</configuration>

@@ -27,10 +27,10 @@ public class CrowdFundingCommonAccountTest {
 
 	@Test
 	public void testEnvioDeNotificacion() {
-		Basket basketMock = mock(Basket.class);
-		eventHandler.createBasket(basketMock);
+		CrowdFundingCommonAccount crowdFundingCommonAccountMock = mock(CrowdFundingCommonAccount.class);
+		eventHandler.createCrowdFundingCommonAccount(crowdFundingCommonAccountMock);
 		// Esto envia un mail de verdad testFiesta.sendInvitations();
-		verify(basketMock, times(1)).sendInvitations();
+		verify(crowdFundingCommonAccountMock, times(1)).sendInvitations();
 	}
 	
 	@Test

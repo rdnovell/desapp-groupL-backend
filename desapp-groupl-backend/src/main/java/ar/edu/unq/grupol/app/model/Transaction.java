@@ -12,5 +12,6 @@ public class Transaction {
 	private TransactionType type;
 	private LocalDateTime date;
 	private Integer amount;
+	private User user;
 	
 }

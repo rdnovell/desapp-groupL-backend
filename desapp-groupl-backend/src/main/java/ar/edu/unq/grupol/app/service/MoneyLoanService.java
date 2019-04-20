@@ -1,22 +1,66 @@
 package ar.edu.unq.grupol.app.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Optional;
 
+import ar.edu.unq.grupol.app.model.Account;
+import ar.edu.unq.grupol.app.model.CreditSituationType;
 import ar.edu.unq.grupol.app.model.Loan;
 import ar.edu.unq.grupol.app.model.User;
+import ar.edu.unq.grupol.app.model.exception.InvalidAmount;
+import lombok.Getter;
 
-public class MoneyLoanService {
+@Getter
+public class MoneyLoanService implements Observer {
+
+	private List<Loan> loans = new ArrayList<Loan>();
 
 	public void createLoan(User user) {
-		//TODO: Crea un prestamo si se puede para el usuario.
-		// Si es cumplidor se le puede asignar 1000.
-		// En 6 cuotas mensuales de 200.
+		if (user.isDutiful() && !hasMoneyLoans(user)) {
+			loans.add(new Loan(user, 1000, 200, 6));
+		}
 	}
-	
-	public List<Loan> getAllLoans() {
-		//TODO: Retornar el listado de creditos en curso y la situacion.
-		// Usuario, cuota y morosidad.
-		return null;
+
+	public boolean hasMoneyLoans(User user) {
+		return loans.stream().anyMatch(loan -> loan.getUser().getId() == user.getId());
 	}
-	
+
+	public Loan getLoan(User user) {
+		return loans.stream().filter(loan -> loan.getUser().getId() == user.getId()).findFirst().get();
+	}
+
+	public void payLoans() {
+		loans.forEach(loan -> payLoan(loan));
+	}
+	//
+	// public void payLoansRisks() {
+	// loans.stream().filter(Loan::isRisk).forEach(loan -> payLoan(loan));
+	// }
+
+	public void payLoan(Loan loan) {
+		Account account = loan.getUser().getAccount();
+		try {
+			account.getMoney(loan.getMonthlyPayback());
+			loan.updateLoanTermsPayed();
+			loan.setCreditSituation(CreditSituationType.NORMAL);
+			if (loan.isFinished()) {
+				loans.remove(loan);
+			}
+		} catch (InvalidAmount e) {
+			loan.setCreditSituation(CreditSituationType.RISK);
+		}
+	}
+
+	@Override
+	public void update(Observable obs, Object _user) {
+		User user = (User) _user; 
+		Loan loan = getLoan(user);
+		if (loan.isRisk()) {
+			payLoan(loan);
+		}
+	}
+
 }

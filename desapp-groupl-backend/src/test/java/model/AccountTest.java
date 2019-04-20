@@ -27,21 +27,6 @@ public class AccountTest {
 	}
 
 	@Test
-	public void testUnaCuentaSeCreaSinMovimientos() {
-		assertEquals(testAccount.getTransactions().size(), 0);
-	}
-
-	@Test
-	public void testAlAgregarDineroSeRegistraLaTransaccion() {
-		testAccount.addMoney(100);
-		Transaction transaction = testAccount.getTransactions().get(0);
-		assertTrue(transaction.getAmount() == 100);
-		assertEquals(transaction.getType(), TransactionType.ADDFUND);
-		assertEquals(transaction.getDate().getDayOfMonth(), LocalDate.now().getDayOfMonth());
-		assertEquals(testAccount.getTransactions().size(), 1);
-	}
-	
-	@Test
 	public void testAgregadoDeDineroAUnaCuenta() {
 		testAccount.addMoney(100);
 		assertTrue(testAccount.getBalance() == 100);

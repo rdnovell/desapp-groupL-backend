@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.unq.grupol.app.model.*;
+import ar.edu.unq.grupol.app.service.MoneyLoanService;
 
 public class TestBuilder {
 
@@ -33,6 +34,8 @@ public class TestBuilder {
 		private User testUser = new User();
 
 		public UserBuilder validUser() {
+			testUser.setId(1);
+			testUser.setMoneyLoanService(new MoneyLoanService());
 			testUser.setName("Pedro");
 			testUser.setLastName("Esposito");
 			testUser.setEmail("rubendario.novelli@gmail.com");

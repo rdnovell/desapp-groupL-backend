@@ -62,4 +62,8 @@ public abstract class Event {
     	addItems(template.getItems());
     }
     
+    public void setNotDutiful(User user) {
+    	user.getDutifulList().add(false);
+    }
+    
 }

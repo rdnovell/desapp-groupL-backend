@@ -2,6 +2,8 @@ package service;
 
 import static org.junit.Assert.*;
 
+import java.util.NoSuchElementException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -14,7 +16,7 @@ import model.TestBuilder;
 public class MoneyLoanServiceTest {
 	private MoneyLoanService testMoneyLoanService;
 	private User testUser;
-	
+
 	@Before
 	public void before() {
 		testMoneyLoanService = new MoneyLoanService();
@@ -25,13 +27,13 @@ public class MoneyLoanServiceTest {
 	public void testElServicioSeCreaSinMovimientos() {
 		assertEquals(testMoneyLoanService.getLoans().size(), 0);
 	}
-	
+
 	@Test
 	public void testCrearLoanUserDutiful() {
 		testMoneyLoanService.createLoan(testUser);
 		assertEquals(testMoneyLoanService.getLoans().size(), 1);
 	}
-	
+
 	@Test
 	public void testGetLoan() {
 		testMoneyLoanService.createLoan(testUser);
@@ -40,18 +42,28 @@ public class MoneyLoanServiceTest {
 		assertTrue(loan.getLoanAmount() == 1000);
 		assertTrue(loan.getLoanTerm() == 6);
 	}
-	
+
 	@Test
 	public void testUserHasNotLoan() {
 		assertFalse(testMoneyLoanService.hasMoneyLoans(testUser));
 	}
+
+	@Test(expected = NoSuchElementException.class)
+	public void testUserGetLoanException() {
+		testMoneyLoanService.getLoan(testUser);
+	}
 	
+	@Test
+	public void testUserHasLoanException() {
+		assertFalse(testMoneyLoanService.hasMoneyLoans(testUser));
+	}
+
 	@Test
 	public void testUserHasLoan() {
 		testMoneyLoanService.createLoan(testUser);
 		assertTrue(testMoneyLoanService.hasMoneyLoans(testUser));
 	}
-	
+
 	@Test
 	public void testPayLoan() {
 		testMoneyLoanService.createLoan(testUser);
@@ -61,7 +73,7 @@ public class MoneyLoanServiceTest {
 		assertTrue(testUser.getAccount().getBalance() == 100);
 		assertTrue(loan.getLoanTermsPayed() == 1);
 	}
-	
+
 	@Test
 	public void testPayLoanAndFinish() {
 		testMoneyLoanService.createLoan(testUser);
@@ -72,7 +84,7 @@ public class MoneyLoanServiceTest {
 		assertTrue(testUser.getAccount().getBalance() == 100);
 		assertEquals(testMoneyLoanService.getLoans().size(), 0);
 	}
-	
+
 	@Test
 	public void testPayLoanNotMoney() {
 		testMoneyLoanService.createLoan(testUser);
@@ -81,7 +93,7 @@ public class MoneyLoanServiceTest {
 		testMoneyLoanService.payLoan(loan);
 		assertEquals(loan.getCreditSituation(), CreditSituationType.RISK);
 	}
-	
+
 	@Test
 	public void testPayLoanIsRisk() {
 		testMoneyLoanService.createLoan(testUser);
@@ -90,7 +102,7 @@ public class MoneyLoanServiceTest {
 		testMoneyLoanService.payLoan(loan);
 		assertTrue(loan.isRisk());
 	}
-	
+
 	@Test
 	public void testPayLoans() {
 		testMoneyLoanService.createLoan(testUser);

@@ -48,6 +48,7 @@ public class MoneyExternalServiceTest {
 		testMoneyExternalService.addMoney(testUser,100);
 		testMoneyExternalService.getMoney(testUser,30);
 		assertTrue(testUser.getAccount().getBalance() == 70);
+		assertTrue(testMoneyExternalService.getAccountBalance(testUser).size() == 2);
 	}
 
 	@Test(expected = InvalidAmount.class)

@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -65,9 +66,7 @@ public class User {
 	}
 
 	public boolean isDutiful() {
-		// TODO: Chequear si en al menos 3 de los ultimos eventos a los cuales asistio,
-		// cumplio con su participacion
-		return true;
+		return !dutifulList.contains(false);
 	}
 
 	public boolean hasMoneyLoans() {

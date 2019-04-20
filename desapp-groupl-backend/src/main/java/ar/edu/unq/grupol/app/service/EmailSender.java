@@ -11,22 +11,20 @@ import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.resource.Emailv31;
 import ar.edu.unq.grupol.app.model.MailJetUser;
+import ar.edu.unq.grupol.app.model.util.ConfigurationLoader;
 
 @Component
 public class EmailSender {
 
-	private String apiKey;
-	private String apiSecret;
 	private JSONObject mailFrom;
+	private MailjetClient client;
 
 	public EmailSender() throws JSONException {
-		apiKey = "16a6b8c2894541dacd5d82bee3a35f46";
-		apiSecret = "ebbe9b9a09a9076144a8802abdd16019";
-		mailFrom = createMail(new MailJetUser("Eventeando", "marinoalanunq@gmail.com"));
+		client = new MailjetClient(ConfigurationLoader.MAIL_API_KEY, ConfigurationLoader.MAIL_API_SECRET, new ClientOptions("v3.1"));
+		mailFrom = createMail(new MailJetUser("Eventeando", ConfigurationLoader.MAIL_ADDRESS));
 	}
 
 	public void send(List<MailJetUser> toUsers) {
-		MailjetClient client = new MailjetClient(apiKey, apiSecret, new ClientOptions("v3.1"));
 		MailjetRequest request = new MailjetRequest(Emailv31.resource).property(Emailv31.MESSAGES, createMail(toUsers));
 		Executors.newSingleThreadExecutor().submit(() -> client.post(request));
 	}

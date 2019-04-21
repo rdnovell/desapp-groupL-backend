@@ -1,15 +1,19 @@
 package service;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
-
+import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import ar.edu.unq.grupol.app.model.CreditSituationType;
 import ar.edu.unq.grupol.app.model.Loan;
 import ar.edu.unq.grupol.app.model.User;
+import ar.edu.unq.grupol.app.service.MoneyExternalService;
 import ar.edu.unq.grupol.app.service.MoneyLoanService;
 import model.TestBuilder;
 
@@ -110,4 +114,37 @@ public class MoneyLoanServiceTest {
 		testMoneyLoanService.payLoans();
 		assertTrue(testUser.getAccount().getBalance() == 100);
 	}
+	
+	@Test
+	public void testUpdateWhenUserIsRiskCallsPayLoan() {
+		Loan loan = prepareLoanMock(true);
+		MoneyExternalService moneyExternalService = mock(MoneyExternalService.class);
+		MoneyLoanService moneyLoanServiceSpy = spy(testMoneyLoanService);
+		doNothing().when(moneyLoanServiceSpy).payLoan(loan);
+		moneyLoanServiceSpy.update(moneyExternalService, loan.getUser());
+		verify(moneyLoanServiceSpy, times(1)).payLoan(loan);
+	}
+	
+	@Test
+	public void testUpdateWhenUserIsRiskDontCallSPayLoan() {
+		Loan loan = prepareLoanMock(false);
+		MoneyExternalService moneyExternalService = mock(MoneyExternalService.class);
+		MoneyLoanService moneyLoanServiceSpy = spy(testMoneyLoanService);
+		doNothing().when(moneyLoanServiceSpy).payLoan(loan);
+		moneyLoanServiceSpy.update(moneyExternalService, loan.getUser());
+		verify(moneyLoanServiceSpy, times(0)).payLoan(loan);
+	}
+	
+	private Loan prepareLoanMock(Boolean loanIsRisk) {
+		List<Loan> loans = new ArrayList<Loan>();
+		Loan loan = mock(Loan.class);
+		loans.add(loan);
+		ReflectionTestUtils.setField(testMoneyLoanService, "loans", loans);
+		User user = mock(User.class);
+		when(loan.isRisk()).thenReturn(loanIsRisk);
+		when(user.getId()).thenReturn(1);
+		when(loan.getUser()).thenReturn(user);
+		return loan;
+	}
+	
 }

@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-
 import org.springframework.stereotype.Component;
-
 import ar.edu.unq.grupol.app.model.Account;
 import ar.edu.unq.grupol.app.model.CreditSituationType;
 import ar.edu.unq.grupol.app.model.Loan;

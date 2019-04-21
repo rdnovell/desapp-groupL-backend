@@ -1,14 +1,20 @@
 package service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.time.LocalDate;
+
 import org.junit.Before;
 import org.junit.Test;
+import static org.mockito.Mockito.*;
+import ar.edu.unq.grupol.app.model.Account;
 import ar.edu.unq.grupol.app.model.Transaction;
 import ar.edu.unq.grupol.app.model.TransactionType;
 import ar.edu.unq.grupol.app.model.User;
 import ar.edu.unq.grupol.app.model.exception.InvalidAmount;
 import ar.edu.unq.grupol.app.service.MoneyExternalService;
+import ar.edu.unq.grupol.app.service.MoneyLoanService;
 import model.TestBuilder;
 
 public class MoneyExternalServiceTest {
@@ -52,9 +58,20 @@ public class MoneyExternalServiceTest {
 	}
 
 	@Test(expected = InvalidAmount.class)
-	public void testNoSeOuedeRetirarMasDelBalance() throws InvalidAmount {
+	public void testNoSePuedeRetirarMasDelBalance() throws InvalidAmount {
 		testMoneyExternalService.addMoney(testUser,100);
 		testMoneyExternalService.getMoney(testUser,1000);
+	}
+	
+	@Test
+	public void testCuandoSeAgregaDineroYElUsuarioDebeUnaCuotaSeDebeNotificarALosObservadores() {
+		MoneyLoanService moneyLoanService = mock(MoneyLoanService.class);
+		testMoneyExternalService.addObserver(moneyLoanService);
+		User user = mock(User.class);
+		when(user.getAccount()).thenReturn(mock(Account.class));
+		when(user.hasMoneyLoans()).thenReturn(true);
+		testMoneyExternalService.addMoney(user, 100);
+		verify(moneyLoanService, times(1)).update(testMoneyExternalService, user);
 	}
 
 }

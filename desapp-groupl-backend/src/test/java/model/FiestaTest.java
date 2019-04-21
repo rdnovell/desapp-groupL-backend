@@ -1,20 +1,26 @@
 package model;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 import ar.edu.unq.grupol.app.model.Party;
 import ar.edu.unq.grupol.app.model.User;
 import ar.edu.unq.grupol.app.model.exception.EventException;
 import ar.edu.unq.grupol.app.model.exception.GuestNotFoundException;
 import ar.edu.unq.grupol.app.model.exception.InvalidParameterException;
+import ar.edu.unq.grupol.app.service.EmailSender;
 import ar.edu.unq.grupol.app.service.EventService;
-
-import org.junit.Before;
-import org.junit.Test;
-import static org.mockito.Mockito.*;
-import org.springframework.test.util.ReflectionTestUtils;
-
-import java.time.LocalDate;
 
 public class FiestaTest {
 
@@ -92,4 +98,30 @@ public class FiestaTest {
 		testFiesta.addConfirmedGuests(user);
 		assertTrue(testFiesta.userIsConfimated(user));
 	}
+	
+	@Test
+	public void testSendInvitationsCuandoNoHayInvitadosNoEnviaMails() {
+		Party party = new Party();
+		party.setGuests(new ArrayList<User>());
+		EmailSender emailSender = mock(EmailSender.class);
+		party.setEmailSender(emailSender);
+		party.sendInvitations();
+		verify(emailSender, times(0)).send(any());
+	}
+	
+	@Test
+	public void testSendInvitationsCuandoHayInvitadosSeLlamaAEnviarMails() {
+		Party party = new Party();
+		User user = mock(User.class);
+		when(user.getName()).thenReturn("Juan");
+		when(user.getLastName()).thenReturn("Perez");
+		when(user.getEmail()).thenReturn("juanperez@gmail.com");
+		party.setGuests(new ArrayList<User>(Arrays.asList(user)));
+		EmailSender emailSender = mock(EmailSender.class);
+		doNothing().when(emailSender).send(any());
+		party.setEmailSender(emailSender);
+		party.sendInvitations();
+		verify(emailSender, times(1)).send(any());
+	}
+	
 }

@@ -35,7 +35,8 @@ public class ConverterDTOServiceTest {
 		ReflectionTestUtils.setField(partyDTO, "expirationDate", LocalDate.now().plusDays(8));
 		
 		User user = TestBuilder.testUser().validUser().build();
-		Item item = new Item(0, "asado", 100);
+		Item item = new Item(1, "asado", 100);
+		item.setId(0);
 		UserRepository userRepositoryMock = mock(UserRepository.class);
 		ItemRepository itemRepositoryMock = mock(ItemRepository.class);
 		

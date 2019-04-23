@@ -3,16 +3,19 @@ TAG Entrega 1.0
 ---------------------------------------------------------------------
 NEW FEATURES (lo que están entregando y está funcionando):
 * Creación de repositorios en Github.
-* Configuración en Travis.
+* Configuración en Travis y Codacy.
+* Build corriendo y SUCCESS
+* Cobertura > 90%
+* Modelo completo
+* Testing 
 
 NOTES (ej: funcionalidad que falta, alguna consideración especial):
-* xxx
+* Deploy automático utlizando HEROKU 
 * xxx
 
 KNOWN ISSUES (ej: funcionalidad que saben que están funcionando diferente, algún error conocido en la funcionalidad terminada, etc) :
 * xxx
 * xxx
-
 
 que es lo que hay hacer
 <<<Core>>>

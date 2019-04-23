@@ -16,25 +16,25 @@ public class AccountTest {
 	}
 
 	@Test
-	public void testUnaCuentaSeCreaSinBalance() {
+	public void testCreateAccountMustGetBalanceOfZero() {
 		assertTrue(testAccount.getBalance() == 0);
 	}
 
 	@Test
-	public void testAgregadoDeDineroAUnaCuenta() {
+	public void testAddMoneyMustIncrementMoneyToTheAccount() {
 		testAccount.addMoney(100);
 		assertTrue(testAccount.getBalance() == 100);
 	}
 	
 	@Test
-	public void testAlRetirarDineroElBalanceSeReduce() throws InvalidAmount {
+	public void testWithdrawMoneyMustDecreaseAccountMoney() throws InvalidAmount {
 		testAccount.addMoney(100);
 		testAccount.getMoney(30);
 		assertTrue(testAccount.getBalance() == 70);
 	}
 	
 	@Test(expected = InvalidAmount.class)
-	public void testNoSeOuedeRetirarMasDelBalance() throws InvalidAmount {
+	public void testWithdrawMoreMoneyThanTheBalanceAccount() throws InvalidAmount {
 		testAccount.addMoney(100);
 		testAccount.getMoney(1000);
 	}

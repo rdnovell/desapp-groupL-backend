@@ -1,7 +1,11 @@
 package ar.edu.unq.grupol.app.model.util;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.Properties;
+
+import ar.edu.unq.grupol.app.model.exception.ConfigurationLoaderException;
+import lombok.SneakyThrows;
 
 public class ConfigurationLoader {
 	
@@ -15,12 +19,13 @@ public class ConfigurationLoader {
 	
 	public final static String MAIL_API_SECRET = getMailApiSecret();
 	
+	@SneakyThrows(ConfigurationLoaderException.class)
 	private static Properties getProperties() {
 		Properties properties = new Properties();
 		try {
 			properties.load(ConfigurationLoader.class.getClassLoader().getResourceAsStream(CONFIGURATION_FILE));
-		} catch (Exception e) {
-			throw new RuntimeException("Cannot get the properties from the configuration.");
+		} catch (IOException e) {
+			throw new ConfigurationLoaderException("Cannot get the properties from the configuration.");
 		}
 		return properties;
 	}
@@ -37,8 +42,9 @@ public class ConfigurationLoader {
 		return getProperty("MAIL_API_SECRET");
 	}
 	
+	@SneakyThrows(ConfigurationLoaderException.class)
 	private static String getProperty(String property) {
-		return Optional.ofNullable(PROPERTIES.getProperty(property)).orElseThrow(() -> new RuntimeException("Cannot find property '" + property + "' in file '" + CONFIGURATION_FILE + "'."));
+		return Optional.ofNullable(PROPERTIES.getProperty(property)).orElseThrow(() -> new ConfigurationLoaderException("Cannot find property '" + property + "' in file '" + CONFIGURATION_FILE + "'."));
 	}
 
 }

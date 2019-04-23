@@ -32,10 +32,9 @@ public class CrowdFundingTest {
 	}
 
 	@Test
-	public void testEnvioDeNotificacion() throws InvalidParameterException {
+	public void testCreateCrowdFundingMustSendInvitations() throws InvalidParameterException {
 		CrowdFunding crowdFundingMock = mock(CrowdFunding.class);
 		eventHandler.createCrowdFunding(crowdFundingMock);
-		// Esto envia un mail de verdad testFiesta.sendInvitations();
 		verify(crowdFundingMock, times(1)).sendInvitations();
 	}
 	
@@ -45,7 +44,7 @@ public class CrowdFundingTest {
 	}
 	
 	@Test
-	public void testUnUserSeleccionaUnItemParaComprar() {
+	public void testAddItemPurchaseMustIncrementItemPurchasesSize() {
 		testCrowdFunding.addItemPurchase(testCrowdFunding.getOwner(), 30);
 		assertTrue(testCrowdFunding.getItemPurchases().size() == 1);
 	}

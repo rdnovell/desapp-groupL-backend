@@ -24,10 +24,9 @@ public class CrowdFundingCommonAccountTest {
 	}
 
 	@Test
-	public void testEnvioDeNotificacion() throws InvalidParameterException {
+	public void testCreateCrowdFundingCommonAccountMustSendInvitations() throws InvalidParameterException {
 		CrowdFundingCommonAccount crowdFundingCommonAccountMock = mock(CrowdFundingCommonAccount.class);
 		eventHandler.createCrowdFundingCommonAccount(crowdFundingCommonAccountMock);
-		// Esto envia un mail de verdad testFiesta.sendInvitations();
 		verify(crowdFundingCommonAccountMock, times(1)).sendInvitations();
 	}
 	

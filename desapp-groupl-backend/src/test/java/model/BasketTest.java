@@ -1,15 +1,15 @@
 package model;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import ar.edu.unq.grupol.app.model.Basket;
 import ar.edu.unq.grupol.app.model.Item;
@@ -37,29 +37,53 @@ public class BasketTest {
 	}
 
 	@Test
-	public void testEnvioDeNotificacion() throws InvalidParameterException {
+	public void testOnCreateMustSendInvitations() throws InvalidParameterException {
 		Basket basketMock = mock(Basket.class);
 		eventHandler.createBasket(basketMock);
-		// Esto envia un mail de verdad testFiesta.sendInvitations();
 		verify(basketMock, times(1)).sendInvitations();
 	}
 	
 	@Test
-	public void testCuandoSeAgregaUnItemEstaDisponibleParaElegirlo() {
+	public void testOnAddItemMustBeAvailableToAssignIt() {
 		assertEquals(testBasket.getItems().size(), 1);
 		assertEquals(testBasket.getItemsAssigned().size(), 1);
 	}
 	
 	@Test
-	public void testUnUserEligeUnItem() {
+	public void testUserAssignAnItemMustSetUserOnItemAssign() {
 		testBasket.assignItem(user, item);
-		
 		ItemAssigned itemAssigned = testBasket.getItemsAssigned().get(0);
 		assertEquals(itemAssigned.getUser().getId(), user.getId());
 	}
 	
 	@Test
-	public void testUnUsuarioNoCumpleDejaDeSerDutiful() {
+	public void testAssignItemToUserOfAnItemThatDontExistMustDoNothing() {
+		ItemAssigned itemAssigned = mock(ItemAssigned.class);
+		Item item = mock(Item.class);
+		Item anotherItem = mock(Item.class);
+		when(anotherItem.getId()).thenReturn(2);
+		when(itemAssigned.getItem()).thenReturn(item);
+		when(item.getId()).thenReturn(1);
+		ReflectionTestUtils.setField(testBasket, "itemsAssigned", new ArrayList<ItemAssigned>(Arrays.asList(itemAssigned)));
+		testBasket.assignItem(mock(User.class), anotherItem);
+		verify(itemAssigned, times(0)).setUser(any(User.class));
+	}
+	
+	@Test
+	public void testAssignItemToUserOfAnItemThatWasAssignedMustDoNothing() {
+		ItemAssigned itemAssigned = mock(ItemAssigned.class);
+		Item item = mock(Item.class);
+		User user = mock(User.class);
+		when(itemAssigned.getItem()).thenReturn(item);
+		when(itemAssigned.getUser()).thenReturn(user);
+		when(item.getId()).thenReturn(1);
+		ReflectionTestUtils.setField(testBasket, "itemsAssigned", new ArrayList<ItemAssigned>(Arrays.asList(itemAssigned)));
+		testBasket.assignItem(mock(User.class), item);
+		verify(itemAssigned, times(0)).setUser(user);
+	}
+	
+	@Test
+	public void testSetNotDutifulMustChangeTheResultOfAnUserWhenCallsMethodIsDutiful() {
 		testBasket.setNotDutiful(user);
 		assertFalse(user.isDutiful());
 	}

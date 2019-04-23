@@ -28,12 +28,12 @@ public class MoneyExternalServiceTest {
 	}
 
 	@Test
-	public void testUnaCuentaSeCreaSinMovimientos() {
+	public void testAccountIsCreatedWithoutTransactions() {
 		assertEquals(testMoneyExternalService.getTransactions().size(), 0);
 	}
 
 	@Test
-	public void testAlAgregarDineroSeRegistraLaTransaccion() {
+	public void testWhenAddMoneyTransactionIsRegistered() {
 		testMoneyExternalService.addMoney(testUser, 100);
 		Transaction transaction = testMoneyExternalService.getTransactions().get(0);
 		assertTrue(transaction.getAmount() == 100);
@@ -44,13 +44,13 @@ public class MoneyExternalServiceTest {
 	}
 
 	@Test
-	public void testAgregadoDeDineroAUnaCuenta() {
+	public void testAddMoneyToAccount() {
 		testMoneyExternalService.addMoney(testUser, 100);
 		assertTrue(testUser.getAccount().getBalance() == 100);
 	}
 
 	@Test
-	public void testAlRetirarDineroElBalanceSeReduce() throws InvalidAmount {
+	public void testWhenGetMoneyAccountBalanceIsReduced() throws InvalidAmount {
 		testMoneyExternalService.addMoney(testUser,100);
 		testMoneyExternalService.getMoney(testUser,30);
 		assertTrue(testUser.getAccount().getBalance() == 70);
@@ -58,13 +58,13 @@ public class MoneyExternalServiceTest {
 	}
 
 	@Test(expected = InvalidAmount.class)
-	public void testNoSePuedeRetirarMasDelBalance() throws InvalidAmount {
+	public void testWhenGetMoneyMoreThanBalanceMustThrowInvalidAmount() throws InvalidAmount {
 		testMoneyExternalService.addMoney(testUser,100);
 		testMoneyExternalService.getMoney(testUser,1000);
 	}
 	
 	@Test
-	public void testCuandoSeAgregaDineroYElUsuarioDebeUnaCuotaSeDebeNotificarALosObservadores() {
+	public void testWhenAddMoneyAndUserIsRiskNotifyObservers() {
 		MoneyLoanService moneyLoanService = mock(MoneyLoanService.class);
 		testMoneyExternalService.addObserver(moneyLoanService);
 		User user = mock(User.class);

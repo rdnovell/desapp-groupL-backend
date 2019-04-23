@@ -52,55 +52,55 @@ public class FiestaTest {
 	}
 
 	@Test(expected = InvalidParameterException.class)
-	public void testLaFiestaTieneUnaFechaDeExpiracionValida() throws InvalidParameterException {
+	public void testPartyMustHaveValidExpirationDate() throws InvalidParameterException {
 		testFiesta.setExpirationDate(null);
 		eventHandler.createParty(testFiesta);
 	}
 
 	@Test(expected = EventException.class)
-	public void testNoSePuedeAgregarInvitadosSiExpiro() throws EventException {
+	public void testCannotAddGuestToExpiredParty() throws EventException {
 		User user = TestBuilder.testUser().validUser().build();
 		testFiesta.setExpirationDate(LocalDate.now().minusDays(10));
 		testFiesta.addConfirmedGuests(user);
 	}
 	
 	@Test
-	public void testCantidadDeInvitados() {
+	public void testGuestsSize() {
 		assertEquals(testFiesta.getGuests().size(), 1);
 	}
 
 	@Test
-	public void testCantidadDeInvitadosConfirmados() {
+	public void testConfirmedGuestsSize() {
 		assertEquals(testFiesta.getConfirmedGuests().size(), 0);
 	}
 
 	@Test
-	public void testObtenerCostoTotal() {
+	public void testGetPartyCost() {
 		assertEquals(testFiesta.getPartyCost(), 0);
 	}
 
 	@Test
-	public void testAlAgregarUnInvitadoSeModificaElCostoTotal() throws EventException {
+	public void testWhenAddGuestChangePartyCost() throws EventException {
 		testFiesta.addConfirmedGuests(TestBuilder.testUser().validUser().build());
 		assertEquals(testFiesta.getPartyCost(), 100);
 	}
 	
 	@Test(expected = GuestNotFoundException.class)
-	public void testNoSePuedeConfirmaAUnNoInvitado() throws EventException {
+	public void testGuestCannotBeConfirmedIfNtotInvited() throws EventException {
 		User user = TestBuilder.testUser().validUser().build();
 		user.setId(2);
 		testFiesta.addConfirmedGuests(user);
 	}
 	
 	@Test
-	public void testVerificarSiUnUsuarioEstaConfirmado() throws EventException {
+	public void testCheckIfGuestIsConfirmed() throws EventException {
 		User user = TestBuilder.testUser().validUser().build();
 		testFiesta.addConfirmedGuests(user);
 		assertTrue(testFiesta.userIsConfimated(user));
 	}
 	
 	@Test
-	public void testSendInvitationsCuandoNoHayInvitadosNoEnviaMails() {
+	public void testSendInvitationsWhenNotHaveGuestsNotSendMails() {
 		Party party = new Party();
 		party.setGuests(new ArrayList<User>());
 		EmailSender emailSender = mock(EmailSender.class);
@@ -110,7 +110,7 @@ public class FiestaTest {
 	}
 	
 	@Test
-	public void testSendInvitationsCuandoHayInvitadosSeLlamaAEnviarMails() {
+	public void testSendInvitationsWhenHaveGuestSendMail() {
 		Party party = new Party();
 		User user = mock(User.class);
 		when(user.getName()).thenReturn("Juan");

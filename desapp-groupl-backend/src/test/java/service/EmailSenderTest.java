@@ -8,7 +8,7 @@ import ar.edu.unq.grupol.app.service.EmailSender;
 public class EmailSenderTest {
 
 	@Test
-	public void testEnvioDeEmail() {
+	public void testSendMail() {
 		EmailSender emailMock = mock(EmailSender.class);
 		emailMock.send(any());
 		verify(emailMock, times(1)).send(any());

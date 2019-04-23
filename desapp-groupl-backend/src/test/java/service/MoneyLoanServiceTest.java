@@ -28,12 +28,12 @@ public class MoneyLoanServiceTest {
 	}
 
 	@Test
-	public void testElServicioSeCreaSinMovimientos() {
+	public void testServiceStartWithoutLoans() {
 		assertEquals(testMoneyLoanService.getLoans().size(), 0);
 	}
 
 	@Test
-	public void testCrearLoanUserDutiful() {
+	public void testCreateLoanUserDutiful() {
 		testMoneyLoanService.createLoan(testUser);
 		assertEquals(testMoneyLoanService.getLoans().size(), 1);
 	}

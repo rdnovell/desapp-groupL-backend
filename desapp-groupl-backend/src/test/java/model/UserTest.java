@@ -45,72 +45,72 @@ public class UserTest {
 	}
 	
 	@Test(expected = InvalidParameterException.class)
-	public void testUsuarioConNombreMayorA30() throws InvalidParameterException {
+	public void testUserWithNameWithMore30CharsMustThrowInvalidParameterException() throws InvalidParameterException {
 		testUser.setName("Juan carlos la mona gimenez de cordoba capital");
 		userHandler.createUser(testUser);
 	}
 	
 	@Test
-	public void testUsuarioConNombreValido() {
+	public void testUserWithValidName() {
 		assertTrue(testUser.getName().length() > 0 && testUser.getName().length() < 30);
 	}
 
 	// Apellido: Texto - Max 30 - Requerido.
 	@Test(expected = InvalidParameterException.class)
-	public void testUsuarioSinApellido() throws InvalidParameterException {
+	public void testUserWithoutLastNameMustThrowInvalidParameterException() throws InvalidParameterException {
 		testUser.setLastName("");
 		userHandler.createUser(testUser);
 	}
 	
 	@Test(expected = InvalidParameterException.class)
-	public void testUsuarioConApellidoMayorA30() throws InvalidParameterException {
+	public void testUserWithLastNameWithMore30CharsMustThrowInvalidParameterException() throws InvalidParameterException {
 		testUser.setLastName("Juan carlos la mona gimenez de cordoba capital");
 		userHandler.createUser(testUser);
 	}
 	
 	@Test
-	public void testUsuarioConApellidoValido() {
+	public void testUserWithValidLastName() {
 		assertTrue(testUser.getLastName().length() > 0 && testUser.getLastName().length() < 30);
 	}
 	
 	// Email: Formato_email - Requerido
 	@Test(expected = InvalidParameterException.class)
-	public void testUsuarioSinEmail() throws InvalidParameterException {
+	public void testUserWithoutEmailMustThrowInvalidParameterException() throws InvalidParameterException {
 		testUser.setEmail("");
 		userHandler.createUser(testUser);
 	}
 	
 	@Test(expected = InvalidParameterException.class)
-	public void testUsuarioConEmailInvalido() throws InvalidParameterException {
+	public void testUserWithInvalidEmailMustThrowInvalidParameterException() throws InvalidParameterException {
 		testUser.setEmail("alfa.com");
 		userHandler.createUser(testUser);
 	}
 	
 	@Test
-	public void testUsuarioConEmailValido() {
+	public void testUserWithValidEmail() {
 		assertTrue(Pattern.compile(EMAIL_PATTERN).matcher(testUser.getEmail()).matches());
 	}
 	
 	// Contraseña: Min 4 - Max 10 - Alfanumérico - Requerido.
 	@Test(expected = InvalidParameterException.class)
-	public void testUsuarioConPasswordMenorA4() throws InvalidParameterException {
+	public void testUserWithShortPasswordMustThrowInvalidParameterException() throws InvalidParameterException {
 		testUser.setPassword("a12");
 		userHandler.createUser(testUser);
 	}
 	
 	@Test(expected = InvalidParameterException.class)
-	public void testUsuarioConPasswordMayorA10() throws InvalidParameterException {
+	public void testUserWithLongPasswordMustThrowInvalidParameterException() throws InvalidParameterException {
 		testUser.setPassword("alcome12rh345");
 		userHandler.createUser(testUser);
 	}
 	
 	@Test(expected = InvalidParameterException.class)
-	public void testUsuarioConPasswordNoAlpha() throws InvalidParameterException {
+	public void testUserWithPasswordNotAlphaMustThrowInvalidParameterException() throws InvalidParameterException {
 		testUser.setPassword("alcone");
 		userHandler.createUser(testUser);
 	}
 	@Test
-	public void testUsuarioConPasswordValido() throws InvalidParameterException {
+	public void testUserWithValidPassword() throws InvalidParameterException {
 		testUser.setPassword("alco12ne");
 		assertTrue(Pattern.compile(PASSWORD_PATTERN).matcher(testUser.getPassword()).matches());
 		userHandler.createUser(testUser);
@@ -118,18 +118,18 @@ public class UserTest {
 	//Fecha de Nacimiento : DD/MM/AAAA - Requerido
 	
 	@Test
-	public void testUsuarioConFechaDeNacimientoValida() {
+	public void testUserWithValidBirthDate() {
 		testUser.setPassword("alco12ne");
 		assertEquals(testUser.getBirthDate(), "01/01/1985");
 	}
 	
 	@Test
-	public void testUsuarioDutiful() {
+	public void testUserDutiful() {
 		assertTrue(testUser.isDutiful());
 	}
 	
 	@Test
-	public void testUsuarioNotDutiful() {
+	public void testUserNotDutiful() {
 		testUser.getDutifulList().add(false);
 		assertFalse(testUser.isDutiful());
 	}

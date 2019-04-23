@@ -9,5 +9,5 @@ __Servicios API__:
 
 | Method |             URL            |                                Request                                |
 |:------:|:--------------------------:|:----------------------------------------------------------------------:|
-|  POST  |     event/createParty      | {"title": "title", "owner": owner, "expirationDate": [yyyy,mm,dd], "date": [yyyy,mm,dd], "guests": guests, "items": items} |
-|  POST  |     user/create            | {"name": "name", "lastName": "lastName", "email": "email", "password": "password", "birthDate": [yyyy,mm,dd]} |
+|  POST  | event/createParty | {"title": "title", "owner": owner, "expirationDate": expirationDate, "date": date, "guests": guests, "items": items} |
+|  POST  | user/create | {"name": "name", "lastName": "lastName", "email": "email", "password": "password", "birthDate": birthDate} |

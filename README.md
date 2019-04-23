@@ -3,7 +3,7 @@
 ## Eventeando backend  
 
 ### Tecnologías utilizadas  
-Se desarrollo una aplicación utilizando Java 8, Spring Boot y Jersey. La misma otorga servicios via API en http://localhost:8080/.
+Se desarrollo una aplicación utilizando Java 8, Spring Boot y Jersey. La misma otorga servicios via [API](http://localhost:8080/).
 
 __Servicios API__:
 

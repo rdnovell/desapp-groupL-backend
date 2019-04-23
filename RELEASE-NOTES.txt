@@ -1,33 +1,28 @@
+========================================================================
+Eventeando
+========================================================================
+
+Eventeando es una aplicación donde no solo se pueden crear eventos, invitar
+asistentes, calcular las comprar, dividir gastos y más, sino que también 
+proporciona una cuenta corriente la cual permite a los usuarios ingresar 
+dinero a través de distintos medios, solicitar micro préstamos o prestar 
+dinero a sus amigos.
+
 ---------------------------------------------------------------------
-TAG Entrega 1.0
+TAG 1.0.0
 ---------------------------------------------------------------------
-NEW FEATURES (lo que están entregando y está funcionando):
+
+NEW FEATURES
 * Creación de repositorios en Github.
 * Configuración en Travis y Codacy.
-* Build corriendo y SUCCESS
-* Cobertura > 90%
-* Modelo completo
-* Testing 
+* Build corriendo y SUCCESS.
+* Cobertura > 90%.
+* Modelo completo.
+* Testing.
+* Deploy en Heroku.
 
-NOTES (ej: funcionalidad que falta, alguna consideración especial):
-* Deploy automático utlizando HEROKU 
-* xxx
+NOTES
+* Deploy automático utlizando Heroku.
 
-KNOWN ISSUES (ej: funcionalidad que saben que están funcionando diferente, algún error conocido en la funcionalidad terminada, etc) :
-* xxx
-* xxx
-
-que es lo que hay hacer
-<<<Core>>>
-Creación de repositorios GitHub
-Configuración en Travis
-Build corriendo y SUCCESS
-Configurar el proyecto en https://www.codacy.com
-Pantalla prototipo del uso de la API de gmaps (mostrar puntos en un mapa, distancia y tiempo entre 2 puntos))
-Deploy automático utlizando HEROKU o cualquiera similar
-TAG en GitHub y Confeccionar Release Notes de entrega 1 (https://drive.google.com/file/d/0BxyNm_rQ4Q8vZU52eF9QeXR4X3M/view)
-Clean Code según la materia (todo en Ingles)
-Cobertura > 90% (https://www.adictosaltrabajo.com/tutoriales/integracion-de-un-proyecto-de-github-con-travis-y-codacy/)
-<<<Modelo>>>
-Implementar modelo completo
-Testing automático unitario según las pautas de la materia
+KNOWN ISSUES
+...

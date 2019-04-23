@@ -26,7 +26,6 @@ public class Application {
 		MoneyExternalService moneyExternalService = applicationContext.getBean(MoneyExternalService.class);
 		MoneyLoanService moneyLoanService = applicationContext.getBean(MoneyLoanService.class);
 		moneyExternalService.addObserver(moneyLoanService);
-		System.out.println("HOLAAAA ENTROOO");
 	}
 	
 }

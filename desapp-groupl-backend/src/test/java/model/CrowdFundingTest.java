@@ -50,14 +50,14 @@ public class CrowdFundingTest {
 	}
 	
 	@Test
-	public void testCuantoDebePagarUnUser() {
+	public void testGetCostOfUser() {
 		testCrowdFunding.addItemPurchase(testCrowdFunding.getOwner(), 30);
 		testCrowdFunding.addItemPurchase(testCrowdFunding.getOwner(), 10);
 		assertTrue(testCrowdFunding.getCost(testCrowdFunding.getOwner()) == 10);
 	}
 	
 	@Test
-	public void testCuantoDebePagarCadaUsuarioSiNoCompraNada() {
+	public void testHowMuchMoneyMustPayEveryUser() {
 		assertTrue(testCrowdFunding.getCostPerUser() == 50);
 		assertTrue(testCrowdFunding.getCost(user2) == 50);
 	}

@@ -39,7 +39,7 @@ public class UserTest {
 	// Validaciones
 	// Nombre: Texto - Max 30 - Requerido.
 	@Test(expected = InvalidParameterException.class)
-	public void testUsuarioSinNombre() throws InvalidParameterException {
+	public void testUserWithoutNameMustThrowInvalidParameterException() throws InvalidParameterException {
 		testUser.setName("");
 		userHandler.createUser(testUser);
 	}

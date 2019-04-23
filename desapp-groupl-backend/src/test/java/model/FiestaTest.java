@@ -34,7 +34,7 @@ public class FiestaTest {
 	}
 
 	@Test
-	public void testEnvioDeNotificacion() throws InvalidParameterException {
+	public void testOnCreatePartyMustSendInvitations() throws InvalidParameterException {
 		Party partyMock = mock(Party.class);
 		ReflectionTestUtils.setField(partyMock, "expirationDate", LocalDate.now());
 		eventHandler.createParty(partyMock);
@@ -42,12 +42,12 @@ public class FiestaTest {
 	}
 
 	@Test
-	public void testObtenerOrganizdor() {
+	public void testGetOwner() {
 		assertEquals(testFiesta.getOwner().getName(), "Pedro");
 	}
 
 	@Test
-	public void testObtenerTitulo() {
+	public void testGetTitle() {
 		assertEquals(testFiesta.getTitle(), "Asado con amigos");
 	}
 

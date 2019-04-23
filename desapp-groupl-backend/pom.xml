@@ -121,6 +121,8 @@
 						<exclude>**/ar/edu/unq/grupol/app/webservice/**</exclude>
 						<exclude>**/ar/edu/unq/grupol/app/persistence/**</exclude>
 						<exclude>**/ar/edu/unq/grupol/app/model/util/C*</exclude>
+						<exclude>**/ar/edu/unq/grupol/app/service/EmailSender.class</exclude>
+						<exclude>**/ar/edu/unq/grupol/app/model/exception/ConfigurationLoaderException.class</exclude>
 						<exclude>**/ar/edu/unq/grupol/app/A*</exclude>
 					</excludes>
 				</configuration>

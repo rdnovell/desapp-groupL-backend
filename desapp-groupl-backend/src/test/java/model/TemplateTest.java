@@ -28,12 +28,12 @@ public class TemplateTest {
 	}
 
 	@Test
-	public void testNombreDeUnTemplate() throws InvalidParameterException {
+	public void testTitleOfTemplate() throws InvalidParameterException {
 		assertEquals(testTemplate.getTitle(), "Template papas fritas");
 	}
 	
 	@Test
-	public void testAlAgregarUnTemplateSeModificaLaListaDeItems() throws InvalidParameterException {
+	public void testOnAddTemplateMustIncrementItemsSize() throws InvalidParameterException {
 		assertEquals(testFiesta.getItems().size(), 1);
 		testFiesta.withTemplate(testTemplate);
 		assertEquals(testFiesta.getItems().size(), 3);

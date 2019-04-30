@@ -16,5 +16,5 @@ deploy:
   provider: heroku
   api_key:
     secure: "o1gvRicCFk8DplJYjrC/0sqKmhvDYKH0KTxfKcUiuPKVEPU270Ei+eS43ZPc1aAPBX3s3JJ5OFhoeYkzhjrTUPHMZ3v5HoASyPAZy2kdcSKgNoS+cndb3CO+NwBpfEDMoWLBoK08tR/goZDCG+nYid7fK9JYXT4SGo6202BGdWPJ3cnI7Ub7sm07Xr8/1aDrZhQWIB0cfJHrpmI0pfJ2DOkjc+DhgKOdWIJBFKvA+lR2ammn+qGFVMoPMBD1NC1ibgjE9DgqpqixrOFwynpz5awerggXoPgHcgvcLwSDjBPupVCcKsLHxuC/Rhsfu07pUP7aXSHHbiNVOnRMQeQDql3x3VcGU6sEu1ce5Q80C3LCniZPp8UoIREvNv3Kbq/0Hn7cUKJ8FPzRrCD2RRYbPmG2PVlGZmFQeUaRXBTbiBLwVXshbsiYV89HdbHYZFWIVusATV5II+VqWflEpvAlQ/l9Yl7trXombww0+Q8kF5+bemG9lnN3qpfRxHfBf1ObsBr/J7zUGJqtIMjGf0akvjpxYqdyXsHYjEtLlaTCVSpRxkds/AKGu6XqGRljqLiSJ1lheqNt/17D+RRQYAaH80wxgnUitnRA2AVPckVZpdA2n/YHkylApeSombsfMrKoQasslUSBJXBw3xJGcdDv/pNunqqn8EhBwwVl1UYAlIw="
-  app: desapp-groupl-backend-testing
-  on: develop
+  app: desapp-groupl-backend
+  on: master

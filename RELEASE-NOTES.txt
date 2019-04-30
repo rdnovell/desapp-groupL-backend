@@ -19,10 +19,10 @@ NEW FEATURES
 * Cobertura > 90%.
 * Modelo completo.
 * Testing.
-* Deploy en Heroku.
+* Deploy automático en Heroku on build success de Travis.
 
 NOTES
-* Deploy automático utlizando Heroku.
+...
 
 KNOWN ISSUES
 ...

@@ -37,7 +37,7 @@ public class MoneyLoanService implements Observer {
 		return loans.stream().filter(loan -> loan.getUser().getId() == user.getId()).findFirst().get();
 	}
 
-	@Scheduled(cron = "0 58 23 4 * ?")
+	@Scheduled(cron = "0 58 0 1 * ?")
 	public void payLoans() {
 		logger.info("Se realizó el debito automatico.");
 		loans.forEach(loan -> payLoan(loan));

@@ -1,13 +1,13 @@
-package ar.edu.unq.groupl.app.service;
+package ar.edu.unq.groupl.app.service.dto;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ar.edu.unq.groupl.app.model.Item;
 import ar.edu.unq.groupl.app.model.Party;
-import ar.edu.unq.groupl.app.model.PartyDTO;
 import ar.edu.unq.groupl.app.model.User;
+import ar.edu.unq.groupl.app.model.util.ListUtil;
 import ar.edu.unq.groupl.app.persistence.ItemRepository;
 import ar.edu.unq.groupl.app.persistence.UserRepository;
 
@@ -20,15 +20,27 @@ public class ConverterDTOService {
 	public Party converter(PartyDTO partyDTO) {
 		Party party = new Party();
 		party.setTitle(partyDTO.getTitle());
-		User owner = userRepository.get(partyDTO.getOwner());
-		List<User> guests = partyDTO.getGuests().stream().map(userRepository::get).collect(Collectors.toList());
-		List<Item> items = partyDTO.getItems().stream().map(itemRepository::get).collect(Collectors.toList());
+		User owner = getUser(partyDTO.getOwner());
+		List<User> guests = map(partyDTO.getGuests(), this::getUser);
+		List<Item> items = map(partyDTO.getItems(), itemRepository::get);
 		party.setOwner(owner);
 		party.setItems(items);
 		party.setGuests(guests);
 		party.setDate(partyDTO.getDate());
 		party.setExpirationDate(partyDTO.getExpirationDate());
 		return party;
+	}
+	
+	public UserDTO convertUserToDTO(User user) {
+		return new UserDTO(user);
+	}
+	
+	private <T, R> List<R> map(List<T> list, Function<T, R> functionMap) {
+		return ListUtil.toList(list.stream().map(functionMap));
+	}
+	
+	private User getUser(String email) {
+		return userRepository.findById(email).get();
 	}
 
 }

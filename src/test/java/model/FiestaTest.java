@@ -89,7 +89,7 @@ public class FiestaTest {
 	@Test(expected = GuestNotFoundException.class)
 	public void testGuestCannotBeConfirmedIfNtotInvited() throws EventException {
 		User user = TestBuilder.testUser().validUser().build();
-		user.setId(2);
+		user.setEmail("otheremail@gmail.com");
 		testFiesta.addConfirmedGuests(user);
 	}
 	

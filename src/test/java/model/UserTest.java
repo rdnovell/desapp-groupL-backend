@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import ar.edu.unq.groupl.app.model.Event;
@@ -21,6 +24,8 @@ public class UserTest {
 
 	private User testUser; 
 	private UserService userHandler;
+	@Mock
+	private UserRepository userRepository;
 	
 	private static final String EMAIL_PATTERN = 
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -30,8 +35,9 @@ public class UserTest {
 	 
 	@Before
 	public void before() {
+		MockitoAnnotations.initMocks(this);
 		userHandler = new UserService();
-		ReflectionTestUtils.setField(userHandler, "userRepository", new UserRepository());
+		//ReflectionTestUtils.setField(userHandler, "userRepository", new UserRepository());
 		testUser = TestBuilder.testUser().validUser().build();
 
 	}
@@ -113,6 +119,10 @@ public class UserTest {
 	public void testUserWithValidPassword() throws InvalidParameterException {
 		testUser.setPassword("alco12ne");
 		assertTrue(Pattern.compile(PASSWORD_PATTERN).matcher(testUser.getPassword()).matches());
+		Mockito.when(userRepository.save(Mockito.any())).thenReturn(testUser);
+		ReflectionTestUtils.setField(userHandler, "userRepository", userRepository);
+//		Mockito.doNothing().when(userRepository).save(Mockito.any());
+//		ReflectionTestUtils.setField(userHandler, "userRepository", userRepository);
 		userHandler.createUser(testUser);
 	}
 	//Fecha de Nacimiento : DD/MM/AAAA - Requerido
@@ -120,7 +130,7 @@ public class UserTest {
 	@Test
 	public void testUserWithValidBirthDate() {
 		testUser.setPassword("alco12ne");
-		assertEquals(testUser.getBirthDate(), "01/01/1985");
+		assertEquals(testUser.getBirthDate(), LocalDate.of(1985, 1, 1));
 	}
 	
 	@Test
@@ -130,7 +140,7 @@ public class UserTest {
 	
 	@Test
 	public void testUserNotDutiful() {
-		testUser.getDutifulList().add(false);
+		testUser.addDutiful(false);
 		assertFalse(testUser.isDutiful());
 	}
 	

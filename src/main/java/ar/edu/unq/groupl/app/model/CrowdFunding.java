@@ -16,7 +16,7 @@ public class CrowdFunding extends Event {
 	
 	public Integer getCost(User user) {
 		Integer value = 0;
-		Optional<Purchase> purchaseFounded = itemPurchases.stream().filter(purchase -> purchase.getUser().getId() == user.getId()).findFirst();
+		Optional<Purchase> purchaseFounded = itemPurchases.stream().filter(purchase -> purchase.getUser().equals(user)).findFirst();
 		if (purchaseFounded.isPresent()) {
 			value = getCostPerUser() - purchaseFounded.get().getAmount() ;
 		} else {
@@ -32,8 +32,8 @@ public class CrowdFunding extends Event {
 	}
 	
 	private void addAmountPurchase(User user, Integer amount) {
-		Optional<Purchase> purchaseFounded = itemPurchases.stream().filter(purchase -> purchase.getUser().getId() == user.getId()).findFirst();
-		if(purchaseFounded.isPresent()) {
+		Optional<Purchase> purchaseFounded = itemPurchases.stream().filter(purchase -> purchase.getUser().equals(user)).findFirst();
+		if (purchaseFounded.isPresent()) {
 			purchaseFounded.get().addAmount(amount);
 		} else {
 			itemPurchases.add(new Purchase(user, amount));

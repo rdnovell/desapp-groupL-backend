@@ -25,7 +25,6 @@ public class CrowdFundingTest {
 		testCrowdFunding.addConfirmedGuests(testCrowdFunding.getOwner());
 		
 		user2 = TestBuilder.testUser().validUser().build();
-		user2.setId(2);
 		user2.setName("Juan");
 		
 		testCrowdFunding.addConfirmedGuests(user2);

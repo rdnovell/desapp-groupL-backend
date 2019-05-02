@@ -34,7 +34,6 @@ public class TestBuilder {
 		private User testUser = new User();
 
 		public UserBuilder validUser() {
-			testUser.setId(0);
 			testUser.setMoneyLoanService(new MoneyLoanService());
 			testUser.setName("Pedro");
 			testUser.setLastName("Esposito");
@@ -127,7 +126,6 @@ public class TestBuilder {
 			
 			List<User> invitados = new ArrayList<User>();
 			invitados.add(testCrowdFunding.getOwner());
-			user2.setId(2);
 			user2.setName("Juan");
 			invitados.add(user2);
 			testCrowdFunding.setGuests(invitados);

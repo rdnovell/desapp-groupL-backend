@@ -1,25 +1,42 @@
 package ar.edu.unq.groupl.app.model;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.IntStream;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import com.google.common.collect.EvictingQueue;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import ar.edu.unq.groupl.app.model.util.ListUtil;
 import ar.edu.unq.groupl.app.service.MoneyLoanService;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
+@Table(name = "users")
 public class User {
 
-	private Integer id;
+	@JsonIgnore
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "user_dutifuls")
+	private List<Boolean> dutifulList;
 
-	private EvictingQueue<Boolean> dutifulList;
-
+	@JsonIgnore
+	@Transient 
 	private MoneyLoanService moneyLoanService;
 
 	@NotNull(message = "Name must be defined")
@@ -30,6 +47,7 @@ public class User {
 	@Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters")
 	private String lastName;
 
+	@Id
 	@NotNull(message = "Email must be defined")
 	private String email;
 
@@ -39,27 +57,25 @@ public class User {
 	@NotNull(message = "Birthdate must be defined")
 	private LocalDate birthDate;
 
-	private List<Event> eventsAssisted;
+	@Transient private List<Event> eventsAssisted;
 
+	@JsonIgnore
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="user")
 	private Account account;
 
 	public User() {
 		eventsAssisted = new ArrayList<Event>();
-		account = new Account();
-		dutifulList = EvictingQueue.create(3);
-		dutifulList.add(true);
-		dutifulList.add(true);
-		dutifulList.add(true);
-		
-	}
-
-	public String getBirthDate() {
-		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		return birthDate.format(formatter);
+		account = new Account(this);
+		dutifulList = new ArrayList<Boolean>(Arrays.asList(true, true, true));
 	}
 
 	public boolean isDutiful() {
 		return !dutifulList.contains(false);
+	}
+	
+	public void addDutiful(boolean value) {
+		IntStream.rangeClosed(0, 1).forEach(index -> dutifulList.set(index, dutifulList.get(index + 1)));
+		dutifulList.set(dutifulList.size() - 1, value);
 	}
 
 	public boolean hasMoneyLoans() {
@@ -69,15 +85,38 @@ public class User {
 	public void addEventAssist(Event event) {
 		eventsAssisted.add(event);
 	}
-
-	public List<Event> getEventsInCourse() {
-		return eventsAssisted.stream().filter(event -> event.getDate().isAfter(LocalDate.now().minusDays(1)))
-				.collect(Collectors.toList());
+	
+	private List<Event> filterEventsBy(Predicate<Event> functionToFilter) {
+		return ListUtil.toList(eventsAssisted.stream().filter(functionToFilter));
 	}
 
+	public List<Event> getEventsInCourse() {
+		return filterEventsBy(this::eventInCourse);
+	}
+	
 	public List<Event> getEventsCoursed() {
-		return eventsAssisted.stream().filter(event -> event.getDate().isBefore(LocalDate.now()))
-				.collect(Collectors.toList());
+		return filterEventsBy(this::eventCoursed);
+	}
+	
+	private boolean eventCoursed(Event event) {
+		return compareEventsTime(event, date -> date.isBefore(LocalDate.now()));
+	}
+	
+	private boolean eventInCourse(Event event) {
+		return compareEventsTime(event, date -> date.isAfter(LocalDate.now().minusDays(1)));
+	}
+	
+	private boolean compareEventsTime(Event event, Function<LocalDate, Boolean> compareFunction) {
+		return compareFunction.apply(event.getDate());
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (User.class == object.getClass()) {
+			User user = (User) object;
+			return email.equals(user.getEmail());
+		}
+		return false;
 	}
 
 }

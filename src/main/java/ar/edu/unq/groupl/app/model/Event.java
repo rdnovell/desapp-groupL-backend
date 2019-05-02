@@ -3,9 +3,9 @@ package ar.edu.unq.groupl.app.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import ar.edu.unq.groupl.app.model.exception.EventException;
 import ar.edu.unq.groupl.app.model.exception.GuestNotFoundException;
+import ar.edu.unq.groupl.app.model.util.ListUtil;
 import ar.edu.unq.groupl.app.service.EmailSender;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,6 +14,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class Event {
+	
+	private Integer id;
 	private EmailSender emailSender;
 	private String title;
 	private User owner;
@@ -24,7 +26,7 @@ public abstract class Event {
 	private LocalDate date;
 	
 	private boolean checkGuest(List<User> users, User user) {
-		return users.stream().anyMatch(guest -> guest.getId() == user.getId());
+		return users.stream().anyMatch(user::equals);
 	}
 	
 	public boolean userIsConfimated(User user) {
@@ -42,9 +44,13 @@ public abstract class Event {
 
     public void sendInvitations() {
     	if (!guests.isEmpty()) {
-        	List<MailJetUser> mailJetUsers = guests.stream().map(guest -> new MailJetUser(guest.getName() + " " + guest.getLastName(), guest.getEmail())).collect(Collectors.toList());
+    		List<MailJetUser> mailJetUsers = ListUtil.toList(guests.stream().map(this::createMailJetUser));
         	emailSender.send(mailJetUsers);
     	}
+    }
+    
+    private MailJetUser createMailJetUser(User user) {
+    	return new MailJetUser(user.getName() + " " + user.getLastName(), user.getEmail());
     }
     
     public void addItems(List<Item> items) {
@@ -60,7 +66,7 @@ public abstract class Event {
     }
     
     public void setNotDutiful(User user) {
-    	user.getDutifulList().add(false);
+    	user.addDutiful(false);
     }
     
 }

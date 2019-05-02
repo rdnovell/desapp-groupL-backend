@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import ar.edu.unq.groupl.app.model.Transaction;
 import ar.edu.unq.groupl.app.model.TransactionType;
 import ar.edu.unq.groupl.app.model.User;
 import ar.edu.unq.groupl.app.model.exception.InvalidAmount;
+import ar.edu.unq.groupl.app.model.util.ListUtil;
 import lombok.Getter;
 
 @Component
@@ -33,7 +33,7 @@ public class MoneyExternalService extends Observable {
 	}
 	
 	public List<Transaction> getAccountBalance(User user) {
-		return transactions.stream().filter(transaction -> transaction.getUser().getId() == user.getId()).collect(Collectors.toList());
+		return ListUtil.toList(transactions.stream().filter(transaction -> transaction.getUser().equals(user)));
 	}
 	
 }

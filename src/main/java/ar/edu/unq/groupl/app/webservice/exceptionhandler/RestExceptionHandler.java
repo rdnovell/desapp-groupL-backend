@@ -12,6 +12,8 @@ import com.thoughtworks.paranamer.BytecodeReadingParanamer;
 import com.thoughtworks.paranamer.CachingParanamer;
 import com.thoughtworks.paranamer.Paranamer;
 
+import ar.edu.unq.groupl.app.model.util.ListUtil;
+
 public class RestExceptionHandler {
 	
 	@Context 
@@ -24,7 +26,7 @@ public class RestExceptionHandler {
 	protected String getParamethersOfTheMethod() {
 		Paranamer paranamer = new CachingParanamer(new AnnotationParanamer(new BytecodeReadingParanamer()));
 	    String[] parameterNames = paranamer.lookupParameterNames(resourceInfo.getResourceMethod());
-	    List<String> classNames = Stream.of(resourceInfo.getResourceMethod().getParameterTypes()).map(clase -> clase.getName()).collect(Collectors.toList());
+	    List<String> classNames = ListUtil.toList(Stream.of(resourceInfo.getResourceMethod().getParameterTypes()).map(Class::getName));
 	    return IntStream.range(0, parameterNames.length)
 	    	.mapToObj(index -> classNames.get(index) + " " + parameterNames[index])
 	    	.collect(Collectors.joining(", ", "(", ")"));

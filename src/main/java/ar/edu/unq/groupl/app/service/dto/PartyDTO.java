@@ -1,4 +1,4 @@
-package ar.edu.unq.groupl.app.model;
+package ar.edu.unq.groupl.app.service.dto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -8,8 +8,8 @@ import lombok.Getter;
 public class PartyDTO {
 	
 	private String title;
-	private Integer owner;
-	private List<Integer> guests;
+	private String owner;
+	private List<String> guests;
 	private List<Integer> items;
 	private LocalDate date;
 	private LocalDate expirationDate;

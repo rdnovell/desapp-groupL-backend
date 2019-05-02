@@ -8,8 +8,8 @@ import javax.ws.rs.core.Response.Status;
 
 public class RestUtils {
 	
-	public static Response ok(Function<JsonObjectBuilder, JsonObjectBuilder> agregarValores) {
-		return Response.ok(agregarValores.apply(Json.createObjectBuilder()).build().toString()).build();
+	public static Response ok(Function<JsonObjectBuilder, JsonObjectBuilder> addValues) {
+		return Response.ok(addValues.apply(Json.createObjectBuilder()).build().toString()).build();
 	}
 	
 	public static <T> Response ok(T object) {
@@ -20,18 +20,22 @@ public class RestUtils {
 		return Response.ok().build();
 	}
 
-	private static Response getResponse(Status status, String mensaje) {
+	private static Response getResponse(Status status, String message) {
 		return Response.status(status).entity(
-						Json.createObjectBuilder().add("message", mensaje).build().toString()
+						Json.createObjectBuilder().add("message", message).build().toString()
 					).build();
 	}
 	
-	public static Response badRequest(String mensaje) {
-		return getResponse(Status.BAD_REQUEST, mensaje);
+	public static Response badRequest(String message) {
+		return getResponse(Status.BAD_REQUEST, message);
 	}
 	
-	public static Response notFound(String mensaje) {
-		return getResponse(Status.NOT_FOUND, mensaje);
+	public static Response notFound(String message) {
+		return getResponse(Status.NOT_FOUND, message);
+	}
+	
+	public static Response unauthorized(String message) {
+		return getResponse(Status.UNAUTHORIZED, message);
 	}
 	
 	public static Response internalServerError(String mensaje) {

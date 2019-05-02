@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
+import ar.edu.unq.groupl.app.service.dto.LoginDTO;
 
 public class Validator {
 
@@ -12,6 +13,10 @@ public class Validator {
 		validateConstraints(user);
 		validateUserEmail(user);
 		validateUserPasword(user);
+	}
+	
+	public static void validateLoginDTO(LoginDTO loginDTO) throws InvalidParameterException {
+		validateConstraints(loginDTO);
 	}
 	
 	public static void validateEvent(Event event) throws InvalidParameterException {

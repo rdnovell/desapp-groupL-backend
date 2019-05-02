@@ -53,7 +53,7 @@ public class BasketTest {
 	public void testUserAssignAnItemMustSetUserOnItemAssign() {
 		testBasket.assignItem(user, item);
 		ItemAssigned itemAssigned = testBasket.getItemsAssigned().get(0);
-		assertEquals(itemAssigned.getUser().getId(), user.getId());
+		assertEquals(itemAssigned.getUser(), user);
 	}
 	
 	@Test

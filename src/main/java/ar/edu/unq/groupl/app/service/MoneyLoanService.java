@@ -30,11 +30,11 @@ public class MoneyLoanService implements Observer {
 	}
 
 	public boolean hasMoneyLoans(User user) {
-		return loans.stream().anyMatch(loan -> loan.getUser().getId() == user.getId());
+		return loans.stream().anyMatch(loan -> loan.getUser().equals(user));
 	}
 
 	public Loan getLoan(User user) {
-		return loans.stream().filter(loan -> loan.getUser().getId() == user.getId()).findFirst().get();
+		return loans.stream().filter(loan -> loan.getUser().equals(user)).findFirst().get();
 	}
 
 	//Cron works on 4am every day 5 of month.

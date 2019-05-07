@@ -22,7 +22,7 @@ public class ConverterDTOService {
 		party.setTitle(partyDTO.getTitle());
 		User owner = getUser(partyDTO.getOwner());
 		List<User> guests = map(partyDTO.getGuests(), this::getUser);
-		List<Item> items = map(partyDTO.getItems(), itemRepository::get);
+		List<Item> items = map(partyDTO.getItems(), this::getItem);
 		party.setOwner(owner);
 		party.setItems(items);
 		party.setGuests(guests);
@@ -41,6 +41,10 @@ public class ConverterDTOService {
 	
 	private User getUser(String email) {
 		return userRepository.findById(email).get();
+	}
+	
+	private Item getItem(Integer id) {
+		return itemRepository.findById(id).get();
 	}
 
 }

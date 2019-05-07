@@ -1,6 +1,8 @@
 package ar.edu.unq.groupl.app.model;
 
 import java.time.LocalDate;
+
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import ar.edu.unq.groupl.app.model.exception.EventException;
 import ar.edu.unq.groupl.app.model.exception.InvitationExpiredException;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@Entity
 public class Party extends Event {
 	
 	@NotNull(message = "Expiration date must be defined.")

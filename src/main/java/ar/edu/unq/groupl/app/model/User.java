@@ -7,18 +7,23 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
+
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ar.edu.unq.groupl.app.model.util.ListUtil;
 import ar.edu.unq.groupl.app.service.MoneyLoanService;
 import lombok.Getter;
@@ -36,7 +41,7 @@ public class User {
 	private List<Boolean> dutifulList;
 
 	@JsonIgnore
-	@Transient 
+	@Transient
 	private MoneyLoanService moneyLoanService;
 
 	@NotNull(message = "Name must be defined")
@@ -57,10 +62,11 @@ public class User {
 	@NotNull(message = "Birthdate must be defined")
 	private LocalDate birthDate;
 
-	@Transient private List<Event> eventsAssisted;
+	@Transient
+	private List<Event> eventsAssisted;
 
 	@JsonIgnore
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="user")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
 	private Account account;
 
 	public User() {
@@ -72,7 +78,7 @@ public class User {
 	public boolean isDutiful() {
 		return !dutifulList.contains(false);
 	}
-	
+
 	public void addDutiful(boolean value) {
 		IntStream.rangeClosed(0, 1).forEach(index -> dutifulList.set(index, dutifulList.get(index + 1)));
 		dutifulList.set(dutifulList.size() - 1, value);
@@ -85,7 +91,7 @@ public class User {
 	public void addEventAssist(Event event) {
 		eventsAssisted.add(event);
 	}
-	
+
 	private List<Event> filterEventsBy(Predicate<Event> functionToFilter) {
 		return ListUtil.toList(eventsAssisted.stream().filter(functionToFilter));
 	}
@@ -93,19 +99,19 @@ public class User {
 	public List<Event> getEventsInCourse() {
 		return filterEventsBy(this::eventInCourse);
 	}
-	
+
 	public List<Event> getEventsCoursed() {
 		return filterEventsBy(this::eventCoursed);
 	}
-	
+
 	private boolean eventCoursed(Event event) {
 		return compareEventsTime(event, date -> date.isBefore(LocalDate.now()));
 	}
-	
+
 	private boolean eventInCourse(Event event) {
 		return compareEventsTime(event, date -> date.isAfter(LocalDate.now().minusDays(1)));
 	}
-	
+
 	private boolean compareEventsTime(Event event, Function<LocalDate, Boolean> compareFunction) {
 		return compareFunction.apply(event.getDate());
 	}

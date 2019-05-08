@@ -4,11 +4,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -24,30 +26,34 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@MappedSuperclass
-public abstract class Event {
+@Entity
+public class Event {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	@JsonIgnore
 	@Transient
 	private EmailSender emailSender;
-	
+
 	private String title;
-	
+
 	@OneToOne
 	private User owner;
-	
-	@Transient
-	private List<User> guests;
-	
+
+	@ManyToMany
+	@JoinTable(name = "event_guest", 
+	           joinColumns = {	@JoinColumn(name = "event_id", referencedColumnName = "id") }, 
+	           inverseJoinColumns = { @JoinColumn(name = "guest_id", referencedColumnName = "email") })
+	private List<User> guests = new ArrayList<User>();
+
 	@Setter(AccessLevel.NONE)
 	@Transient
 	private List<User> confirmedGuests = new ArrayList<User>();
-	
-	@Transient private List<Item> items = new ArrayList<Item>();
+
+	@Transient
+	private List<Item> items = new ArrayList<Item>();
 	private LocalDate date;
 
 	private boolean checkGuest(List<User> users, User user) {

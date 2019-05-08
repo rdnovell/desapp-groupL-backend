@@ -14,6 +14,7 @@ import ar.edu.unq.groupl.app.model.Validator;
 import ar.edu.unq.groupl.app.model.exception.InvalidAmount;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
 import ar.edu.unq.groupl.app.persistence.BasketRepository;
+import ar.edu.unq.groupl.app.persistence.CrowdRepository;
 import ar.edu.unq.groupl.app.persistence.PartyRepository;
 
 @Component
@@ -22,6 +23,7 @@ public class EventService {
 	@Autowired private EmailSender emailSender;
 	@Autowired private PartyRepository partyRepository; 
 	@Autowired private BasketRepository basketRepository; 
+	@Autowired private CrowdRepository crowdRepository;
 	
 	private <T> T createEvent(Event event) throws InvalidParameterException {
 		Validator.validateEvent(event);
@@ -36,6 +38,12 @@ public class EventService {
 		return event;
 	}
 
+	public Basket createBasket(Basket basket) throws InvalidParameterException {
+		Basket event = createEvent(basket);
+		basketRepository.save(event);
+		return event;
+	}
+	
 	public CrowdFundingCommonAccount createCrowdFundingCommonAccount(CrowdFundingCommonAccount crowdFundingCommonAccount) throws InvalidParameterException {
 		crowdFundingCommonAccount.setCommonAccount(new Account());
 		CrowdFundingCommonAccount event = createEvent(crowdFundingCommonAccount);
@@ -45,19 +53,13 @@ public class EventService {
 
 	public CrowdFunding createCrowdFunding(CrowdFunding crowdFunding) throws InvalidParameterException {
 		CrowdFunding event = createEvent(crowdFunding);
-		//eventRepository.save(event);
+		crowdRepository.save(event);
 		return event;
 	}
 	
 	public void addFunds(CrowdFundingCommonAccount crowdFundingCommonAccount, User user, Integer amount) throws InvalidAmount {
 		user.getAccount().getMoney(amount);
 		crowdFundingCommonAccount.addFunds(amount);
-	}
-
-	public Basket createBasket(Basket basket) throws InvalidParameterException {
-		Basket event = createEvent(basket);
-		basketRepository.save(event);
-		return event;
 	}
 
 }

@@ -3,11 +3,17 @@ package ar.edu.unq.groupl.app.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
 import lombok.Getter;
 
+@Entity
 public class CrowdFunding extends Event {
 
 	@Getter
+	@Transient
 	private List<Purchase> itemPurchases = new ArrayList<Purchase>();
 	
 	public Integer getCostPerUser() {

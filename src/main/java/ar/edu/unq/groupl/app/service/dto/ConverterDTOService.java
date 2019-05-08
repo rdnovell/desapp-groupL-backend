@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ar.edu.unq.groupl.app.model.Basket;
+import ar.edu.unq.groupl.app.model.CrowdFunding;
 import ar.edu.unq.groupl.app.model.Item;
 import ar.edu.unq.groupl.app.model.ItemAssigned;
 import ar.edu.unq.groupl.app.model.Party;
@@ -34,6 +35,35 @@ public class ConverterDTOService {
 		return party;
 	}
 	
+	public Basket converter(BasketDTO basketDTO) {
+		Basket basket = new Basket();
+		basket.setTitle(basketDTO.getTitle());
+		User owner = getUser(basketDTO.getOwner());
+		List<User> guests = map(basketDTO.getGuests(), this::getUser);
+		List<Item> items = map(basketDTO.getItems(), this::getItem);
+		basket.setOwner(owner);
+		basket.setItems(items);
+		basket.setGuests(guests);
+		basket.setDate(basketDTO.getDate());
+		List<ItemAssigned> itemsAssigned = map(basketDTO.getItemsAssigned(), this::getItemAssigned);
+		basket.setItemsAssigned(itemsAssigned);
+		return basket;
+	}
+
+	public CrowdFunding converter(CrowdDTO crowdDTO) {
+		CrowdFunding crowd = new CrowdFunding();
+		crowd.setTitle(crowdDTO.getTitle());
+		User owner = getUser(crowdDTO.getOwner());
+		List<User> guests = map(crowdDTO.getGuests(), this::getUser);
+		List<Item> items = map(crowdDTO.getItems(), this::getItem);
+		crowd.setOwner(owner);
+		crowd.setItems(items);
+		crowd.setGuests(guests);
+		crowd.setDate(crowdDTO.getDate());
+		return crowd;
+	}
+	
+	
 	public UserDTO convertUserToDTO(User user) {
 		return new UserDTO(user);
 	}
@@ -55,21 +85,6 @@ public class ConverterDTOService {
 		itemAssigned.setUser(getUser(itemAssignedDTO.getUser()));
 		itemAssigned.setItem(getItem(itemAssignedDTO.getItem()));
 		return null;
-	}
-	
-	public Basket converter(BasketDTO basketDTO) {
-		Basket basket = new Basket();
-		basket.setTitle(basketDTO.getTitle());
-		User owner = getUser(basketDTO.getOwner());
-		List<User> guests = map(basketDTO.getGuests(), this::getUser);
-		List<Item> items = map(basketDTO.getItems(), this::getItem);
-		basket.setOwner(owner);
-		basket.setItems(items);
-		basket.setGuests(guests);
-		basket.setDate(basketDTO.getDate());
-		List<ItemAssigned> itemsAssigned = map(basketDTO.getItemsAssigned(), this::getItemAssigned);
-		basket.setItemsAssigned(itemsAssigned);
-		return basket;
 	}
 
 }

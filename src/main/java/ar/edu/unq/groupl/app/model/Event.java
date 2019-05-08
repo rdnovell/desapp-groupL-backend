@@ -83,7 +83,7 @@ public abstract class Event {
 	}
 
 	public Integer getTotalCost() {
-		return items.stream().mapToInt(item -> item.getValue()).sum();
+		return items.stream().mapToInt(item -> item.getPrice()).sum();
 	}
 
 	public void withTemplate(Template template) {

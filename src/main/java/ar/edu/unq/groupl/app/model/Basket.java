@@ -3,11 +3,19 @@ package ar.edu.unq.groupl.app.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import lombok.Getter;
 
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
 public class Basket extends Event {
 
 	@Getter
+	@Setter
+	@Transient
 	private List<ItemAssigned> itemsAssigned = new ArrayList<ItemAssigned>();
 
 	@Override

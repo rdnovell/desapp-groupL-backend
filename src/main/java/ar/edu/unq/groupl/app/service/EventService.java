@@ -2,6 +2,7 @@ package ar.edu.unq.groupl.app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import ar.edu.unq.groupl.app.model.Account;
 import ar.edu.unq.groupl.app.model.Basket;
 import ar.edu.unq.groupl.app.model.CrowdFunding;
@@ -12,11 +13,15 @@ import ar.edu.unq.groupl.app.model.User;
 import ar.edu.unq.groupl.app.model.Validator;
 import ar.edu.unq.groupl.app.model.exception.InvalidAmount;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
+import ar.edu.unq.groupl.app.persistence.BasketRepository;
+import ar.edu.unq.groupl.app.persistence.PartyRepository;
 
 @Component
 public class EventService {
 	
 	@Autowired private EmailSender emailSender;
+	@Autowired private PartyRepository partyRepository; 
+	@Autowired private BasketRepository basketRepository; 
 	
 	private <T> T createEvent(Event event) throws InvalidParameterException {
 		Validator.validateEvent(event);
@@ -26,16 +31,22 @@ public class EventService {
 	}
 
 	public Party createParty(Party party) throws InvalidParameterException {
-		return createEvent(party);
+		Party event = createEvent(party);
+		partyRepository.save(event);
+		return event;
 	}
 
 	public CrowdFundingCommonAccount createCrowdFundingCommonAccount(CrowdFundingCommonAccount crowdFundingCommonAccount) throws InvalidParameterException {
 		crowdFundingCommonAccount.setCommonAccount(new Account());
-		return createEvent(crowdFundingCommonAccount);
+		CrowdFundingCommonAccount event = createEvent(crowdFundingCommonAccount);
+		//eventRepository.save(event);
+		return createEvent(event);
 	}
 
 	public CrowdFunding createCrowdFunding(CrowdFunding crowdFunding) throws InvalidParameterException {
-		return createEvent(crowdFunding);
+		CrowdFunding event = createEvent(crowdFunding);
+		//eventRepository.save(event);
+		return event;
 	}
 	
 	public void addFunds(CrowdFundingCommonAccount crowdFundingCommonAccount, User user, Integer amount) throws InvalidAmount {
@@ -44,7 +55,9 @@ public class EventService {
 	}
 
 	public Basket createBasket(Basket basket) throws InvalidParameterException {
-		return createEvent(basket);
+		Basket event = createEvent(basket);
+		basketRepository.save(event);
+		return event;
 	}
 
 }

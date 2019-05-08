@@ -6,9 +6,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import ar.edu.unq.groupl.app.model.Basket;
 import ar.edu.unq.groupl.app.model.Party;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
 import ar.edu.unq.groupl.app.service.EventService;
+import ar.edu.unq.groupl.app.service.dto.BasketDTO;
 import ar.edu.unq.groupl.app.service.dto.ConverterDTOService;
 import ar.edu.unq.groupl.app.service.dto.PartyDTO;
 
@@ -32,5 +35,14 @@ public class EventRest extends Rest {
 		eventService.createParty(party);
 		return ok();
 	}
-
+	
+	@POST
+	@Path("/createBasket")
+	@Consumes(APPLICATION_JSON)
+	@Produces(APPLICATION_JSON)
+	public Response createParty(BasketDTO basketDTO) throws InvalidParameterException {
+		Basket basket = converterDTOService.converter(basketDTO);
+		eventService.createBasket(basket);
+		return ok();
+	}
 }

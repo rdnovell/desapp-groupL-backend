@@ -4,13 +4,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -42,18 +41,23 @@ public class Event {
 	@OneToOne
 	private User owner;
 
-	@ManyToMany
+	/*@ManyToMany
 	@JoinTable(name = "event_guest", 
 	           joinColumns = {	@JoinColumn(name = "event_id", referencedColumnName = "id") }, 
-	           inverseJoinColumns = { @JoinColumn(name = "guest_id", referencedColumnName = "email") })
+	           inverseJoinColumns = { @JoinColumn(name = "guest_id", referencedColumnName = "email") })*/
+    @Column
+	@ElementCollection(targetClass=User.class)
 	private List<User> guests = new ArrayList<User>();
 
 	@Setter(AccessLevel.NONE)
-	@Transient
+    @Column
+	@ElementCollection(targetClass=User.class)
 	private List<User> confirmedGuests = new ArrayList<User>();
 
-	@Transient
+    @Column
+	@ElementCollection(targetClass=Item.class)
 	private List<Item> items = new ArrayList<Item>();
+    
 	private LocalDate date;
 
 	private boolean checkGuest(List<User> users, User user) {

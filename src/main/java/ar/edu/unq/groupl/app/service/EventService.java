@@ -48,7 +48,7 @@ public class EventService {
 		crowdFundingCommonAccount.setCommonAccount(new Account());
 		CrowdFundingCommonAccount event = createEvent(crowdFundingCommonAccount);
 		//eventRepository.save(event);
-		return createEvent(event);
+		return event;
 	}
 
 	public CrowdFunding createCrowdFunding(CrowdFunding crowdFunding) throws InvalidParameterException {

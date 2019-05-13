@@ -1,12 +1,17 @@
 package model;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -16,6 +21,7 @@ import ar.edu.unq.groupl.app.model.Item;
 import ar.edu.unq.groupl.app.model.ItemAssigned;
 import ar.edu.unq.groupl.app.model.User;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
+import ar.edu.unq.groupl.app.persistence.BasketRepository;
 import ar.edu.unq.groupl.app.service.EventService;
 
 public class BasketTest {
@@ -39,6 +45,8 @@ public class BasketTest {
 	@Test
 	public void testOnCreateMustSendInvitations() throws InvalidParameterException {
 		Basket basketMock = mock(Basket.class);
+	    BasketRepository repoMock = mock(BasketRepository.class);
+	    ReflectionTestUtils.setField(eventHandler, "basketRepository", repoMock);
 		eventHandler.createBasket(basketMock);
 		verify(basketMock, times(1)).sendInvitations();
 	}

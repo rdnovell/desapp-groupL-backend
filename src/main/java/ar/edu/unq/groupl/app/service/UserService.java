@@ -35,4 +35,9 @@ public class UserService {
 		return converterDTOService.convertUserToDTO(user);
 	}
 
+	public int getBalance(String email) throws UnexistException {
+		User user = userRepository.findById(email).orElseThrow(() -> new UnexistException("There are no user registered with email '" + email + "'."));
+		return user.getAccount().getBalance();
+	}
+
 }

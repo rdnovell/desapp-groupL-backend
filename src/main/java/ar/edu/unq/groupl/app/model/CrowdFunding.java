@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import lombok.Getter;
 
 @Entity
+@Table(name = "crowd_fundings")
 public class CrowdFunding extends Event {
 
 	@Getter
@@ -32,7 +34,7 @@ public class CrowdFunding extends Event {
 	}
 	
 	public void addItemPurchase(User user, Integer amount) {
-		if (userIsConfimated(user)) {
+		if (userIsConfirmated(user)) {
 			addAmountPurchase(user, amount);
 		}
 	}

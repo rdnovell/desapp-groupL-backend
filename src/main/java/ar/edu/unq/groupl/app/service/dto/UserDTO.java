@@ -15,7 +15,6 @@ public class UserDTO {
 	private String name;
 	private String lastName;
 	private String email;
-	private LocalDate birthDate;
 	private List<EventDTO> eventsAssisted;
 	private List<EventDTO> eventsCoursed;
 	private List<EventDTO> eventsInCourse;
@@ -25,7 +24,6 @@ public class UserDTO {
 		name = user.getName();
 		lastName = user.getLastName();
 		email = user.getEmail();
-		birthDate = user.getBirthDate();
 		eventsAssisted = transformEvents(user.getEventsAssisted());
 		eventsCoursed = transformEvents(user.getEventsCoursed());
 		eventsInCourse = transformEvents(user.getEventsInCourse());

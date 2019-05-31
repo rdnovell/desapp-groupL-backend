@@ -1,15 +1,20 @@
 package ar.edu.unq.groupl.app.service;
 
-import org.mindrot.jbcrypt.BCrypt;
+
+
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ar.edu.unq.groupl.app.model.Event;
 import ar.edu.unq.groupl.app.model.User;
-import ar.edu.unq.groupl.app.model.Validator;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
+import ar.edu.unq.groupl.app.persistence.AccountRepository;
 import ar.edu.unq.groupl.app.persistence.UserRepository;
-import ar.edu.unq.groupl.app.service.dto.ConverterDTOService;
-import ar.edu.unq.groupl.app.service.dto.UserDTO;
-import ar.edu.unq.groupl.app.service.exception.LoginException;
+import ar.edu.unq.groupl.app.service.annotation.Valid;
 import ar.edu.unq.groupl.app.service.exception.UnexistException;
 
 @Service
@@ -17,27 +22,41 @@ public class UserService {
 
 	@Autowired private MoneyLoanService moneyLoanService;
 	@Autowired private UserRepository userRepository;
-	@Autowired private ConverterDTOService converterDTOService;
+	@Autowired private AccountRepository accountRepository;
 	
-	public User createUser(User user) throws InvalidParameterException {
-		Validator.validateUser(user);
-		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-		user.setMoneyLoanService(moneyLoanService);
-		userRepository.save(user);
-		return user;
+	@Transactional
+	@Valid
+	public void createUser(User user) throws InvalidParameterException {
+		if (nonExistentUser(user.getEmail())) {
+			user.setMoneyLoanService(moneyLoanService);
+			userRepository.save(user);
+		}
 	}
 	
-	public UserDTO login(String email, String password) throws UnexistException, LoginException {
-		User user = userRepository.findById(email).orElseThrow(() -> new UnexistException("There are no user registered with email '" + email + "'."));
-		if (!BCrypt.checkpw(password, user.getPassword())) {
-			throw new LoginException("Incorrect password.");
-		}
-		return converterDTOService.convertUserToDTO(user);
+	public int getBalance(String email) throws UnexistException {
+		return accountRepository.getBalance(email).orElseThrow(() -> getUnexistException(email));
 	}
 
-	public int getBalance(String email) throws UnexistException {
-		User user = userRepository.findById(email).orElseThrow(() -> new UnexistException("There are no user registered with email '" + email + "'."));
-		return user.getAccount().getBalance();
+	public List<Event> getGuestEvents(String email) throws UnexistException {
+		if (nonExistentUser(email)) {
+			throw getUnexistException(email);
+		}
+		return userRepository.getGuestEvents(email);
+	}
+	
+	private UnexistException getUnexistException(String email) {
+		return new UnexistException("There are no user registered with email '" + email + "'.");
+	}
+	
+	private boolean nonExistentUser(String email) {
+		return! userRepository.existsById(email);
+	}
+
+	public List<Event> getOwnerEvents(String email) throws UnexistException {
+		if (nonExistentUser(email)) {
+			throw getUnexistException(email);
+		}
+		return userRepository.getOwnerEvents(email);
 	}
 
 }

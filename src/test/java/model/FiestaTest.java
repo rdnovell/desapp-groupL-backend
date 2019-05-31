@@ -102,7 +102,7 @@ public class FiestaTest {
 	public void testCheckIfGuestIsConfirmed() throws EventException {
 		User user = TestBuilder.testUser().validUser().build();
 		testFiesta.addConfirmedGuests(user);
-		assertTrue(testFiesta.userIsConfimated(user));
+		assertTrue(testFiesta.userIsConfirmated(user));
 	}
 	
 	@Test

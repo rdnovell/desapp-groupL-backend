@@ -29,7 +29,7 @@ public class ConverterDTOService {
 		List<Item> items = map(partyDTO.getItems(), this::getItem);
 		party.setOwner(owner);
 		party.setItems(items);
-		party.setGuests(guests);
+		//party.setGuests(guests);
 		party.setDate(partyDTO.getDate());
 		party.setExpirationDate(partyDTO.getExpirationDate());
 		return party;
@@ -43,7 +43,7 @@ public class ConverterDTOService {
 		List<Item> items = map(basketDTO.getItems(), this::getItem);
 		basket.setOwner(owner);
 		basket.setItems(items);
-		basket.setGuests(guests);
+		//basket.setGuests(guests);
 		basket.setDate(basketDTO.getDate());
 		List<ItemAssigned> itemsAssigned = map(basketDTO.getItemsAssigned(), this::getItemAssigned);
 		basket.setItemsAssigned(itemsAssigned);
@@ -58,7 +58,7 @@ public class ConverterDTOService {
 		List<Item> items = map(crowdDTO.getItems(), this::getItem);
 		crowd.setOwner(owner);
 		crowd.setItems(items);
-		crowd.setGuests(guests);
+		//crowd.setGuests(guests);
 		crowd.setDate(crowdDTO.getDate());
 		return crowd;
 	}

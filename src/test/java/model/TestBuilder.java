@@ -38,8 +38,6 @@ public class TestBuilder {
 			testUser.setName("Pedro");
 			testUser.setLastName("Esposito");
 			testUser.setEmail("rubendario.novelli@gmail.com");
-			testUser.setPassword("alpa1234");
-			testUser.setBirthDate(LocalDate.of(1985, Month.JANUARY, 1));
 			return this;
 		}
 

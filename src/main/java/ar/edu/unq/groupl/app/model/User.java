@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
-
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -15,17 +14,18 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import ar.edu.unq.groupl.app.model.util.ListUtil;
 import ar.edu.unq.groupl.app.service.MoneyLoanService;
+import ar.edu.unq.groupl.app.service.validation.Email;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,16 +54,30 @@ public class User {
 
 	@Id
 	@NotNull(message = "Email must be defined")
+	@Email(message = "Email must be valid")
 	private String email;
+	
+	@OneToMany(
+	        mappedBy = "owner",
+	        cascade = CascadeType.ALL
+	)
+	private List<Event> eventsOwner;
 
-	@NotNull(message = "Pasword must be defined")
-	private String password;
-
-	@NotNull(message = "Birthdate must be defined")
-	private LocalDate birthDate;
-
-	@Transient
+	@JoinTable(
+			name = "assisted_and_events",
+	        joinColumns = @JoinColumn(name = "user_email", referencedColumnName = "email"),
+	        inverseJoinColumns = @JoinColumn(name="event_id", referencedColumnName = "id")
+	)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Event> eventsAssisted;
+
+	@JoinTable(
+			name = "guests_and_events",
+	        joinColumns = @JoinColumn(name = "user_email", referencedColumnName = "email"),
+	        inverseJoinColumns = @JoinColumn(name="event_id", referencedColumnName = "id")
+	)
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Event> guestedEvents;
 
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")

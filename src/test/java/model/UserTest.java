@@ -97,42 +97,6 @@ public class UserTest {
 		assertTrue(Pattern.compile(EMAIL_PATTERN).matcher(testUser.getEmail()).matches());
 	}
 	
-	// Contraseña: Min 4 - Max 10 - Alfanumérico - Requerido.
-	@Test(expected = InvalidParameterException.class)
-	public void testUserWithShortPasswordMustThrowInvalidParameterException() throws InvalidParameterException {
-		testUser.setPassword("a12");
-		userHandler.createUser(testUser);
-	}
-	
-	@Test(expected = InvalidParameterException.class)
-	public void testUserWithLongPasswordMustThrowInvalidParameterException() throws InvalidParameterException {
-		testUser.setPassword("alcome12rh345");
-		userHandler.createUser(testUser);
-	}
-	
-	@Test(expected = InvalidParameterException.class)
-	public void testUserWithPasswordNotAlphaMustThrowInvalidParameterException() throws InvalidParameterException {
-		testUser.setPassword("alcone");
-		userHandler.createUser(testUser);
-	}
-	@Test
-	public void testUserWithValidPassword() throws InvalidParameterException {
-		testUser.setPassword("alco12ne");
-		assertTrue(Pattern.compile(PASSWORD_PATTERN).matcher(testUser.getPassword()).matches());
-		Mockito.when(userRepository.save(Mockito.any())).thenReturn(testUser);
-		ReflectionTestUtils.setField(userHandler, "userRepository", userRepository);
-//		Mockito.doNothing().when(userRepository).save(Mockito.any());
-//		ReflectionTestUtils.setField(userHandler, "userRepository", userRepository);
-		userHandler.createUser(testUser);
-	}
-	//Fecha de Nacimiento : DD/MM/AAAA - Requerido
-	
-	@Test
-	public void testUserWithValidBirthDate() {
-		testUser.setPassword("alco12ne");
-		assertEquals(testUser.getBirthDate(), LocalDate.of(1985, 1, 1));
-	}
-	
 	@Test
 	public void testUserDutiful() {
 		assertTrue(testUser.isDutiful());

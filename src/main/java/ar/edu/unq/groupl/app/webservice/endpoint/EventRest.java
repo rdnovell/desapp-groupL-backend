@@ -20,6 +20,7 @@ import ar.edu.unq.groupl.app.service.dto.BasketDTO;
 import ar.edu.unq.groupl.app.service.dto.ConverterDTOService;
 import ar.edu.unq.groupl.app.service.dto.CrowdDTO;
 import ar.edu.unq.groupl.app.service.dto.PartyDTO;
+import ar.edu.unq.groupl.app.service.dto.PartyDTOOnCreate;
 
 @Component
 @Path("/event")
@@ -29,12 +30,13 @@ public class EventRest extends Rest {
 	@Autowired private ConverterDTOService converterDTOService;
 	
 	@POST
-	@Path("/createParty")
+	@Path("/party")
 	@Consumes(APPLICATION_JSON)
 	@Produces(APPLICATION_JSON)
-	public Response createParty(PartyDTO partyDTO) throws InvalidParameterException {
-		Party party = converterDTOService.converter(partyDTO);
-		eventService.createParty(party);
+	public Response createParty(PartyDTOOnCreate partyDTO) throws InvalidParameterException {
+//		Party party = converterDTOService.converter(partyDTO);
+//		eventService.createParty(party);
+		eventService.createParty(partyDTO);
 		return ok();
 	}
 	

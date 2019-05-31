@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "baskets")
 public class Basket extends Event {
 
 	@Getter

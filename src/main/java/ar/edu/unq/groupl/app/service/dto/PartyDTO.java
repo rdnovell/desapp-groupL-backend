@@ -10,9 +10,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PartyDTO extends EventDTO {
+	private LocalDate expirationDate;
+	
 	public PartyDTO(Event event) {
 		super(event);
 	}
 
-	private LocalDate expirationDate;
 }

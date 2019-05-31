@@ -3,28 +3,32 @@ package ar.edu.unq.groupl.app.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
-
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import ar.edu.unq.groupl.app.model.exception.EventException;
 import ar.edu.unq.groupl.app.model.exception.GuestNotFoundException;
 import ar.edu.unq.groupl.app.model.util.ListUtil;
 import ar.edu.unq.groupl.app.service.EmailSender;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
 public class Event {
 
@@ -38,23 +42,18 @@ public class Event {
 
 	private String title;
 
-	@OneToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_email")
 	private User owner;
 
-	/*@ManyToMany
-	@JoinTable(name = "event_guest", 
-	           joinColumns = {	@JoinColumn(name = "event_id", referencedColumnName = "id") }, 
-	           inverseJoinColumns = { @JoinColumn(name = "guest_id", referencedColumnName = "email") })*/
-    @Column
-	@ElementCollection(targetClass=User.class)
+	@ManyToMany(mappedBy = "guestedEvents")
 	private List<User> guests = new ArrayList<User>();
 
-	@Setter(AccessLevel.NONE)
-    @Column
-	@ElementCollection(targetClass=User.class)
+	@ManyToMany(mappedBy = "eventsAssisted")
 	private List<User> confirmedGuests = new ArrayList<User>();
 
     @Column
+    @LazyCollection(LazyCollectionOption.FALSE)
 	@ElementCollection(targetClass=Item.class)
 	private List<Item> items = new ArrayList<Item>();
     
@@ -64,7 +63,7 @@ public class Event {
 		return users.stream().anyMatch(user::equals);
 	}
 
-	public boolean userIsConfimated(User user) {
+	public boolean userIsConfirmated(User user) {
 		return checkGuest(confirmedGuests, user);
 	}
 

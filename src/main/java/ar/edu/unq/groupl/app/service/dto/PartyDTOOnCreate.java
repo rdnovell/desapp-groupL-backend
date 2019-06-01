@@ -9,7 +9,7 @@ public class PartyDTOOnCreate {
 
 	private String title;
 	private String owner;
-	private List<Integer> items;
+	private List<String> items;
 	private List<String> guests;
 	private LocalDate date;
 	private LocalDate expirationDate;

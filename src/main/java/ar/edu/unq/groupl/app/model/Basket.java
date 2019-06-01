@@ -27,7 +27,7 @@ public class Basket extends Event {
 	}
 
 	public void assignItem(User user, Item item) {
-		Optional<ItemAssigned> itemAssigned = itemsAssigned.stream().filter(itemFitered -> itemFitered.getItem().getId() == item.getId()).findFirst();
+		Optional<ItemAssigned> itemAssigned = itemsAssigned.stream().filter(itemFitered -> itemFitered.getItem().getTitle() == item.getTitle()).findFirst();
 		if (itemAssigned.isPresent() && itemAssigned.get().getUser() == null) {
 			itemAssigned.get().setUser(user);
 		}

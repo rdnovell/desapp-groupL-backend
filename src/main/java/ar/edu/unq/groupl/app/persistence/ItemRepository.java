@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import ar.edu.unq.groupl.app.model.Item;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Integer>{
+public interface ItemRepository extends JpaRepository<Item, String>{
 
 }

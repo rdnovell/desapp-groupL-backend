@@ -8,10 +8,12 @@ import lombok.Getter;
 public class PartyDTOOnUser extends EventDTOOnUser {
 	
 	private LocalDate expirationDate;
+	private String type;
 	
 	public PartyDTOOnUser(Party party) {
 		super(party);
 		this.expirationDate = party.getExpirationDate();
+		this.type = party.getClass().getSimpleName();
 	}
 	
 }

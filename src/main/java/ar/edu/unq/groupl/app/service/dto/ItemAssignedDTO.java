@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public class ItemAssignedDTO {
 	private String user;
-	private Integer item;
+	private String item;
 }

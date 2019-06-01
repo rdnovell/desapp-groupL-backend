@@ -17,7 +17,7 @@ public class EventDTO {
 	private String title;
 	private String owner;
 	private List<String> guests;
-	private List<Integer> items;
+	private List<String> items;
 	private LocalDate date;
 
 	public EventDTO(Event event) {
@@ -25,6 +25,6 @@ public class EventDTO {
 		this.title = event.getTitle();
 		this.owner = event.getOwner().getEmail();
 		//this.guests = ListUtil.toList(event.getGuests().stream().map(User::getEmail));
-		this.items = ListUtil.toList(event.getItems().stream().map(Item::getId));
+		this.items = ListUtil.toList(event.getItems().stream().map(Item::getTitle));
 	}
 }

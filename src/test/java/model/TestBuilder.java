@@ -56,7 +56,7 @@ public class TestBuilder {
 			testFiesta.setOwner(organizador);
 
 			List<Item> items = new ArrayList<Item>();
-			items.add(new Item(1, "Asado", 100));
+//			items.add(new Item(1, "Asado", 100));
 			testFiesta.setItems(items);
 
 			testFiesta.setExpirationDate(LocalDate.now().plusDays(10));
@@ -119,7 +119,7 @@ public class TestBuilder {
 			testCrowdFunding.setOwner(organizador);
 
 			List<Item> items = new ArrayList<Item>();
-			items.add(new Item(1, "Asado", 100));
+//			items.add(new Item(1, "Asado", 100));
 			testCrowdFunding.setItems(items);
 			
 			List<User> invitados = new ArrayList<User>();

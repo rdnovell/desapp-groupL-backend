@@ -76,7 +76,7 @@ public class ConverterDTOService {
 		return userRepository.findById(email).get();
 	}
 	
-	private Item getItem(Integer id) {
+	private Item getItem(String id) {
 		return itemRepository.findById(id).get();
 	}
 

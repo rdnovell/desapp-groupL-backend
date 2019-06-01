@@ -112,6 +112,10 @@ public class User {
 		guestedEvents.removeIf(guestedEvent -> guestedEvent.getId().equals(event.getId()));
 		eventsAssisted.add(event);
 	}
+	
+	public void addEventGuest(Event event) {
+		guestedEvents.add(event);
+	}
 
 	private List<Event> filterEventsBy(Predicate<Event> functionToFilter) {
 		return ListUtil.toList(eventsAssisted.stream().filter(functionToFilter));

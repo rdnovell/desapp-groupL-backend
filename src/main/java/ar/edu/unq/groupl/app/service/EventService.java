@@ -53,9 +53,7 @@ public class EventService {
 		party.setOwner(owner.get());
 		party.setItems(items);
 		List<User> users = userRepository.findAllById(partyDTO.getGuests());
-		List<Event> events = new ArrayList<Event>();
-		events.add(party);
-		users.forEach(eachUser -> eachUser.setGuestedEvents(events));
+		users.forEach(eachUser -> eachUser.addEventGuest(party));
 		party.setGuests(users);
 		party.setDate(partyDTO.getDate());
 		party.setExpirationDate(partyDTO.getExpirationDate());

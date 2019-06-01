@@ -17,4 +17,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Query("SELECT user.eventsOwner FROM User user where user.email = :email") 
 	List<Event> getOwnerEvents(@Param("email") String email);
 	
+	@Query("SELECT user.eventsAssisted FROM User user where user.email = :email") 
+	List<Event> getAssistedEvents(@Param("email") String email);
+	
 }

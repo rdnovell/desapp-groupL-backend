@@ -22,6 +22,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import ar.edu.unq.groupl.app.model.util.ListUtil;
 import ar.edu.unq.groupl.app.service.MoneyLoanService;
@@ -63,6 +67,7 @@ public class User {
 	)
 	private List<Event> eventsOwner;
 
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(
 			name = "assisted_and_events",
 	        joinColumns = @JoinColumn(name = "user_email", referencedColumnName = "email"),
@@ -71,6 +76,7 @@ public class User {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Event> eventsAssisted;
 
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(
 			name = "guests_and_events",
 	        joinColumns = @JoinColumn(name = "user_email", referencedColumnName = "email"),
@@ -103,6 +109,7 @@ public class User {
 	}
 
 	public void addEventAssist(Event event) {
+		guestedEvents.removeIf(guestedEvent -> guestedEvent.getId().equals(event.getId()));
 		eventsAssisted.add(event);
 	}
 

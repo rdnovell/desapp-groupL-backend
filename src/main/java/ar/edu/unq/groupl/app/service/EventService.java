@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import ar.edu.unq.groupl.app.model.Item;
 import ar.edu.unq.groupl.app.model.Party;
 import ar.edu.unq.groupl.app.model.User;
 import ar.edu.unq.groupl.app.model.Validator;
+import ar.edu.unq.groupl.app.model.exception.EventException;
 import ar.edu.unq.groupl.app.model.exception.InvalidAmount;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
 import ar.edu.unq.groupl.app.persistence.BasketRepository;
@@ -24,6 +26,7 @@ import ar.edu.unq.groupl.app.persistence.ItemRepository;
 import ar.edu.unq.groupl.app.persistence.PartyRepository;
 import ar.edu.unq.groupl.app.persistence.UserRepository;
 import ar.edu.unq.groupl.app.service.dto.PartyDTOOnCreate;
+import ar.edu.unq.groupl.app.service.dto.UserConfirmatedDTO;
 
 @Component
 public class EventService {
@@ -85,6 +88,15 @@ public class EventService {
 	public void addFunds(CrowdFundingCommonAccount crowdFundingCommonAccount, User user, Integer amount) throws InvalidAmount {
 		user.getAccount().getMoney(amount);
 		crowdFundingCommonAccount.addFunds(amount);
+	}
+
+	public void confirmAssistance(UserConfirmatedDTO userConfirmatedDTO) throws EventException {
+		Optional<Party> partyOptional = partyRepository.findById(userConfirmatedDTO.getEventId());
+		Optional<User> userOptional = userRepository.findById(userConfirmatedDTO.getUserEmail());
+		Party party = partyOptional.get();
+		User user = userOptional.get();
+		party.addConfirmedGuests(user);
+		userRepository.save(user);
 	}
 
 }

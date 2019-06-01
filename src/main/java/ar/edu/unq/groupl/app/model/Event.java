@@ -42,13 +42,16 @@ public class Event {
 
 	private String title;
 
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_email")
 	private User owner;
 
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(mappedBy = "guestedEvents")
 	private List<User> guests = new ArrayList<User>();
 
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(mappedBy = "eventsAssisted")
 	private List<User> confirmedGuests = new ArrayList<User>();
 

@@ -61,9 +61,6 @@ public class EventService {
 		party.setExpirationDate(partyDTO.getExpirationDate());
 		partyRepository.save(party);
 		userRepository.saveAll(users);
-//		Party event = createEvent(party);
-//		partyRepository.save(event);
-//		return event;
 	}
 
 	public Basket createBasket(Basket basket) throws InvalidParameterException {
@@ -75,7 +72,6 @@ public class EventService {
 	public CrowdFundingCommonAccount createCrowdFundingCommonAccount(CrowdFundingCommonAccount crowdFundingCommonAccount) throws InvalidParameterException {
 		crowdFundingCommonAccount.setCommonAccount(new Account());
 		CrowdFundingCommonAccount event = createEvent(crowdFundingCommonAccount);
-		//eventRepository.save(event);
 		return event;
 	}
 

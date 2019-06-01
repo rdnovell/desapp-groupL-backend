@@ -2,23 +2,30 @@ package ar.edu.unq.groupl.app.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ar.edu.unq.groupl.app.model.exception.EventException;
 import ar.edu.unq.groupl.app.model.exception.GuestNotFoundException;
 import ar.edu.unq.groupl.app.model.util.ListUtil;
@@ -43,7 +50,7 @@ public class Event {
 	private String title;
 
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne()
     @JoinColumn(name = "owner_email")
 	private User owner;
 
@@ -57,7 +64,8 @@ public class Event {
 
     @Column
     @LazyCollection(LazyCollectionOption.FALSE)
-	@ElementCollection(targetClass=Item.class)
+    @JoinTable
+    @ManyToMany
 	private List<Item> items = new ArrayList<Item>();
     
 	private LocalDate date;

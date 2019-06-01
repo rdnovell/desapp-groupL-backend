@@ -60,6 +60,15 @@ public class EventService {
 		partyRepository.save(party);
 		userRepository.saveAll(users);
 	}
+	
+	public void removeParty(Integer partyId) {
+//		Party party = partyRepository.findById(partyId).get();
+//		User user = userRepository.findById(email).get();
+//		user.removeEvent(party);
+//		userRepository.save(user);
+//		partyRepository.deleteById(partyId);
+		partyRepository.removeById(partyId);
+	}
 
 	public Basket createBasket(Basket basket) throws InvalidParameterException {
 		Basket event = createEvent(basket);

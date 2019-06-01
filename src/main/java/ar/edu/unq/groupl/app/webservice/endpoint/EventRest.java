@@ -3,6 +3,7 @@ package ar.edu.unq.groupl.app.webservice.endpoint;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -38,9 +39,15 @@ public class EventRest extends Rest {
 	@Consumes(APPLICATION_JSON)
 	@Produces(APPLICATION_JSON)
 	public Response createParty(PartyDTOOnCreate partyDTO) throws InvalidParameterException {
-//		Party party = converterDTOService.converter(partyDTO);
-//		eventService.createParty(party);
 		eventService.createParty(partyDTO);
+		return ok();
+	}
+	
+	@DELETE
+	@Path("/party/{id}")
+	@Produces(APPLICATION_JSON)
+	public Response removeParty(@PathParam("id") Integer partyId) {
+		eventService.removeParty(partyId);
 		return ok();
 	}
 	

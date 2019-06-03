@@ -1,4 +1,5 @@
 package ar.edu.unq.groupl.app.service;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.apache.commons.collections.ListUtils;
@@ -122,7 +123,8 @@ public class EventService {
 	}
 
 	public List<Event> getTopEvents() {
-		List<Event> events = partyRepository.getTopEvents();
+		List<Event> events = new ArrayList<>();
+		events.addAll(partyRepository.getTopEvents());
 		return events;
 	}
 	

@@ -22,7 +22,7 @@ public interface PartyRepository extends JpaRepository<Party, Integer> {
 	void removeById(@Param("id") Integer id);
 	
 
-	@Query(value = "SELECT * FROM parties where id in (select event_id from (select count(*),event_id from guests_and_events group by event_id order by 1 desc) as events) limit 1", 
+	@Query(value = "SELECT * FROM parties where id in (select event_id from (select count(*),event_id from guests_and_events group by event_id order by 1 desc) as events)", 
 	nativeQuery = true)
 	List<Event> getTopEvents();
 	

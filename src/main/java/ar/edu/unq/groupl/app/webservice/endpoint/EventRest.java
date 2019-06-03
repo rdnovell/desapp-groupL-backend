@@ -110,7 +110,7 @@ public class EventRest extends Rest {
 	@GET
 	@Path("/top-events")
 	@Produces(APPLICATION_JSON)
-	public Response getGuestEvents() throws UnexistException {
+	public Response getTopEvents() throws UnexistException {
 		List<Event> events = eventService.getTopEvents();
 		return ok(ListUtil.toList(events.stream().map(event -> {
 			if (event instanceof Party) {

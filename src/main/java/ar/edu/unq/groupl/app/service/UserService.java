@@ -54,4 +54,11 @@ public class UserService {
 		return userRepository.getOwnerEvents(email);
 	}
 
+	public List<Event> getAssitedEvents(String email) throws UnexistException {
+		if (nonExistentUser(email)) {
+			throw getUnexistException(email);
+		}
+		return userRepository.getAssistedEvents(email);
+	}
+	
 }

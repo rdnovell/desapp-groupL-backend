@@ -52,6 +52,19 @@ public class UserRest extends Rest {
 	}
 	
 	@GET
+	@Path("/assisted-events")
+	@Produces(APPLICATION_JSON)
+	public Response getAssitedEvents(@QueryParam("email") String email) throws UnexistException {
+		List<Event> events = userService.getAssitedEvents(email);
+		return ok(ListUtil.toList(events.stream().map(event -> {
+			if (event instanceof Party) {
+				return new PartyDTOOnUser((Party) event);
+			}
+			return null;
+		})));
+	}
+	
+	@GET
 	@Path("/owner-events")
 	@Produces(APPLICATION_JSON)
 	public Response getOwnertEvents(@QueryParam("email") String email) throws UnexistException {

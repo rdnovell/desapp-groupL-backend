@@ -1,14 +1,9 @@
 package ar.edu.unq.groupl.app.service;
 
-
-
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import ar.edu.unq.groupl.app.model.Event;
 import ar.edu.unq.groupl.app.model.User;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;

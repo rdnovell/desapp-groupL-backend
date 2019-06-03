@@ -43,7 +43,7 @@ public class FiestaTest {
 	    PartyRepository repoMock = mock(PartyRepository.class);
 	    ReflectionTestUtils.setField(eventHandler, "partyRepository", repoMock);
 		ReflectionTestUtils.setField(partyMock, "expirationDate", LocalDate.now());
-//		eventHandler.createParty(partyMock);
+		eventHandler.createEvent(partyMock);
 		verify(partyMock, times(1)).sendInvitations();
 	}
 
@@ -60,7 +60,7 @@ public class FiestaTest {
 	@Test(expected = InvalidParameterException.class)
 	public void testPartyMustHaveValidExpirationDate() throws InvalidParameterException {
 		testFiesta.setExpirationDate(null);
-//		eventHandler.createParty(testFiesta);
+		eventHandler.createEvent(testFiesta);
 	}
 
 	@Test(expected = EventException.class)

@@ -91,6 +91,7 @@ public class User {
 
 	public User() {
 		eventsAssisted = new ArrayList<Event>();
+		guestedEvents = new ArrayList<Event>();
 		account = new Account(this);
 		dutifulList = new ArrayList<Boolean>(Arrays.asList(true, true, true));
 	}

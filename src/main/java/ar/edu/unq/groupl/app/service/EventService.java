@@ -36,7 +36,7 @@ public class EventService {
 	@Autowired private BasketRepository basketRepository; 
 	@Autowired private CrowdRepository crowdRepository;
 	
-	private <T> T createEvent(Event event) throws InvalidParameterException {
+	public <T> T createEvent(Event event) throws InvalidParameterException {
 		Validator.validateEvent(event);
 		event.setEmailSender(emailSender);
 		event.sendInvitations();

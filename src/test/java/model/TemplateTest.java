@@ -21,8 +21,8 @@ public class TemplateTest {
 	@Before
 	public void before() {
 		testFiesta = TestBuilder.testParty().validFiesta().build();
-//		testItems.add(new Item(1, "papa", 10));
-//		testItems.add(new Item(2, "aceite", 40));
+		testItems.add(new Item("papa", 10));
+		testItems.add(new Item("aceite", 40));
 		testTemplate = new Template("Template papas fritas", testItems);
 		
 	}

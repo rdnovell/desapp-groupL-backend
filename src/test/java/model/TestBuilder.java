@@ -1,11 +1,15 @@
 package model;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.edu.unq.groupl.app.model.*;
+import ar.edu.unq.groupl.app.model.Basket;
+import ar.edu.unq.groupl.app.model.CrowdFunding;
+import ar.edu.unq.groupl.app.model.CrowdFundingCommonAccount;
+import ar.edu.unq.groupl.app.model.Item;
+import ar.edu.unq.groupl.app.model.Party;
+import ar.edu.unq.groupl.app.model.User;
 import ar.edu.unq.groupl.app.service.MoneyLoanService;
 
 public class TestBuilder {
@@ -56,7 +60,7 @@ public class TestBuilder {
 			testFiesta.setOwner(organizador);
 
 			List<Item> items = new ArrayList<Item>();
-//			items.add(new Item(1, "Asado", 100));
+			items.add(new Item("Asado", 100));
 			testFiesta.setItems(items);
 
 			testFiesta.setExpirationDate(LocalDate.now().plusDays(10));
@@ -119,7 +123,7 @@ public class TestBuilder {
 			testCrowdFunding.setOwner(organizador);
 
 			List<Item> items = new ArrayList<Item>();
-//			items.add(new Item(1, "Asado", 100));
+     		items.add(new Item("Asado", 100));
 			testCrowdFunding.setItems(items);
 			
 			List<User> invitados = new ArrayList<User>();

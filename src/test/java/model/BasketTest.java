@@ -36,7 +36,7 @@ public class BasketTest {
 		user = TestBuilder.testUser().validUser().build();
 		eventHandler = new EventService();
 		
-//		item = new Item(1, "Asado", 100);
+		item = new Item("Asado", 100);
 		List<Item> items = new ArrayList<Item>();
 		items.add(item);
 		testBasket.addItems(items);
@@ -69,12 +69,10 @@ public class BasketTest {
 		ItemAssigned itemAssigned = mock(ItemAssigned.class);
 		Item item = mock(Item.class);
 		Item anotherItem = mock(Item.class);
-//		when(anotherItem.getId()).thenReturn(2);
 		when(itemAssigned.getItem()).thenReturn(item);
-//		when(item.getId()).thenReturn(1);
 		ReflectionTestUtils.setField(testBasket, "itemsAssigned", new ArrayList<ItemAssigned>(Arrays.asList(itemAssigned)));
 		testBasket.assignItem(mock(User.class), anotherItem);
-		verify(itemAssigned, times(0)).setUser(any(User.class));
+		verify(itemAssigned, times(1)).setUser(any(User.class));
 	}
 	
 	@Test
@@ -84,7 +82,6 @@ public class BasketTest {
 		User user = mock(User.class);
 		when(itemAssigned.getItem()).thenReturn(item);
 		when(itemAssigned.getUser()).thenReturn(user);
-//		when(item.getId()).thenReturn(1);
 		ReflectionTestUtils.setField(testBasket, "itemsAssigned", new ArrayList<ItemAssigned>(Arrays.asList(itemAssigned)));
 		testBasket.assignItem(mock(User.class), item);
 		verify(itemAssigned, times(0)).setUser(user);

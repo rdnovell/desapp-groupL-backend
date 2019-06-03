@@ -121,4 +121,9 @@ public class EventService {
 		partyRepository.save(party);
 	}
 
+	public List<Event> getTopEvents() {
+		List<Event> events = partyRepository.getTopEvents();
+		return events;
+	}
+	
 }

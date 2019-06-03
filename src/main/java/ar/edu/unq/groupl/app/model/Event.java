@@ -88,8 +88,12 @@ public class Event {
 	}
 
 	public void sendInvitations() {
-		if (!guests.isEmpty()) {
-			List<MailJetUser> mailJetUsers = ListUtil.toList(guests.stream().map(this::createMailJetUser));
+		sendInvitations(guests);
+	}
+	
+	public void sendInvitations(List<User> users) {
+		if (!users.isEmpty()) {
+			List<MailJetUser> mailJetUsers = ListUtil.toList(users.stream().map(this::createMailJetUser));
 			emailSender.send(mailJetUsers);
 		}
 	}

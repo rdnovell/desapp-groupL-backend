@@ -25,6 +25,8 @@ import ar.edu.unq.groupl.app.service.dto.ConverterDTOService;
 import ar.edu.unq.groupl.app.service.dto.CrowdDTO;
 import ar.edu.unq.groupl.app.service.dto.PartyDTO;
 import ar.edu.unq.groupl.app.service.dto.PartyDTOOnCreate;
+import ar.edu.unq.groupl.app.service.dto.EventItemsDTO;
+import ar.edu.unq.groupl.app.service.dto.EventUsersDTO;
 import ar.edu.unq.groupl.app.service.dto.UserConfirmatedDTO;
 
 @Component
@@ -56,6 +58,24 @@ public class EventRest extends Rest {
 	@Produces(APPLICATION_JSON)
 	public Response confirmAssistance(UserConfirmatedDTO userConfirmatedDTO) throws EventException {
 		eventService.confirmAssistance(userConfirmatedDTO);
+		return ok();
+	}
+	
+	@PUT
+	@Path("/party/items")
+	@Consumes(APPLICATION_JSON)
+	@Produces(APPLICATION_JSON)
+	public Response updateItemsFromParty(EventItemsDTO partyItem) {
+		eventService.updateItemsFromParty(partyItem.getEventId(), partyItem.getItemsTitle());
+		return ok();
+	}
+	
+	@PUT
+	@Path("/party/guests")
+	@Consumes(APPLICATION_JSON)
+	@Produces(APPLICATION_JSON)
+	public Response updateGuestsFromParty(EventUsersDTO partyUsers) {
+		eventService.updateGuestsFromParty(partyUsers.getEventId(), partyUsers.getUserEmails());
 		return ok();
 	}
 	

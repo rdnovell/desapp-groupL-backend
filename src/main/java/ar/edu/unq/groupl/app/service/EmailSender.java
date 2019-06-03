@@ -37,7 +37,7 @@ public class EmailSender {
 						new JSONObject().put(Emailv31.Message.FROM, mailFrom)
 						.put(Emailv31.Message.TO, new JSONArray().put(createMail(user)))
 						.put(Emailv31.Message.SUBJECT, "Eventeando: Invitación")
-						.put(Emailv31.Message.TEXTPART, "Estimado " + user.getName() + " has sido invitado al evento." )
+						.put(Emailv31.Message.TEXTPART, user.getName() + " has sido invitado a un evento." )
 						);
 			} catch (JSONException e) {
 				e.printStackTrace();

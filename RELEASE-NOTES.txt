@@ -26,3 +26,22 @@ NOTES
 
 KNOWN ISSUES
 ...
+
+---------------------------------------------------------------------
+TAG 2.0.0
+---------------------------------------------------------------------
+
+NEW FEATURES
+* ABM de Fiesta.
+* Creacion de un nuevo usuario.
+* ABM de invitados.
+* Mis fiestas como creador.
+* Mis fiestas como invitado.
+* Mis fiestas como asistente.
+* ABM de items.
+
+NOTES
+...
+
+KNOWN ISSUES
+...

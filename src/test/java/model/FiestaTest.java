@@ -8,9 +8,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -20,6 +22,7 @@ import ar.edu.unq.groupl.app.model.User;
 import ar.edu.unq.groupl.app.model.exception.EventException;
 import ar.edu.unq.groupl.app.model.exception.GuestNotFoundException;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
+import ar.edu.unq.groupl.app.persistence.PartyRepository;
 import ar.edu.unq.groupl.app.service.EmailSender;
 import ar.edu.unq.groupl.app.service.EventService;
 
@@ -37,8 +40,10 @@ public class FiestaTest {
 	@Test
 	public void testOnCreatePartyMustSendInvitations() throws InvalidParameterException {
 		Party partyMock = mock(Party.class);
+	    PartyRepository repoMock = mock(PartyRepository.class);
+	    ReflectionTestUtils.setField(eventHandler, "partyRepository", repoMock);
 		ReflectionTestUtils.setField(partyMock, "expirationDate", LocalDate.now());
-		eventHandler.createParty(partyMock);
+		eventHandler.createEvent(partyMock);
 		verify(partyMock, times(1)).sendInvitations();
 	}
 
@@ -55,7 +60,7 @@ public class FiestaTest {
 	@Test(expected = InvalidParameterException.class)
 	public void testPartyMustHaveValidExpirationDate() throws InvalidParameterException {
 		testFiesta.setExpirationDate(null);
-		eventHandler.createParty(testFiesta);
+		eventHandler.createEvent(testFiesta);
 	}
 
 	@Test(expected = EventException.class)
@@ -89,7 +94,7 @@ public class FiestaTest {
 	@Test(expected = GuestNotFoundException.class)
 	public void testGuestCannotBeConfirmedIfNtotInvited() throws EventException {
 		User user = TestBuilder.testUser().validUser().build();
-		user.setId(2);
+		user.setEmail("otheremail@gmail.com");
 		testFiesta.addConfirmedGuests(user);
 	}
 	
@@ -97,7 +102,7 @@ public class FiestaTest {
 	public void testCheckIfGuestIsConfirmed() throws EventException {
 		User user = TestBuilder.testUser().validUser().build();
 		testFiesta.addConfirmedGuests(user);
-		assertTrue(testFiesta.userIsConfimated(user));
+		assertTrue(testFiesta.userIsConfirmated(user));
 	}
 	
 	@Test

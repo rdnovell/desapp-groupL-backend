@@ -1,25 +1,23 @@
 package ar.edu.unq.groupl.app.persistence;
 
-import java.util.ArrayList;
 import java.util.List;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import ar.edu.unq.groupl.app.model.Event;
 import ar.edu.unq.groupl.app.model.User;
 
-@Component
-public class UserRepository {
+@Repository
+public interface UserRepository extends JpaRepository<User, String> {
 	
-	private List<User> users = new ArrayList<User>();
-	private int index = 0;
+	@Query("SELECT user.guestedEvents FROM User user where user.email = :email") 
+	List<Event> getGuestEvents(@Param("email") String email);
 	
-	public void save(User user) {
-		user.setId(index);
-		index++;
-		users.add(user);
-	}
+	@Query("SELECT user.eventsOwner FROM User user where user.email = :email") 
+	List<Event> getOwnerEvents(@Param("email") String email);
 	
-	public User get(Integer id) {
-		//TODO: ASUMIMOS QUE EL USUARIO EXISTE.
-		return users.get(id);
-	}
-
+	@Query("SELECT user.eventsAssisted FROM User user where user.email = :email") 
+	List<Event> getAssistedEvents(@Param("email") String email);
+	
 }

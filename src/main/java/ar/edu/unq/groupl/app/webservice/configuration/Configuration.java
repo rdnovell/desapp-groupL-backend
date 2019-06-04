@@ -10,6 +10,7 @@ import ar.edu.unq.groupl.app.webservice.exceptionhandler.BadRequestExceptionHand
 import ar.edu.unq.groupl.app.webservice.exceptionhandler.InvalidParameterExceptionHandler;
 import ar.edu.unq.groupl.app.webservice.exceptionhandler.NotFoundExceptionHandler;
 import ar.edu.unq.groupl.app.webservice.exceptionhandler.ServerExceptionHandler;
+import ar.edu.unq.groupl.app.webservice.exceptionhandler.UnexistExceptionHandler;
 
 @Component
 @ApplicationPath("/api")
@@ -30,6 +31,7 @@ public class Configuration extends ResourceConfig {
 		register(ServerExceptionHandler.class);
 		register(NotFoundExceptionHandler.class);
 		register(InvalidParameterExceptionHandler.class);
+		register(UnexistExceptionHandler.class);
 	}
 
 }

@@ -1,9 +1,5 @@
 package ar.edu.unq.groupl.app.service;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unq.groupl.app.model.Event;
 import ar.edu.unq.groupl.app.model.User;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
@@ -11,6 +7,11 @@ import ar.edu.unq.groupl.app.persistence.AccountRepository;
 import ar.edu.unq.groupl.app.persistence.UserRepository;
 import ar.edu.unq.groupl.app.service.annotation.Valid;
 import ar.edu.unq.groupl.app.service.exception.UnexistException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -60,5 +61,11 @@ public class UserService {
 		}
 		return userRepository.getAssistedEvents(email);
 	}
-	
+
+    public User getUser(String email) throws UnexistException {
+		if (nonExistentUser(email)) {
+			throw getUnexistException(email);
+		}
+		return userRepository.getOne(email);
+    }
 }

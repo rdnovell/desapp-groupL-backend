@@ -3,18 +3,26 @@ package ar.edu.unq.groupl.app.model;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Getter @Setter
+@Entity
+@Table(name = "loans")
 public class Loan {
 
-	private User user;
+	@Id
+	private String email;
+
 	private Integer loanAmount;
 	private Integer monthlyPayback;
 	private Integer loanTerm;
 	private Integer loanTermsPayed;
 	@Setter private CreditSituationType creditSituation;
 	
-	public Loan(User user, Integer loanAmount, Integer monthlyPayback, Integer loanTerm) {
-		this.user = user;
+	public Loan(String email, Integer loanAmount, Integer monthlyPayback, Integer loanTerm) {
+		this.email = email;
 		this.loanAmount = loanAmount;
 		this.monthlyPayback = monthlyPayback;
 		this.loanTerm = loanTerm;

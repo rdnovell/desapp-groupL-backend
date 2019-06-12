@@ -1,5 +1,17 @@
 package ar.edu.unq.groupl.app.model;
 
+import ar.edu.unq.groupl.app.model.util.ListUtil;
+import ar.edu.unq.groupl.app.service.MoneyLoanService;
+import ar.edu.unq.groupl.app.service.validation.Email;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,31 +19,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import ar.edu.unq.groupl.app.model.util.ListUtil;
-import ar.edu.unq.groupl.app.service.MoneyLoanService;
-import ar.edu.unq.groupl.app.service.validation.Email;
-import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Setter
@@ -106,7 +93,7 @@ public class User {
 	}
 
 	public boolean hasMoneyLoans() {
-		return moneyLoanService.hasMoneyLoans(this);
+		return moneyLoanService.hasMoneyLoans(email);
 	}
 
 	public void addEventAssist(Event event) {

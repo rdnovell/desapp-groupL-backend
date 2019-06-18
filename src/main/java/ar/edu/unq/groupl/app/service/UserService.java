@@ -66,6 +66,6 @@ public class UserService {
 		if (nonExistentUser(email)) {
 			throw getUnexistException(email);
 		}
-		return userRepository.getOne(email);
+		return userRepository.findById(email).get();
     }
 }

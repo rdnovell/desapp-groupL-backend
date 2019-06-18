@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 @Getter
@@ -41,7 +42,8 @@ public class MoneyLoanService implements Observer {
 	}
 
 	public boolean hasMoneyLoans(String email) {
-		return loans.stream().anyMatch(loan -> loan.getEmail().equals(email));
+		Stream<Loan> myLoans = loans.stream().filter(loan -> loan.getEmail().equals(email));
+		return myLoans.anyMatch(loan -> !loan.isFinished());
 	}
 
 	public Loan getLoan(User user) {

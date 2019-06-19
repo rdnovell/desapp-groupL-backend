@@ -1,22 +1,24 @@
 package ar.edu.unq.groupl.app.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.ZonedDateTime;
 
 
 @Getter @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "loans")
 public class Loan {
 
 	@Id
-	private String email;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 
+	private String email;
 	private Integer loanAmount;
 	private Integer monthlyPayback;
 	private Integer loanTerm;

@@ -24,9 +24,8 @@ public class LoanRest extends Rest {
 	@GET
 	@Path("/loans")
 	@Produces(APPLICATION_JSON)
-	public Response getGuestEvents(@QueryParam("email") String email) throws UnexistException {
-		User user = userService.getUser(email);
-		List<Loan> loans = moneyLoanService.getAllUserLoans(user);
+	public Response getUserLoans(@QueryParam("email") String email) throws UnexistException {
+		List<Loan> loans = moneyLoanService.getAllUserLoans(email);
 		return ok(loans);
 	}
 
@@ -38,6 +37,7 @@ public class LoanRest extends Rest {
 	}
 
 	@POST
+	@Path("/create")
 	@Consumes(APPLICATION_JSON)
 	@Produces(APPLICATION_JSON)
 	public Response createLoan(@QueryParam("email") String email) throws UnexistException {

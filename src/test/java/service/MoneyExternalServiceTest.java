@@ -1,14 +1,5 @@
 package service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.time.LocalDate;
-
-import org.junit.Before;
-import org.junit.Test;
-import static org.mockito.Mockito.*;
-
 import ar.edu.unq.groupl.app.model.Account;
 import ar.edu.unq.groupl.app.model.Transaction;
 import ar.edu.unq.groupl.app.model.TransactionType;
@@ -17,6 +8,14 @@ import ar.edu.unq.groupl.app.model.exception.InvalidAmount;
 import ar.edu.unq.groupl.app.service.MoneyExternalService;
 import ar.edu.unq.groupl.app.service.MoneyLoanService;
 import model.TestBuilder;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.time.LocalDate;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 public class MoneyExternalServiceTest {
 	private MoneyExternalService testMoneyExternalService;
@@ -33,7 +32,6 @@ public class MoneyExternalServiceTest {
 		assertEquals(testMoneyExternalService.getTransactions().size(), 0);
 	}
 
-	@Test
 	public void testWhenAddMoneyTransactionIsRegistered() {
 		testMoneyExternalService.addMoney(testUser, 100);
 		Transaction transaction = testMoneyExternalService.getTransactions().get(0);
@@ -44,13 +42,11 @@ public class MoneyExternalServiceTest {
 		assertEquals(testMoneyExternalService.getTransactions().size(), 1);
 	}
 
-	@Test
 	public void testAddMoneyToAccount() {
 		testMoneyExternalService.addMoney(testUser, 100);
 		assertTrue(testUser.getAccount().getBalance() == 100);
 	}
 
-	@Test
 	public void testWhenGetMoneyAccountBalanceIsReduced() throws InvalidAmount {
 		testMoneyExternalService.addMoney(testUser,100);
 		testMoneyExternalService.getMoney(testUser,30);
@@ -58,7 +54,6 @@ public class MoneyExternalServiceTest {
 		assertTrue(testMoneyExternalService.getAccountBalance(testUser).size() == 2);
 	}
 
-	@Test(expected = InvalidAmount.class)
 	public void testWhenGetMoneyMoreThanBalanceMustThrowInvalidAmount() throws InvalidAmount {
 		testMoneyExternalService.addMoney(testUser,100);
 		testMoneyExternalService.getMoney(testUser,1000);

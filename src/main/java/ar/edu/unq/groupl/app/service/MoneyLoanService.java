@@ -5,6 +5,7 @@ import ar.edu.unq.groupl.app.model.CreditSituationType;
 import ar.edu.unq.groupl.app.model.Loan;
 import ar.edu.unq.groupl.app.model.User;
 import ar.edu.unq.groupl.app.model.exception.InvalidAmount;
+import ar.edu.unq.groupl.app.persistence.LoanRepository;
 import ar.edu.unq.groupl.app.service.exception.UnexistException;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -14,12 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 @Getter
@@ -27,13 +25,15 @@ public class MoneyLoanService implements Observer {
 
 	@Autowired
 	private UserService userService;
-	private Logger logger = LoggerFactory.getLogger(MoneyLoanService.class);
+	@Autowired private LoanRepository loanRepository;
 
-	private List<Loan> loans = new ArrayList<Loan>();
+	private Logger logger = LoggerFactory.getLogger(MoneyLoanService.class);
 
 	public void createLoan(String email) throws UnexistException{
 		if (isDutiful(email) && !hasMoneyLoans(email)) {
-			loans.add(new Loan(email, 1000, 200, 6));
+			//loans.add(new Loan(email, 1000, 200, 6));
+			Loan loan = new Loan(email, 1000, 200, 6);
+			loanRepository.save(loan);
 		}
 	}
 
@@ -42,23 +42,19 @@ public class MoneyLoanService implements Observer {
 	}
 
 	public boolean hasMoneyLoans(String email) {
-		Stream<Loan> myLoans = loans.stream().filter(loan -> loan.getEmail().equals(email));
-		return myLoans.anyMatch(loan -> !loan.isFinished());
+		return getAllUserLoans(email).stream().anyMatch(loan -> !loan.isFinished());
 	}
 
-	public Loan getLoan(User user) {
-		return loans.stream().filter(loan -> loan.getEmail().equals(user.getEmail())).findFirst().get();
+	public Loan getLoan(String email) {
+		return getAllUserLoans(email).stream().filter(loan -> !loan.isFinished()).findFirst().get();
 	}
 
-	public List<Loan> getAllUserLoans(User user) {
-		return loans.stream().filter(loan -> loan.getEmail().equals(user.getEmail())).collect(Collectors.toList());
-	}
 
 	//Cron works on 4am every day 5 of month.
 	@Scheduled(cron = "0 0 4 5 * ?")
 	public void payLoans() {
 		logger.info("Se realizó el debito automatico.");
-		loans.forEach(loan -> payLoan(loan));
+		getLoans().forEach(loan -> payLoan(loan));
 	}
 
 	@SneakyThrows
@@ -70,7 +66,7 @@ public class MoneyLoanService implements Observer {
 			loan.updateLoanTermsPayed();
 			loan.setCreditSituation(CreditSituationType.NORMAL);
 			if (loan.isFinished()) {
-				loans.remove(loan);
+				//loans.remove(loan);
 			}
 		} catch (InvalidAmount e) {
 			loan.setCreditSituation(CreditSituationType.RISK);
@@ -80,7 +76,7 @@ public class MoneyLoanService implements Observer {
 	@Override
 	public void update(Observable obs, Object _user) {
 		User user = (User) _user; 
-		Loan loan = getLoan(user);
+		Loan loan = getLoan(user.getEmail());
 		if (loan.isRisk()) {
 			payLoan(loan);
 		}
@@ -88,5 +84,13 @@ public class MoneyLoanService implements Observer {
 
 	public boolean loanAvailable(String email) throws UnexistException {
 		return isDutiful(email) && !hasMoneyLoans(email);
+	}
+
+	public List<Loan> getAllUserLoans(String email) {
+		return loanRepository.getUserLoans(email);
+	}
+
+	public List<Loan> getLoans() {
+		return loanRepository.findAll();
 	}
 }

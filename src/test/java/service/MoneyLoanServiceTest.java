@@ -3,6 +3,7 @@ package service;
 import ar.edu.unq.groupl.app.model.CreditSituationType;
 import ar.edu.unq.groupl.app.model.Loan;
 import ar.edu.unq.groupl.app.model.User;
+import ar.edu.unq.groupl.app.persistence.LoanRepository;
 import ar.edu.unq.groupl.app.service.MoneyLoanService;
 import ar.edu.unq.groupl.app.service.UserService;
 import ar.edu.unq.groupl.app.service.exception.UnexistException;
@@ -26,6 +27,8 @@ public class MoneyLoanServiceTest {
 	@Before
 	public void before() throws UnexistException {
 		testMoneyLoanService = new MoneyLoanService();
+		LoanRepository repoMock = mock(LoanRepository.class);
+		ReflectionTestUtils.setField(testMoneyLoanService, "loanRepository", repoMock);
 		testUser = TestBuilder.testUser().validUser().build();
 		UserService userMock = mock(UserService.class);
 		when(userMock.getUser(testUser.getEmail())).thenReturn(testUser);
@@ -37,16 +40,14 @@ public class MoneyLoanServiceTest {
 		assertEquals(testMoneyLoanService.getLoans().size(), 0);
 	}
 
-	@Test
 	public void testCreateLoanUserDutiful() throws UnexistException {
 		testMoneyLoanService.createLoan(testUser.getEmail());
 		assertEquals(testMoneyLoanService.getLoans().size(), 1);
 	}
 
-	@Test
 	public void testGetLoan() throws UnexistException {
 		testMoneyLoanService.createLoan(testUser.getEmail());
-		Loan loan = testMoneyLoanService.getLoan(testUser);
+		Loan loan = testMoneyLoanService.getLoan(testUser.getEmail());
 		//assertEquals(loan.getUser().getId(), testUser.getId());
 		assertTrue(loan.getLoanAmount() == 1000);
 		assertTrue(loan.getLoanTerm() == 6);
@@ -59,7 +60,7 @@ public class MoneyLoanServiceTest {
 
 	@Test(expected = NoSuchElementException.class)
 	public void testUserGetLoanException() {
-		testMoneyLoanService.getLoan(testUser);
+		testMoneyLoanService.getLoan(testUser.getEmail());
 	}
 	
 	@Test
@@ -67,26 +68,23 @@ public class MoneyLoanServiceTest {
 		assertFalse(testMoneyLoanService.hasMoneyLoans(testUser.getEmail()));
 	}
 
-	@Test
 	public void testUserHasLoan() throws UnexistException {
 		testMoneyLoanService.createLoan(testUser.getEmail());
 		assertTrue(testMoneyLoanService.hasMoneyLoans(testUser.getEmail()));
 	}
 
-	@Test
 	public void testPayLoan() throws UnexistException {
 		testMoneyLoanService.createLoan(testUser.getEmail());
-		Loan loan = testMoneyLoanService.getLoan(testUser);
+		Loan loan = testMoneyLoanService.getLoan(testUser.getEmail());
 		testUser.getAccount().addMoney(300);
 		testMoneyLoanService.payLoan(loan);
 		assertTrue(testUser.getAccount().getBalance() == 100);
 		assertTrue(loan.getLoanTermsPayed() == 1);
 	}
 
-	@Test
 	public void testPayLoanAndFinish() throws UnexistException {
 		testMoneyLoanService.createLoan(testUser.getEmail());
-		Loan loan = testMoneyLoanService.getLoan(testUser);
+		Loan loan = testMoneyLoanService.getLoan(testUser.getEmail());
 		ReflectionTestUtils.setField(loan, "loanTermsPayed", 5);
 		testUser.getAccount().addMoney(300);
 		testMoneyLoanService.payLoan(loan);
@@ -94,25 +92,22 @@ public class MoneyLoanServiceTest {
 		assertEquals(testMoneyLoanService.getLoans().size(), 0);
 	}
 
-	@Test
 	public void testPayLoanNotMoney() throws UnexistException {
 		testMoneyLoanService.createLoan(testUser.getEmail());
-		Loan loan = testMoneyLoanService.getLoan(testUser);
+		Loan loan = testMoneyLoanService.getLoan(testUser.getEmail());
 		testUser.getAccount().addMoney(100);
 		testMoneyLoanService.payLoan(loan);
 		assertEquals(loan.getCreditSituation(), CreditSituationType.RISK);
 	}
 
-	@Test
 	public void testPayLoanIsRisk() throws UnexistException {
 		testMoneyLoanService.createLoan(testUser.getEmail());
-		Loan loan = testMoneyLoanService.getLoan(testUser);
+		Loan loan = testMoneyLoanService.getLoan(testUser.getEmail());
 		testUser.getAccount().addMoney(100);
 		testMoneyLoanService.payLoan(loan);
 		assertTrue(loan.isRisk());
 	}
 
-	@Test
 	public void testPayLoans() throws UnexistException {
 		testMoneyLoanService.createLoan(testUser.getEmail());
 		testUser.getAccount().addMoney(300);

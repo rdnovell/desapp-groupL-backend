@@ -6,14 +6,20 @@ import com.tngtech.archunit.core.domain.JavaMethod;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.lang.*;
+import ar.edu.unq.groupl.app.service.annotation.Valid;
 import org.aspectj.lang.annotation.Aspect;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
+import org.reflections.Reflections;
+import org.reflections.scanners.MethodAnnotationsScanner;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 import static com.tngtech.archunit.core.domain.JavaModifier.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.all;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
@@ -153,6 +159,13 @@ public class ArquitecturaTest {
                 .that().resideInAPackage("model")
                 .should().haveSimpleNameEndingWith("Test")
                 .check(classes);
+    }
+    
+    @Test
+    public void serviceMethodsWithValidAnnotationMustHaveAtLeastOneArgumentToValidate() {
+    	Set<Method> methodsAnnotatedWith = new Reflections("ar.edu.unq.groupl.app.service", new MethodAnnotationsScanner()).getMethodsAnnotatedWith(Valid.class);
+		Predicate<Method> hasMoreThanOneArgument = method -> method.getParameterCount() > 0;
+		assertTrue(methodsAnnotatedWith.stream().allMatch(hasMoreThanOneArgument));
     }
 
 }

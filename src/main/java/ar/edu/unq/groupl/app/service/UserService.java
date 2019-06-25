@@ -5,6 +5,7 @@ import ar.edu.unq.groupl.app.model.User;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
 import ar.edu.unq.groupl.app.persistence.AccountRepository;
 import ar.edu.unq.groupl.app.persistence.UserRepository;
+import ar.edu.unq.groupl.app.service.annotation.Log;
 import ar.edu.unq.groupl.app.service.annotation.Valid;
 import ar.edu.unq.groupl.app.service.exception.UnexistException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,8 @@ public class UserService {
 			userRepository.save(user);
 		}
 	}
-	
+
+	@Log
 	public int getBalance(String email) throws UnexistException {
 		return accountRepository.getBalance(email).orElseThrow(() -> getUnexistException(email));
 	}

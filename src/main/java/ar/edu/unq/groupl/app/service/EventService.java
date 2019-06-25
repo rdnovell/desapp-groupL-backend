@@ -1,31 +1,21 @@
 package ar.edu.unq.groupl.app.service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import org.apache.commons.collections.ListUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-import ar.edu.unq.groupl.app.model.Account;
-import ar.edu.unq.groupl.app.model.Basket;
-import ar.edu.unq.groupl.app.model.CrowdFunding;
-import ar.edu.unq.groupl.app.model.CrowdFundingCommonAccount;
-import ar.edu.unq.groupl.app.model.Event;
-import ar.edu.unq.groupl.app.model.Item;
-import ar.edu.unq.groupl.app.model.Party;
-import ar.edu.unq.groupl.app.model.User;
-import ar.edu.unq.groupl.app.model.Validator;
+import ar.edu.unq.groupl.app.model.*;
 import ar.edu.unq.groupl.app.model.exception.EventException;
 import ar.edu.unq.groupl.app.model.exception.InvalidAmount;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
 import ar.edu.unq.groupl.app.model.util.ListUtil;
-import ar.edu.unq.groupl.app.persistence.BasketRepository;
-import ar.edu.unq.groupl.app.persistence.CrowdRepository;
-import ar.edu.unq.groupl.app.persistence.ItemRepository;
-import ar.edu.unq.groupl.app.persistence.PartyRepository;
-import ar.edu.unq.groupl.app.persistence.UserRepository;
+import ar.edu.unq.groupl.app.persistence.*;
+import ar.edu.unq.groupl.app.service.annotation.Log;
 import ar.edu.unq.groupl.app.service.dto.PartyDTOOnCreate;
 import ar.edu.unq.groupl.app.service.dto.UserConfirmatedDTO;
+import org.apache.commons.collections.ListUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class EventService {
@@ -122,6 +112,7 @@ public class EventService {
 		partyRepository.save(party);
 	}
 
+	@Log
 	public List<Event> getTopEvents() {
 		List<Event> events = new ArrayList<>();
 		events.addAll(partyRepository.getTopEvents());

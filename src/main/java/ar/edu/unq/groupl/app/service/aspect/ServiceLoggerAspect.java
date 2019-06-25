@@ -1,11 +1,14 @@
 package ar.edu.unq.groupl.app.service.aspect;
 
-import java.util.function.Function;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Aspect
 @Component
@@ -17,7 +20,12 @@ public class ServiceLoggerAspect {
 		Logger logger = Logger.getLogger(joinPoint.getTarget().getClass().getSimpleName());
 		try {
 			T toReturn = (T) joinPoint.proceed();
-			logger.info("Method " + joinPoint.getSignature().getName() + " executed correctly.");
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+			String parameters = Arrays.stream(joinPoint.getArgs()).map(a -> "Type: " + a.getClass().getSimpleName() + " Value: " + a ).collect(Collectors.joining());
+
+			System.out.println("Method " + joinPoint.getSignature().getName() + " executed correctly at " + timestamp + " with parameters [" + parameters + "].");
+
+			logger.info("Method " + joinPoint.getSignature().getName() + " executed correctly at " + timestamp + " with parameters [" + parameters + "].");
 			return toReturn;
 		} catch (Throwable throwable) {
 			 Function<String, String> exceptionMessage = message -> message == null ? "." : " - Exception message: " + message;

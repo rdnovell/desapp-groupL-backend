@@ -22,10 +22,7 @@ public class ServiceLoggerAspect {
 			T toReturn = (T) joinPoint.proceed();
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			String parameters = Arrays.stream(joinPoint.getArgs()).map(a -> "Type: " + a.getClass().getSimpleName() + " Value: " + a ).collect(Collectors.joining());
-
-			System.out.println("Method " + joinPoint.getSignature().getName() + " executed correctly at " + timestamp + " with parameters [" + parameters + "].");
-
-			logger.info("Method " + joinPoint.getSignature().getName() + " executed correctly at " + timestamp + " with parameters [" + parameters + "].");
+			logger.info("Method " + joinPoint.getSignature().getName() + " executed correctly with parameters [" + parameters + "].");
 			return toReturn;
 		} catch (Throwable throwable) {
 			 Function<String, String> exceptionMessage = message -> message == null ? "." : " - Exception message: " + message;

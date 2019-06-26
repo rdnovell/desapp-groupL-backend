@@ -12,7 +12,7 @@ import static org.springframework.http.HttpMethod.GET;
 
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 @Order(99)
 public class AppConfig extends WebSecurityConfigurerAdapter {
 

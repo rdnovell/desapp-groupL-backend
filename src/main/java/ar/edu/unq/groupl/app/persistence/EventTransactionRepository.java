@@ -1,5 +1,7 @@
 package ar.edu.unq.groupl.app.persistence;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +17,8 @@ public interface EventTransactionRepository extends JpaRepository<EventTransacti
 	@Modifying
 	@Query("DELETE FROM EventTransaction eventTransaction where eventTransaction.event.id = :id") 
 	void removeById(@Param("id") Integer id);
+	
+	@Query("FROM EventTransaction eventTransaction where eventTransaction.event.id = :id") 
+	List<EventTransaction> getTransactionsFromEvent(@Param("id") Integer id);
 	
 }

@@ -1,9 +1,7 @@
 package ar.edu.unq.groupl.app.webservice.endpoint;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-
 import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -14,13 +12,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import ar.edu.unq.groupl.app.model.Basket;
 import ar.edu.unq.groupl.app.model.CrowdFunding;
 import ar.edu.unq.groupl.app.model.Event;
+import ar.edu.unq.groupl.app.model.EventTransaction;
 import ar.edu.unq.groupl.app.model.Party;
 import ar.edu.unq.groupl.app.model.exception.EventException;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
@@ -33,6 +30,7 @@ import ar.edu.unq.groupl.app.service.dto.PartyDTO;
 import ar.edu.unq.groupl.app.service.dto.PartyDTOOnCreate;
 import ar.edu.unq.groupl.app.service.dto.PartyDTOOnUser;
 import ar.edu.unq.groupl.app.service.dto.EventItemsDTO;
+import ar.edu.unq.groupl.app.service.dto.EventTransactionDTO;
 import ar.edu.unq.groupl.app.service.dto.EventUsersDTO;
 import ar.edu.unq.groupl.app.service.dto.UserConfirmatedDTO;
 import ar.edu.unq.groupl.app.service.exception.UnexistException;
@@ -59,6 +57,14 @@ public class EventRest extends Rest {
 	public Response removeParty(@PathParam("id") Integer partyId) {
 		eventService.removeParty(partyId);
 		return ok();
+	}
+	
+	@GET
+	@Path("/party/transactions")
+	@Produces(APPLICATION_JSON)
+	public Response getTransactionsTimeByZone(@QueryParam("zone") String zone, @QueryParam("eventId") Integer eventId) {
+		List<EventTransactionDTO> transactions = eventService.getTransactionsTimeByZone(zone, eventId);
+		return ok(transactions);
 	}
 	
 	@PUT

@@ -33,12 +33,12 @@ public class EventTransaction {
 	@ManyToOne
 	private Event event;
 	
-	private Instant instant;
+	private String instant;
 	
 	public EventTransaction(User user, Event event) {
 		this.user = user;
 		this.event = event;
-		this.instant = Instant.now();
+		this.instant = Instant.now().toString();
 	}
 
 }

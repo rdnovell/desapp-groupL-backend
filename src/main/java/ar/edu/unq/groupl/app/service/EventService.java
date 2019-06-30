@@ -7,15 +7,22 @@ import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
 import ar.edu.unq.groupl.app.model.util.ListUtil;
 import ar.edu.unq.groupl.app.persistence.*;
 import ar.edu.unq.groupl.app.service.annotation.Log;
+import ar.edu.unq.groupl.app.service.dto.EventTransactionDTO;
 import ar.edu.unq.groupl.app.service.dto.PartyDTOOnCreate;
 import ar.edu.unq.groupl.app.service.dto.UserConfirmatedDTO;
 import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class EventService {
@@ -57,6 +64,12 @@ public class EventService {
 	public void removeParty(Integer partyId) {
 		partyRepository.removeById(partyId);
 		eventTransactionRepository.removeById(partyId);
+	}
+	
+	public List<EventTransactionDTO> getTransactionsTimeByZone(String zone, Integer eventId) {
+		List<EventTransaction> transactions = eventTransactionRepository.getTransactionsFromEvent(eventId);
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		return ListUtil.toList(transactions.stream().map(transaction -> new EventTransactionDTO(transaction, zone)));
 	}
 	
 	@Transactional

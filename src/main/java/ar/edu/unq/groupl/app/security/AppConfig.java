@@ -8,9 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import static org.springframework.http.HttpMethod.GET;
-
-
 @Configuration
 @EnableWebSecurity(debug = false)
 @Order(99)
@@ -28,8 +25,8 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
                 .forRS256(apiAudience, issuer)
                 .configure(http)
                 .authorizeRequests()
-                .antMatchers(GET, "/").permitAll()
-                .antMatchers(GET, "/api/loan/**").authenticated();
+                .anyRequest()
+                .authenticated();
 
         http.headers().frameOptions().sameOrigin();
     }

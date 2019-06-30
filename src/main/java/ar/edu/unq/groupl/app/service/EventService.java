@@ -1,4 +1,5 @@
 package ar.edu.unq.groupl.app.service;
+
 import ar.edu.unq.groupl.app.model.*;
 import ar.edu.unq.groupl.app.model.exception.EventException;
 import ar.edu.unq.groupl.app.model.exception.InvalidAmount;
@@ -12,7 +13,6 @@ import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +26,7 @@ public class EventService {
 	@Autowired private UserRepository userRepository;
 	@Autowired private BasketRepository basketRepository; 
 	@Autowired private CrowdRepository crowdRepository;
+	@Autowired private EventTransactionRepository eventTransactionRepository;
 	
 	public <T> T createEvent(Event event) throws InvalidParameterException {
 		Validator.validateEvent(event);
@@ -52,8 +53,10 @@ public class EventService {
 		party.sendInvitations();
 	}
 	
+	@Transactional
 	public void removeParty(Integer partyId) {
 		partyRepository.removeById(partyId);
+		eventTransactionRepository.removeById(partyId);
 	}
 	
 	@Transactional
@@ -109,6 +112,7 @@ public class EventService {
 		Party party = partyOptional.get();
 		User user = userOptional.get();
 		party.addConfirmedGuests(user);
+		party.addEventTransactions(new EventTransaction(user, party));
 		partyRepository.save(party);
 	}
 

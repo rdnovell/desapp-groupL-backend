@@ -16,10 +16,9 @@ import java.util.function.Function;
 public class ServiceLoggerAspect {
 
 	@SuppressWarnings("unchecked")
-	@Around(value = "@annotation(ar.edu.unq.groupl.app.service.annotation.Log)")
+	@Around("execution(* ar.edu.unq.groupl.app.service..*(..))")
 	public <T> T logAspect(ProceedingJoinPoint joinPoint) throws Throwable {
 		Object token = SecurityContextHolder.getContext().getAuthentication().getCredentials();
-
 		Logger logger = Logger.getLogger(joinPoint.getTarget().getClass().getSimpleName());
 		String user = "";
 		try {

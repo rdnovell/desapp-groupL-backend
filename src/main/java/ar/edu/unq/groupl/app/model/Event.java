@@ -2,10 +2,7 @@ package ar.edu.unq.groupl.app.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,14 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import ar.edu.unq.groupl.app.model.exception.EventException;
 import ar.edu.unq.groupl.app.model.exception.GuestNotFoundException;
 import ar.edu.unq.groupl.app.model.util.ListUtil;
@@ -37,7 +31,7 @@ import lombok.Setter;
 @Setter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
-public class Event {
+public abstract class Event {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -68,7 +62,14 @@ public class Event {
     @ManyToMany
 	private List<Item> items = new ArrayList<Item>();
     
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private List<EventTransaction> eventTransactions = new ArrayList<EventTransaction>();
+    
 	private LocalDate date;
+	
+	public void addEventTransactions(EventTransaction eventTransaction) {
+		this.eventTransactions.add(eventTransaction);
+	}
 
 	private boolean checkGuest(List<User> users, User user) {
 		return users.stream().anyMatch(user::equals);

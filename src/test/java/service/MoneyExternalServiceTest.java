@@ -37,7 +37,7 @@ public class MoneyExternalServiceTest {
 		Transaction transaction = testMoneyExternalService.getTransactions().get(0);
 		assertTrue(transaction.getAmount() == 100);
 		assertEquals(transaction.getType(), TransactionType.ADDFUND);
-		assertEquals(transaction.getUser(), testUser);
+		assertEquals(transaction.getEmail(), testUser.getEmail());
 		assertEquals(transaction.getDate().getDayOfMonth(), LocalDate.now().getDayOfMonth());
 		assertEquals(testMoneyExternalService.getTransactions().size(), 1);
 	}

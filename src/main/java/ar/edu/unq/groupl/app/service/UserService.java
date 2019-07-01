@@ -1,9 +1,11 @@
 package ar.edu.unq.groupl.app.service;
 
 import ar.edu.unq.groupl.app.model.Event;
+import ar.edu.unq.groupl.app.model.Transaction;
 import ar.edu.unq.groupl.app.model.User;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
 import ar.edu.unq.groupl.app.persistence.AccountRepository;
+import ar.edu.unq.groupl.app.persistence.TransactionRepository;
 import ar.edu.unq.groupl.app.persistence.UserRepository;
 import ar.edu.unq.groupl.app.service.annotation.Log;
 import ar.edu.unq.groupl.app.service.annotation.Valid;
@@ -20,7 +22,9 @@ public class UserService {
 	@Autowired private MoneyLoanService moneyLoanService;
 	@Autowired private UserRepository userRepository;
 	@Autowired private AccountRepository accountRepository;
-	
+	@Autowired private TransactionRepository transactionRepository;
+	@Autowired private MoneyExternalService moneyExternalService;
+
 	@Transactional
 	@Valid
 	public void createUser(User user) throws InvalidParameterException {
@@ -62,6 +66,14 @@ public class UserService {
 			throw getUnexistException(email);
 		}
 		return userRepository.getAssistedEvents(email);
+	}
+
+	public List<Transaction> getAccountTransaction(String email) throws UnexistException {
+		if (nonExistentUser(email)) {
+			throw getUnexistException(email);
+		}
+
+		return transactionRepository.getAccountTransaction(email);
 	}
 
     public User getUser(String email) throws UnexistException {

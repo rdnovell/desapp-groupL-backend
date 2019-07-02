@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, String> {
 
-	@Query("SELECT user.account.transactions FROM User user where user.email = :email")
+	@Query("SELECT user.account.transactions FROM User user where user.email = :email order by date DESC")
 	List<Transaction> getAccountTransaction(@Param("email") String email);
 	
 }

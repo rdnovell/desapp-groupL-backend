@@ -18,7 +18,7 @@ public interface EventTransactionRepository extends JpaRepository<EventTransacti
 	@Query("DELETE FROM EventTransaction eventTransaction where eventTransaction.event.id = :id") 
 	void removeById(@Param("id") Integer id);
 	
-	@Query("FROM EventTransaction eventTransaction where eventTransaction.event.id = :id") 
-	List<EventTransaction> getTransactionsFromEvent(@Param("id") Integer id);
+	@Query("FROM EventTransaction eventTransaction where eventTransaction.event.owner.email = :owner") 
+	List<EventTransaction> getTransactionsFromEvent(@Param("owner") String owner);
 	
 }

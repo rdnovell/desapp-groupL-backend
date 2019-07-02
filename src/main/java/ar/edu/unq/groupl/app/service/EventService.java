@@ -4,7 +4,7 @@ import ar.edu.unq.groupl.app.model.*;
 import ar.edu.unq.groupl.app.model.exception.EventException;
 import ar.edu.unq.groupl.app.model.exception.InvalidAmount;
 import ar.edu.unq.groupl.app.model.exception.InvalidParameterException;
-import ar.edu.unq.groupl.app.model.util.ListUtil;
+import static ar.edu.unq.groupl.app.model.util.ListUtil.toList;
 import ar.edu.unq.groupl.app.persistence.*;
 import ar.edu.unq.groupl.app.service.annotation.Log;
 import ar.edu.unq.groupl.app.service.dto.EventTransactionDTO;
@@ -14,15 +14,9 @@ import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class EventService {
@@ -66,10 +60,9 @@ public class EventService {
 		eventTransactionRepository.removeById(partyId);
 	}
 	
-	public List<EventTransactionDTO> getTransactionsTimeByZone(String zone, Integer eventId) {
-		List<EventTransaction> transactions = eventTransactionRepository.getTransactionsFromEvent(eventId);
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		return ListUtil.toList(transactions.stream().map(transaction -> new EventTransactionDTO(transaction, zone)));
+	public List<EventTransactionDTO> getTransactionsTimeByZone(String zone, String owner) {
+		List<EventTransaction> transactions = eventTransactionRepository.getTransactionsFromEvent(owner);
+		return toList(transactions.stream().map(transaction -> new EventTransactionDTO(transaction, zone)));
 	}
 	
 	@Transactional
@@ -83,12 +76,12 @@ public class EventService {
 	@Transactional
 	public void updateGuestsFromParty(Integer eventId, List<String> guests) {
 		Party party = partyRepository.findById(eventId).get();
-		List<String> guestsEmails = ListUtil.toList(party.getGuests().stream().map(guest -> guest.getEmail()));
+		List<String> guestsEmails = toList(party.getGuests().stream().map(guest -> guest.getEmail()));
 		List<String> newEmails = ListUtils.removeAll(guests, guestsEmails);
 		List<User> users = userRepository.findAllById(guests);
-		List<User> usersToDelete = ListUtil.toList(party.getGuests().stream().filter(oldUser -> !users.contains(oldUser)));
+		List<User> usersToDelete = toList(party.getGuests().stream().filter(oldUser -> !users.contains(oldUser)));
 		usersToDelete.forEach(user -> user.removeEventGuest(party));
-		List<User> newUsers = ListUtil.toList(users.stream().filter(user -> newEmails.contains(user.getEmail())));
+		List<User> newUsers = toList(users.stream().filter(user -> newEmails.contains(user.getEmail())));
 		newUsers.forEach(user -> user.addEventGuest(party));
 		partyRepository.save(party);
 		party.setEmailSender(emailSender);

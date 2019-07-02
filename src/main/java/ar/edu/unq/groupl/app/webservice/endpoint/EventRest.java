@@ -1,6 +1,8 @@
 package ar.edu.unq.groupl.app.webservice.endpoint;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
+import java.util.Collections;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -62,8 +64,9 @@ public class EventRest extends Rest {
 	@GET
 	@Path("/party/transactions")
 	@Produces(APPLICATION_JSON)
-	public Response getTransactionsTimeByZone(@QueryParam("zone") String zone, @QueryParam("eventId") Integer eventId) {
-		List<EventTransactionDTO> transactions = eventService.getTransactionsTimeByZone(zone, eventId);
+	public Response getTransactionsTimeByZone(@QueryParam("zone") String zone, @QueryParam("owner") String owner) {
+		List<EventTransactionDTO> transactions = eventService.getTransactionsTimeByZone(zone, owner);
+		Collections.reverse(transactions);
 		return ok(transactions);
 	}
 	

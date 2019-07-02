@@ -11,12 +11,14 @@ import lombok.Setter;
 @Getter @Setter
 public class EventTransactionDTO {
 	
+	private String eventName;
 	private String date;
 	private String email;
 	
 	public EventTransactionDTO(EventTransaction eventTransaction, String zone) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		this.date = Instant.parse(eventTransaction.getInstant()).atZone(ZoneId.of(zone)).format(formatter).replace(' ', 'T');
+		this.eventName = eventTransaction.getEvent().getTitle();
 		this.email = eventTransaction.getUser().getEmail();
 	}
 
